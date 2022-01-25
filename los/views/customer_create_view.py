@@ -1,4 +1,4 @@
 from django.http import JsonResponse,HttpResponse
 
-def home (request):
+def customer_create (request):
     return HttpResponse("working")
