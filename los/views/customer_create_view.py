@@ -31,7 +31,7 @@ logger = logging.getLogger("django")
                     "middle_name": openapi.Schema(type=openapi.TYPE_STRING, description="middle name"),
                     "last_name": openapi.Schema(type=openapi.TYPE_STRING, description="last name"),
                     "gender": openapi.Schema(type=openapi.TYPE_STRING, description="gender"),
-                    "date_of_birth": openapi.Schema(type=openapi.TYPE_STRING, description="date of birth"),
+                    "date_of_birth": openapi.Schema(type=openapi.TYPE_STRING, description="date should be in YYYY-MM-DD format"),
                     "relation_with_applicant": openapi.Schema(type=openapi.TYPE_INTEGER, description="self=0, father=1, mother=2, brother=3, etc"),
                     "marital_status": openapi.Schema(type=openapi.TYPE_STRING, description="married:1, single:2,separated:3, will hide:0"),
                     "father_first_name": openapi.Schema(type=openapi.TYPE_STRING, description="father first name"),
