@@ -61,7 +61,7 @@ def customer_create(request):
             logger.debug("response data: %s", request.body)
             data = json.loads(request.body.decode("utf-8"), object_hook=lambda d: SimpleNamespace(**d))
             response_obj = create_service(data)
-            logger.debug("Data inserted")
+            logger.debug("inserted customer and audit table")
         else:
             response_obj = {"error_code": errors.invalid_request["error_code"], "message": errors.invalid_request["message"]}
 

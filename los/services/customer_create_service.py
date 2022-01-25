@@ -94,6 +94,7 @@ def create_service(req_data):
                                     status=1,
                                     creation_date=current_time, creation_by="System")
                 customer.save()
+                logger.info("inserted in customer table")
 
                 if customer.id:
 
@@ -122,6 +123,7 @@ def create_service(req_data):
                                                       customer_id=customer.id
                                                       )
                     customer_audit.save()
+                    logger.info("inserted in customer audit table")
                 else:
                     response_obj = {"error_code": errors.customer_id["error_code"],
                                     "message": errors.customer_id["message"]
