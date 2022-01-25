@@ -2,8 +2,9 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 
-class Customer(models.Model):
+class Customerauditlog(models.Model):
     id = models.BigAutoField(primary_key=True)
+    customer = models.ForeignKey('Customer', on_delete=models.SET_NULL, null=True)
     salutation = models.PositiveSmallIntegerField(validators=[MinValueValidator(0),
                                                               MaxValueValidator(9)], null=True)
     first_name = models.TextField(null=False)
@@ -32,5 +33,4 @@ class Customer(models.Model):
                                                           MaxValueValidator(9)], null=True)
     creation_date = models.DateTimeField(null=False)
     creation_by = models.TextField(null=False)
-    updation_date = models.DateTimeField(null=True)
-    updation_by = models.TextField(null=True)
+
