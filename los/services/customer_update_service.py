@@ -9,12 +9,11 @@ from los.error_code import errors
 from los.models.customer_auditlog_model import Customerauditlog
 from los.models.customer_model import Customer
 from los.los_dict import LosDictionary
-from django.http import JsonResponse,HttpResponse
+from django.http import JsonResponse
+
 
 logger = logging.getLogger("django")
-
-
-def create_service(req_data):
+def update_customer(req_data):
     response_obj = None
 
     try:
@@ -22,7 +21,8 @@ def create_service(req_data):
 
         if req_data:
 
-            if req_data and hasattr(req_data, 'salutation') and hasattr(req_data, 'first_name') and \
+            if req_data and hasattr(req_data, 'customer_id') and hasattr(req_data, 'salutation')\
+                    and hasattr(req_data, 'first_name') and \
                     hasattr(req_data, 'middle_name') and hasattr(req_data, 'last_name') and \
                     hasattr(req_data, 'gender') and hasattr(req_data, 'date_of_birth') and \
                     hasattr(req_data, 'relation_with_applicant') and hasattr(req_data, 'marital_status') and \
@@ -57,6 +57,7 @@ def create_service(req_data):
                 spouse_last_name = req_data.spouse_last_name
                 no_of_family_members = req_data.no_of_family_members
                 household_income_monthly = req_data.household_income_monthly
+                customer_id = req_data.customer_id
 
                 if len(first_name.strip()) == 0:
                     response_obj = {"error_code": errors.name["error_code"],
@@ -83,33 +84,33 @@ def create_service(req_data):
                     return response_obj
                 current_time = django.utils.timezone.now()
                 logger.debug("current_time india: %s", current_time)
+                customer_update = Customer.objects.filter(id=customer_id).update(
+                    salutation=LosDictionary.salutation[salutation],
+                    first_name=first_name,
+                    middle_name=middle_name,
+                    last_name=last_name,
+                    gender=LosDictionary.gender[gender],
+                    date_of_birth=date_of_birth,
+                    relation_with_applicant=relation_with_applicant,
+                    marital_status=LosDictionary.marital_status[marital_status],
+                    father_first_name=father_first_name,
+                    father_middle_name=father_middle_name,
+                    father_last_name=father_last_name,
+                    mother_first_name=mother_first_name,
+                    mother_middle_name=mother_middle_name,
+                    mother_last_name=mother_last_name,
+                    spouse_first_name=spouse_first_name,
+                    spouse_middle_name=spouse_middle_name,
+                    spouse_last_name=spouse_last_name,
+                    no_of_family_members=no_of_family_members,
+                    household_income_monthly=household_income_monthly,
+                    status=1,
+                    updation_date=current_time,
+                    updation_by="System")
+                customer_update.save()
+                logger.info("updated in customer table")
 
-                customer = Customer(salutation=LosDictionary.salutation[salutation],
-                                    first_name=first_name,
-                                    middle_name =middle_name,
-                                    last_name=last_name,
-                                    gender=LosDictionary.gender[gender],
-                                    date_of_birth=date_of_birth,
-                                    relation_with_applicant=relation_with_applicant,
-                                    marital_status=LosDictionary.marital_status[marital_status],
-                                    father_first_name=father_first_name,
-                                    father_middle_name=father_middle_name,
-                                    father_last_name=father_last_name,
-                                    mother_first_name=mother_first_name,
-                                    mother_middle_name=mother_middle_name,
-                                    mother_last_name=mother_last_name,
-                                    spouse_first_name=spouse_first_name,
-                                    spouse_middle_name=spouse_middle_name,
-                                    spouse_last_name=spouse_last_name,
-                                    no_of_family_members = no_of_family_members,
-                                    household_income_monthly=household_income_monthly,
-                                    status=1,
-                                    creation_date=current_time, creation_by="System")
-                customer.save()
-                logger.info("inserted in customer table")
-
-                if customer.id:
-
+                if customer_id:
                     customer_audit = Customerauditlog(salutation=LosDictionary.salutation[salutation],
                                                       first_name=first_name,
                                                       middle_name=middle_name,
@@ -132,7 +133,7 @@ def create_service(req_data):
                                                       status=1,
                                                       creation_date=current_time,
                                                       creation_by="System",
-                                                      customer_id=customer.id
+                                                      customer_id=customer_id
                                                       )
                     customer_audit.save()
                     logger.info("inserted in customer audit table")
@@ -141,18 +142,27 @@ def create_service(req_data):
                                     "message": errors.customer_id["message"]
                                     }
                     return response_obj
-                response_obj = {"error_code": errors.success["error_code"], "message": errors.success["message"],
+
+                response_obj = {"error_code": errors.success["error_code"],
+                                "message": errors.success["message"],
                                 "data": {
-                                    "customer_id": customer.id}
+                                    "customer_id": customer_update,
+                                    "customer_audit_id": customer_audit.id}
                                 }
             else:
-                response_obj = {"error_code": errors.generic_error_1["error_code"], "message": errors.generic_error_1["message"]}
+                response_obj = {"error_code": errors.generic_error_1["error_code"],
+                                "message": errors.generic_error_1["message"]}
         else:
-            response_obj = {"error_code": errors.generic_error_1["error_code"], "message": errors.generic_error_1["message"]}
+            response_obj = {"error_code": errors.generic_error_1["error_code"],
+                            "message": errors.generic_error_1["message"]}
 
     except Exception as e:
         logger.exception("Exception: ")
-        response_obj = {"error_code": errors.generic_error_2["error_code"], "message": errors.generic_error_2["message"]}
+        response_obj = {"error_code": errors.generic_error_2["error_code"],
+                        "message": errors.generic_error_2["message"]}
 
     logger.info("response: %s", response_obj)
     return response_obj
+
+
+

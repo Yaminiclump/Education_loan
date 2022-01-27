@@ -10,5 +10,9 @@ class errors():
 
     salutation = {'error_code': 20005, 'message': "Please provide a valid first name"}
     marital_status = {'error_code': 20006, 'message': "Please provide a valid marital status"}
-    gender = {'error_code': 20008, 'message': "Please provide a valid gender name"}
-    customer_id = {'error_code': 20009, 'message': "Please provide a valid customer id "}
+    name = {'error_code': 20007, 'message': "Please provide a valid name"}
+    father_name = {'error_code': 20008, 'message': "Please provide a valid father name"}
+    gender = {'error_code': 20009, 'message': "Please provide a valid gender name"}
+    customer_id = {'error_code': 200010, 'message': "Please provide a valid customer id"}
+    mother_name = {'error_code': 200011, 'message': "Please provide a valid mother name"}
+    spouse_name = {'error_code': 200012, 'message': "Please provide a valid spouse name"}

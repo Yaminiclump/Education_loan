@@ -1,3 +1,5 @@
+
+from django.http import JsonResponse, HttpResponse
 import json
 import logging
 from types import SimpleNamespace
@@ -7,9 +9,8 @@ from drf_yasg import openapi
 from drf_yasg.inspectors import SwaggerAutoSchema
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.decorators import api_view, parser_classes
-from los.services.customer_create_service import create_service
 from los.error_code import errors
-
+from los.services.customer_update_service import update_customer
 logger = logging.getLogger("django")
 
 
@@ -25,7 +26,8 @@ logger = logging.getLogger("django")
             "spouse_first_name", "spouse_middle_name", "spouse_last_name", "no_of_family_members",
             "household_income_monthly"
         ],
-        properties={"salutation": openapi.Schema(type=openapi.TYPE_STRING, description="mr:1, mrs:2, dr:3 undefined:0"),
+        properties={"customer_id": openapi.Schema(type=openapi.TYPE_STRING, description="customer Id")
+                    "salutation": openapi.Schema(type=openapi.TYPE_STRING, description="mr:1, mrs:2, dr:3 undefined:0"),
                     "first_name": openapi.Schema(type=openapi.TYPE_STRING, description="first name"),
                     "middle_name": openapi.Schema(type=openapi.TYPE_STRING, description="middle name"),
                     "last_name": openapi.Schema(type=openapi.TYPE_STRING, description="last name"),
@@ -51,7 +53,7 @@ logger = logging.getLogger("django")
 )
 
 @api_view(["POST"])
-def customer_create(request):
+def customer_update(request):
     response_obj = None
     try:
         logger.info("request: %s", request.body)
@@ -59,7 +61,7 @@ def customer_create(request):
         if request.method == 'POST':
             logger.debug("response data: %s", request.body)
             data = json.loads(request.body.decode("utf-8"), object_hook=lambda d: SimpleNamespace(**d))
-            response_obj = create_service(data)
+            response_obj = update_customer(data)
             logger.debug("inserted customer and audit table")
         else:
             response_obj = {"error_code": errors.invalid_request["error_code"], "message": errors.invalid_request["message"]}
@@ -70,3 +72,4 @@ def customer_create(request):
 
     logger.info("response: %s", response_obj)
     return JsonResponse(response_obj, safe=False)
+
