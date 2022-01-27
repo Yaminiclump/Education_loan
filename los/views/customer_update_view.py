@@ -20,13 +20,13 @@ logger = logging.getLogger("django")
     request_body=openapi.Schema(
         type=openapi.TYPE_OBJECT,
         required=[
-            "salutation", "first_name", "middle_name", "last_name", "gender", "date_of_birth",
+            "customer_id", "salutation", "first_name", "middle_name", "last_name", "gender", "date_of_birth",
             "relation_with_applicant", "marital_status", "father_first_name", "father_middle_name",
             "father_last_name", "mother_first_name", "mother_middle_name", "mother_last_name",
             "spouse_first_name", "spouse_middle_name", "spouse_last_name", "no_of_family_members",
             "household_income_monthly"
         ],
-        properties={"customer_id": openapi.Schema(type=openapi.TYPE_STRING, description="customer Id"),
+        properties={"customer_id": openapi.Schema(type=openapi.TYPE_INTEGER, description="customer Id"),
                     "salutation": openapi.Schema(type=openapi.TYPE_STRING, description="mr:1, mrs:2, dr:3 undefined:0"),
                     "first_name": openapi.Schema(type=openapi.TYPE_STRING, description="first name"),
                     "middle_name": openapi.Schema(type=openapi.TYPE_STRING, description="middle name"),

@@ -107,8 +107,7 @@ def update_customer(req_data):
                     status=1,
                     updation_date=current_time,
                     updation_by="System")
-                customer_update.save()
-                logger.info("updated in customer table")
+                logger.info("updated id: %s", customer_id)
 
                 if customer_id:
                     customer_audit = Customerauditlog(salutation=LosDictionary.salutation[salutation],
@@ -146,7 +145,7 @@ def update_customer(req_data):
                 response_obj = {"error_code": errors.success["error_code"],
                                 "message": errors.success["message"],
                                 "data": {
-                                    "customer_id": customer_update,
+                                    "customer_id": customer_id,
                                     "customer_audit_id": customer_audit.id}
                                 }
             else:
