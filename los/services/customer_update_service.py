@@ -21,43 +21,48 @@ def update_customer(req_data):
 
         if req_data:
 
-            if req_data and hasattr(req_data, 'customer_id') and hasattr(req_data, 'salutation')\
-                    and hasattr(req_data, 'first_name') and \
-                    hasattr(req_data, 'middle_name') and hasattr(req_data, 'last_name') and \
-                    hasattr(req_data, 'gender') and hasattr(req_data, 'date_of_birth') and \
-                    hasattr(req_data, 'relation_with_applicant') and hasattr(req_data, 'marital_status') and \
-                    hasattr(req_data, 'father_first_name') and hasattr(req_data, 'father_middle_name') and \
-                    hasattr(req_data, 'father_last_name') and hasattr(req_data, 'mother_first_name') and \
-                    hasattr(req_data, 'mother_middle_name') and hasattr(req_data, 'mother_last_name') \
-                    and hasattr(req_data, 'spouse_first_name') and hasattr(req_data, 'spouse_middle_name') and \
-                    hasattr(req_data, 'spouse_last_name') and hasattr(req_data, 'no_of_family_members') \
-                    and hasattr(req_data, 'household_income_monthly'):
+            customer = None
+            if hasattr(req_data, 'customer'):
+                customer = req_data.customer
 
-                salutation = req_data.salutation
-                first_name = req_data.first_name
-                middle_name = req_data.middle_name
+            if customer and hasattr(customer, 'customer_id') and hasattr(customer, 'salutation') \
+                    and hasattr(customer, 'first_name') and \
+                    hasattr(customer, 'middle_name') and hasattr(customer, 'last_name') and \
+                    hasattr(customer, 'gender') and hasattr(customer, 'date_of_birth') and \
+                    hasattr(customer, 'relation_with_applicant') and hasattr(customer, 'marital_status') and \
+                    hasattr(customer, 'father_first_name') and hasattr(customer, 'father_middle_name') and \
+                    hasattr(customer, 'father_last_name') and hasattr(customer, 'mother_first_name') and \
+                    hasattr(customer, 'mother_middle_name') and hasattr(customer, 'mother_last_name') \
+                    and hasattr(customer, 'spouse_first_name') and hasattr(customer, 'spouse_middle_name') and \
+                    hasattr(customer, 'spouse_last_name') and hasattr(customer, 'no_of_family_members') \
+                    and hasattr(customer, 'household_income_monthly'):
 
-                last_name = req_data.last_name
-                gender = req_data.gender
-                date_of_birth = req_data.date_of_birth
+                customer_id = customer.customer_id
+                salutation = customer.salutation
+                first_name = customer.first_name
+                middle_name = customer.middle_name
 
-                relation_with_applicant = req_data.relation_with_applicant
-                marital_status = req_data.marital_status
-                father_first_name = req_data.father_first_name
+                last_name = customer.last_name
+                gender = customer.gender
+                date_of_birth = customer.date_of_birth
 
-                father_middle_name = req_data.father_middle_name
-                father_last_name = req_data.father_last_name
-                mother_first_name = req_data.mother_first_name
+                relation_with_applicant = customer.relation_with_applicant
+                marital_status = customer.marital_status
+                father_first_name = customer.father_first_name
 
-                mother_middle_name = req_data.mother_middle_name
-                mother_last_name = req_data.mother_last_name
-                spouse_first_name = req_data.spouse_first_name
+                father_middle_name = customer.father_middle_name
+                father_last_name = customer.father_last_name
+                mother_first_name = customer.mother_first_name
 
-                spouse_middle_name = req_data.spouse_middle_name
-                spouse_last_name = req_data.spouse_last_name
-                no_of_family_members = req_data.no_of_family_members
-                household_income_monthly = req_data.household_income_monthly
-                customer_id = req_data.customer_id
+                mother_middle_name = customer.mother_middle_name
+                mother_last_name = customer.mother_last_name
+                spouse_first_name = customer.spouse_first_name
+
+                spouse_middle_name = customer.spouse_middle_name
+                spouse_last_name = customer.spouse_last_name
+                no_of_family_members = customer.no_of_family_members
+                household_income_monthly = customer.household_income_monthly
+
 
                 if len(first_name.strip()) == 0:
                     response_obj = {"error_code": errors.name["error_code"],
