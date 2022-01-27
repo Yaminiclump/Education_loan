@@ -26,7 +26,7 @@ logger = logging.getLogger("django")
             "spouse_first_name", "spouse_middle_name", "spouse_last_name", "no_of_family_members",
             "household_income_monthly"
         ],
-        properties={"customer_id": openapi.Schema(type=openapi.TYPE_STRING, description="customer Id")
+        properties={"customer_id": openapi.Schema(type=openapi.TYPE_STRING, description="customer Id"),
                     "salutation": openapi.Schema(type=openapi.TYPE_STRING, description="mr:1, mrs:2, dr:3 undefined:0"),
                     "first_name": openapi.Schema(type=openapi.TYPE_STRING, description="first name"),
                     "middle_name": openapi.Schema(type=openapi.TYPE_STRING, description="middle name"),
