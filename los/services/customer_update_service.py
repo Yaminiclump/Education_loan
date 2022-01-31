@@ -13,6 +13,7 @@ from django.http import JsonResponse
 
 
 logger = logging.getLogger("django")
+
 def update_customer(req_data):
     response_obj = None
 
