@@ -21,16 +21,17 @@ logger = logging.getLogger("django")
 @pytest.mark.django_db
 class Test():
 
-    def test_create_view_GET(self, client):
+    def test_update_customer_view_GET(self, client):
 
-        url = reverse('customer_create')
+        url = reverse('customer_update')
         response = client.get(url)
         logger.info("response for get method : %s", response)
         assert response.status_code == 405
 
-    def test_create_view_POST(self, client):
+    def test_update_customer_view_POST(self,client):
         data = {
             "customer": {
+                "customer_id": 2,
                 "salutation": "mr",
                 "first_name": "abc",
                 "middle_name": "abc",
@@ -52,8 +53,7 @@ class Test():
                 "household_income_monthly": 5000
             }
         }
-
-        url = reverse('customer_create')
+        url = reverse('customer_update')
         data = json.dumps(data)
         response = client.post(url, data=data, content_type='application/json')
         logger.info("response for post method: %s", response)

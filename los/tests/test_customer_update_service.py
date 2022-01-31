@@ -786,7 +786,7 @@ class Test():
     def test_customer_update_service_success(self):
         data = {
             "customer": {
-                "customer_id": 8,
+                "customer_id": 2,
                 "salutation": "mr",
                 "first_name": "abc",
                 "middle_name": "abc",
