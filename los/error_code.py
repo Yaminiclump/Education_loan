@@ -8,7 +8,7 @@ class errors():
 
     generic_error_3 = {'error_code': 20004, 'message': "There was some error while processing the request"}
 
-    salutation = {'error_code': 20005, 'message': "Please provide a valid first name"}
+    salutation = {'error_code': 20005, 'message': "Please provide a valid salutation"}
     marital_status = {'error_code': 20006, 'message': "Please provide a valid marital status"}
     name = {'error_code': 20007, 'message': "Please provide a valid name"}
     father_name = {'error_code': 20008, 'message': "Please provide a valid father name"}

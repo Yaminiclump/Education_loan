@@ -25,16 +25,7 @@ def create_service(req_data):
             if hasattr(req_data, 'customer'):
                 customer = req_data.customer
 
-            if customer and hasattr(customer, 'salutation') and hasattr(customer, 'first_name') and \
-                    hasattr(customer, 'middle_name') and hasattr(customer, 'last_name') and \
-                    hasattr(customer, 'gender') and hasattr(customer, 'date_of_birth') and \
-                    hasattr(customer, 'relation_with_applicant') and hasattr(customer, 'marital_status') and \
-                    hasattr(customer, 'father_first_name') and hasattr(customer, 'father_middle_name') and \
-                    hasattr(customer, 'father_last_name') and hasattr(customer, 'mother_first_name') and \
-                    hasattr(customer, 'mother_middle_name') and hasattr(customer, 'mother_last_name') \
-                    and hasattr(customer, 'spouse_first_name') and hasattr(customer, 'spouse_middle_name') and \
-                    hasattr(customer, 'spouse_last_name') and hasattr(customer, 'no_of_family_members') \
-                    and hasattr(customer, 'household_income_monthly'):
+            if customer and hasattr(customer, 'first_name'):
 
                 salutation = customer.salutation
                 first_name = customer.first_name
