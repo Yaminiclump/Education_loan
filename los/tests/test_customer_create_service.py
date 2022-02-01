@@ -4,7 +4,7 @@ from rest_framework.test import APITestCase
 from http import HTTPStatus
 from django.urls import reverse
 from django.conf import settings
-from los.services import customer_create_service
+from los.services import customer_service
 from los.models.customer_auditlog_model import Customerauditlog
 from los.models.customer_model import Customer
 import django.utils.timezone
@@ -48,7 +48,7 @@ class Test():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_create_service.create_service(data)
+        response = customer_service.create_service(data)
         logger.info("response: %s", response)
         assert response['error_code'] == errors.name['error_code']
 
@@ -78,7 +78,7 @@ class Test():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_create_service.create_service(data)
+        response = customer_service.create_service(data)
         logger.info("response: %s", response)
         assert response['error_code'] == errors.salutation['error_code']
 
@@ -108,7 +108,7 @@ class Test():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_create_service.create_service(data)
+        response = customer_service.create_service(data)
         logger.info("response: %s", response)
         assert response['error_code'] == errors.gender['error_code']
 
@@ -138,7 +138,7 @@ class Test():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_create_service.create_service(data)
+        response = customer_service.create_service(data)
         logger.info("response: %s", response)
         assert response['error_code'] == errors.marital_status['error_code']
 
@@ -167,7 +167,7 @@ class Test():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_create_service.create_service(data)
+        response = customer_service.create_service(data)
         logger.info("response: %s", response)
         assert response['error_code'] == errors.generic_error_1['error_code']
 
@@ -196,7 +196,7 @@ class Test():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_create_service.create_service(data)
+        response = customer_service.create_service(data)
         logger.info("response: %s", response)
         assert response['error_code'] == errors.generic_error_1['error_code']
 
@@ -225,7 +225,7 @@ class Test():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_create_service.create_service(data)
+        response = customer_service.create_service(data)
         logger.info("response: %s", response)
         assert response['error_code'] == errors.generic_error_1['error_code']
 
@@ -254,7 +254,7 @@ class Test():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_create_service.create_service(data)
+        response = customer_service.create_service(data)
         logger.info("response: %s", response)
         assert response['error_code'] == errors.generic_error_1['error_code']
 
@@ -283,7 +283,7 @@ class Test():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_create_service.create_service(data)
+        response = customer_service.create_service(data)
         logger.info("response: %s", response)
         assert response['error_code'] == errors.generic_error_1['error_code']
 
@@ -312,7 +312,7 @@ class Test():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_create_service.create_service(data)
+        response = customer_service.create_service(data)
         logger.info("response: %s", response)
         assert response['error_code'] == errors.generic_error_1['error_code']
 
@@ -341,7 +341,7 @@ class Test():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_create_service.create_service(data)
+        response = customer_service.create_service(data)
         logger.info("response: %s", response)
         assert response['error_code'] == errors.generic_error_1['error_code']
 
@@ -370,7 +370,7 @@ class Test():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_create_service.create_service(data)
+        response = customer_service.create_service(data)
         logger.info("response: %s", response)
         assert response['error_code'] == errors.generic_error_1['error_code']
 
@@ -399,7 +399,7 @@ class Test():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_create_service.create_service(data)
+        response = customer_service.create_service(data)
         logger.info("response: %s", response)
         assert response['error_code'] == errors.generic_error_1['error_code']
 
@@ -428,7 +428,7 @@ class Test():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_create_service.create_service(data)
+        response = customer_service.create_service(data)
         logger.info("response: %s", response)
         assert response['error_code'] == errors.generic_error_1['error_code']
 
@@ -457,7 +457,7 @@ class Test():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_create_service.create_service(data)
+        response = customer_service.create_service(data)
         logger.info("response: %s", response)
         assert response['error_code'] == errors.generic_error_1['error_code']
 
@@ -486,7 +486,7 @@ class Test():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_create_service.create_service(data)
+        response = customer_service.create_service(data)
         logger.info("response: %s", response)
         assert response['error_code'] == errors.generic_error_1['error_code']
 
@@ -515,7 +515,7 @@ class Test():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_create_service.create_service(data)
+        response = customer_service.create_service(data)
         logger.info("response: %s", response)
         assert response['error_code'] == errors.generic_error_1['error_code']
 
@@ -544,7 +544,7 @@ class Test():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_create_service.create_service(data)
+        response = customer_service.create_service(data)
         logger.info("response: %s", response)
         assert response['error_code'] == errors.generic_error_1['error_code']
 
@@ -573,7 +573,7 @@ class Test():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_create_service.create_service(data)
+        response = customer_service.create_service(data)
         logger.info("response: %s", response)
         assert response['error_code'] == errors.generic_error_1['error_code']
 
@@ -602,7 +602,7 @@ class Test():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_create_service.create_service(data)
+        response = customer_service.create_service(data)
         logger.info("response: %s", response)
         assert response['error_code'] == errors.generic_error_1['error_code']
 
@@ -631,7 +631,7 @@ class Test():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_create_service.create_service(data)
+        response = customer_service.create_service(data)
         logger.info("response: %s", response)
         assert response['error_code'] == errors.generic_error_1['error_code']
 
@@ -660,7 +660,7 @@ class Test():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_create_service.create_service(data)
+        response = customer_service.create_service(data)
         logger.info("response: %s", response)
         assert response['error_code'] == errors.generic_error_1['error_code']
 
@@ -689,7 +689,7 @@ class Test():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_create_service.create_service(data)
+        response = customer_service.create_service(data)
         logger.info("response: %s", response)
         assert response['error_code'] == errors.generic_error_1['error_code']
 
@@ -699,7 +699,7 @@ class Test():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_create_service.create_service(data)
+        response = customer_service.create_service(data)
         logger.info("response: %s", response)
         assert response['error_code'] == errors.generic_error_1['error_code']
 
@@ -710,7 +710,7 @@ class Test():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_create_service.create_service(data)
+        response = customer_service.create_service(data)
         logger.info("response: %s", response)
         assert response['error_code'] == errors.generic_error_1['error_code']
 
@@ -741,6 +741,6 @@ class Test():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_create_service.create_service(data)
+        response = customer_service.create_service(data)
         logger.info("response: %s", response)
         assert response['error_code'] == errors.success['error_code']

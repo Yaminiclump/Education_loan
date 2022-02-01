@@ -18,3 +18,4 @@ class errors():
     spouse_name = {'error_code': 200012, 'message': "Please provide a valid spouse name"}
     test_get = {'error_code': 405}
     test_post = {'error_code': 200}
+    check_numeric = {'error_code': 200013, 'message': "It should be a Integer Value"}

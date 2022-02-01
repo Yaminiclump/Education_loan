@@ -2,7 +2,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 from http import HTTPStatus
 from django.conf import settings
-from los.services import customer_create_service
+from los.services import customer_service
 from los.models.customer_model import Customer
 import django.utils.timezone
 from los.los_dict import LosDictionary

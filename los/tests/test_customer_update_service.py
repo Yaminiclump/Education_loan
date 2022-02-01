@@ -4,7 +4,7 @@ from rest_framework.test import APITestCase
 from http import HTTPStatus
 from django.urls import reverse
 from django.conf import settings
-from los.services.customer_update_service import update_customer
+from los.services.customer_service import update_customer,create_service
 from los.los_dict import LosDictionary
 import pytest
 from types import SimpleNamespace
