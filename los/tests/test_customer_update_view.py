@@ -15,7 +15,6 @@ from django.urls import reverse_lazy, reverse
 from types import SimpleNamespace
 import requests
 from los.error_code import errors
-
 logger = logging.getLogger("django")
 
 
@@ -30,9 +29,37 @@ class Test():
         assert response.status_code == errors.test_get['error_code']
 
     def test_update_customer_view_POST(self,client):
+        current_time = django.utils.timezone.now()
+        logger.debug("current_time india: %s", current_time)
+        create_customer = Customer(
+            salutation=1,
+            first_name="abc",
+            middle_name="",
+            last_name="",
+            gender=1,
+            date_of_birth="2019-10-25",
+            relation_with_applicant=0,
+            marital_status=1,
+            father_first_name="abc",
+            father_middle_name="abc",
+            father_last_name="",
+            mother_first_name="",
+            mother_middle_name="",
+            mother_last_name="",
+            spouse_first_name="",
+            spouse_middle_name="",
+            spouse_last_name="",
+            no_of_family_members=4,
+            household_income_monthly=5000,
+            status=1,
+            creation_date=current_time,
+            creation_by="System"
+        )
+        create_customer.save()
+
         data = {
             "customer": {
-                "customer_id": 2,
+                "customer_id": create_customer.id,
                 "salutation": "mr",
                 "first_name": "abc",
                 "middle_name": "abc",
