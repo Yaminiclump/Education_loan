@@ -16,3 +16,5 @@ class errors():
     customer_id = {'error_code': 200010, 'message': "Please provide a valid customer id"}
     mother_name = {'error_code': 200011, 'message': "Please provide a valid mother name"}
     spouse_name = {'error_code': 200012, 'message': "Please provide a valid spouse name"}
+    test_get = {'error_code': 405}
+    test_post = {'error_code': 200}

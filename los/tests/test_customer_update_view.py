@@ -14,6 +14,7 @@ import logging
 from django.urls import reverse_lazy, reverse
 from types import SimpleNamespace
 import requests
+from los.error_code import errors
 
 logger = logging.getLogger("django")
 
@@ -26,7 +27,7 @@ class Test():
         url = reverse('customer_update')
         response = client.get(url)
         logger.info("response for get method : %s", response)
-        assert response.status_code == 405
+        assert response.status_code == errors.test_get['error_code']
 
     def test_update_customer_view_POST(self,client):
         data = {
@@ -57,4 +58,4 @@ class Test():
         data = json.dumps(data)
         response = client.post(url, data=data, content_type='application/json')
         logger.info("response for post method: %s", response)
-        assert response.status_code == 200
+        assert response.status_code == errors.test_post['error_code']

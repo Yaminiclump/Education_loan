@@ -11,6 +11,8 @@ import pytest
 from types import SimpleNamespace
 import json
 import logging
+from los.error_code import errors
+
 
 logger = logging.getLogger("django")
 
@@ -47,7 +49,7 @@ class Test():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['error_code'] == 20007
+        assert response['error_code'] == errors.name['error_code']
 
     def test_salutation_invalid(self):
         data = {
@@ -78,7 +80,7 @@ class Test():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['error_code'] == 20005
+        assert response['error_code'] == errors.salutation['error_code']
 
     def test_gender_invalid(self):
         data = {
@@ -109,7 +111,7 @@ class Test():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['error_code'] == 20009
+        assert response['error_code'] == errors.gender['error_code']
 
     def test_marital_status_invalid(self):
         data = {
@@ -140,7 +142,7 @@ class Test():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['error_code'] == 20006
+        assert response['error_code'] == errors.marital_status['error_code']
 
     def test_customer_id_invalid(self):
         data = {
@@ -171,7 +173,7 @@ class Test():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['error_code'] == 200010
+        assert response['error_code'] == errors.customer_id['error_code']
 
     def test_no_customer_id_parameter(self):
         data = {
@@ -201,7 +203,7 @@ class Test():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['error_code'] == 20001
+        assert response['error_code'] == errors.generic_error_1['error_code']
 
     def test_no_salutation_parameter(self):
         data = {
@@ -231,7 +233,7 @@ class Test():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['error_code'] == 20001
+        assert response['error_code'] == errors.generic_error_1['error_code']
 
     def test_no_firstname_parameter(self):
         data = {
@@ -261,7 +263,7 @@ class Test():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['error_code'] == 20001
+        assert response['error_code'] == errors.generic_error_1['error_code']
 
     def test_no_middle_name_parameter(self):
         data = {
@@ -291,7 +293,7 @@ class Test():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['error_code'] == 20001
+        assert response['error_code'] == errors.generic_error_1['error_code']
 
     def test_no_last_name_parameter(self):
         data = {
@@ -321,7 +323,7 @@ class Test():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['error_code'] == 20001
+        assert response['error_code'] == errors.generic_error_1['error_code']
 
     def test_no_gender_parameter(self):
         data = {
@@ -351,7 +353,7 @@ class Test():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['error_code'] == 20001
+        assert response['error_code'] == errors.generic_error_1['error_code']
 
     def test_no_dob_parameter(self):
         data = {
@@ -381,7 +383,7 @@ class Test():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['error_code'] == 20001
+        assert response['error_code'] == errors.generic_error_1['error_code']
 
     def test_no_relation_with_applicant_parameter(self):
         data = {
@@ -411,7 +413,7 @@ class Test():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['error_code'] == 20001
+        assert response['error_code'] == errors.generic_error_1['error_code']
 
     def test_no_marital_status_parameter(self):
         data = {
@@ -441,7 +443,7 @@ class Test():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['error_code'] == 20001
+        assert response['error_code'] == errors.generic_error_1['error_code']
 
     def test_no_father_first_name_parameter(self):
         data = {
@@ -471,7 +473,7 @@ class Test():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['error_code'] == 20001
+        assert response['error_code'] == errors.generic_error_1['error_code']
 
     def test_no_father_middle_name_parameter(self):
         data = {
@@ -501,7 +503,7 @@ class Test():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['error_code'] == 20001
+        assert response['error_code'] == errors.generic_error_1['error_code']
 
     def test_no_father_last_name_parameter(self):
         data = {
@@ -531,7 +533,7 @@ class Test():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['error_code'] == 20001
+        assert response['error_code'] == errors.generic_error_1['error_code']
 
     def test_no_mother_first_name_parameter(self):
         data = {
@@ -561,7 +563,7 @@ class Test():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['error_code'] == 20001
+        assert response['error_code'] == errors.generic_error_1['error_code']
 
     def test_no_mother_middle_name_parameter(self):
         data = {
@@ -591,7 +593,7 @@ class Test():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['error_code'] == 20001
+        assert response['error_code'] == errors.generic_error_1['error_code']
 
     def test_no_mother_last_name_parameter(self):
         data = {
@@ -621,7 +623,7 @@ class Test():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['error_code'] == 20001
+        assert response['error_code'] == errors.generic_error_1['error_code']
 
     def test_no_spouse_first_name_parameter(self):
         data = {
@@ -651,7 +653,7 @@ class Test():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['error_code'] == 20001
+        assert response['error_code'] == errors.generic_error_1['error_code']
 
     def test_no_spouse_middle_name_parameter(self):
         data = {
@@ -681,7 +683,7 @@ class Test():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['error_code'] == 20001
+        assert response['error_code'] == errors.generic_error_1['error_code']
 
     def test_no_spouse_last_name_parameter(self):
         data = {
@@ -711,7 +713,7 @@ class Test():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['error_code'] == 20001
+        assert response['error_code'] == errors.generic_error_1['error_code']
 
     def test_no_family_members_no_parameter(self):
         data = {
@@ -741,7 +743,7 @@ class Test():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['error_code'] == 20001
+        assert response['error_code'] == errors.generic_error_1['error_code']
 
     def test_no_household_income_monthly_parameter(self):
         data = {
@@ -771,7 +773,7 @@ class Test():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['error_code'] == 20001
+        assert response['error_code'] == errors.generic_error_1['error_code']
 
     def test_no_customer_parameter(self):
         data = {
@@ -781,7 +783,7 @@ class Test():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['error_code'] == 20001
+        assert response['error_code'] == errors.generic_error_1['error_code']
 
     def test_customer_update_service_success(self):
         data = {
@@ -812,4 +814,4 @@ class Test():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['error_code'] == 10000
+        assert response['error_code'] == errors.success['error_code']
