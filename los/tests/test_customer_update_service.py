@@ -785,6 +785,17 @@ class Test():
         logger.info("response: %s", response)
         assert response['error_code'] == errors.generic_error_1['error_code']
 
+    def test_no_data_in_customer_object(self):
+        data = {
+            "customer": {
+            }
+        }
+        data = json.dumps(data)
+        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
+        response = update_customer(data)
+        logger.info("response: %s", response)
+        assert response['error_code'] == errors.generic_error_1['error_code']
+
     def test_customer_update_service_success(self):
         current_time = django.utils.timezone.now()
         logger.debug("current_time india: %s", current_time)

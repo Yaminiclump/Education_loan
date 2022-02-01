@@ -701,7 +701,19 @@ class Test():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = customer_create_service.create_service(data)
         logger.info("response: %s", response)
-        assert response['error_code'] == 20001
+        assert response['error_code'] == errors.generic_error_1['error_code']
+
+    def test_no_data_in_customer_object(self):
+        data = {
+            "customer": {
+            }
+        }
+        data = json.dumps(data)
+        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
+        response = customer_create_service.create_service(data)
+        logger.info("response: %s", response)
+        assert response['error_code'] == errors.generic_error_1['error_code']
+
 
     def test_customer_create_service_success(self):
         data = {
