@@ -11,6 +11,8 @@ from los.models.customer_model import Customer
 from los.los_dict import LosDictionary
 from django.http import JsonResponse,HttpResponse
 import datetime
+from datetime import datetime,date
+
 logger = logging.getLogger("django")
 
 
@@ -82,11 +84,11 @@ def create_service(req_data):
 
                 if date_of_birth:
                     try:
-                        date_of_birth = datetime.datetime.strptime(date_of_birth, '%Y-%m-%d')
+                        formated_dob = datetime.strptime(date_of_birth, "%Y-%m-%d").date()
+                        date_of_birth = formated_dob
                     except ValueError:
-                        raise ValueError("Incorrect data format, should be YYYY-MM-DD")
-
-                    date_of_birth = date_of_birth
+                        response_obj = {"error_code": errors.check_dob["error_code"], "message": errors.check_dob["message"]}
+                        return response_obj
                 else:
                     date_of_birth = None
 
@@ -258,7 +260,12 @@ def update_customer(req_data):
                     marital_status = None
 
                 if date_of_birth:
-                    date_of_birth = date_of_birth
+                    try:
+                        formated_dob = datetime.strptime(date_of_birth, "%Y-%m-%d").date()
+                        date_of_birth = formated_dob
+                    except ValueError:
+                        response_obj = {"error_code": errors.check_dob["error_code"], "message": errors.check_dob["message"]}
+                        return response_obj
                 else:
                     date_of_birth = None
 
