@@ -57,6 +57,7 @@ def create_service(req_data):
                 if len(first_name.strip()) == 0:
                     response_obj = {"error_code": errors.name["error_code"],"message": errors.name["message"]}
                     return response_obj
+
                 if salutation:
 
                     if salutation not in LosDictionary.salutation.keys():
@@ -235,6 +236,7 @@ def update_customer(req_data):
                 if len(first_name.strip()) == 0:
                     response_obj = {"error_code": errors.name["error_code"], "message": errors.name["message"]}
                     return response_obj
+
                 if salutation:
                     if salutation not in LosDictionary.salutation.keys():
                         response_obj = {"error_code": errors.salutation["error_code"], "message": errors.salutation["message"]}
