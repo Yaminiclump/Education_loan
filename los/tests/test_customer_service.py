@@ -149,7 +149,7 @@ class Test_Customer_Create():
                 "first_name": "abc",
                 "middle_name": "abc",
                 "last_name": "abc",
-                "gender": "mal",
+                "gender": "male",
                 "date_of_birth": "2019-10-25",
                 "relation_with_applicant": 0,
                 "marital_status": "married",
@@ -729,6 +729,47 @@ class Test_Customer_Create():
         logger.info("response: %s", response)
         assert response['error_code'] == errors.check_dob['error_code']
 
+    def test_relation_with_applicant_notint(self):
+        data = {
+            "customer": {
+                "first_name": "Abcdd",
+                "date_of_birth": "1995-05-11",
+                "relation_with_applicant": "gh67",
+            }
+        }
+        data = json.dumps(data)
+        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
+        response = customer_service.create_service(data)
+        logger.info("response: %s", response)
+        assert response['error_code'] == errors.check_numeric['error_code']
+
+    def test_no_of_family_members_notint(self):
+        data = {
+            "customer": {
+                "first_name": "Abcdd",
+                "date_of_birth": "1995-05-11",
+                "no_of_family_members": "67gg",
+            }
+        }
+        data = json.dumps(data)
+        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
+        response = customer_service.create_service(data)
+        logger.info("response: %s", response)
+        assert response['error_code'] == errors.check_numeric['error_code']
+
+    def test_household_income_monthly_notint(self):
+        data = {
+            "customer": {
+                "first_name": "Abcdd",
+                "date_of_birth": "1995-05-11",
+                "household_income_monthly": "67gg",
+            }
+        }
+        data = json.dumps(data)
+        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
+        response = customer_service.create_service(data)
+        logger.info("response: %s", response)
+        assert response['error_code'] == errors.check_numeric['error_code']
 
     def test_customer_create_service_success(self):
         data = {
@@ -950,35 +991,6 @@ class Test_Customer_Update():
         logger.info("response: %s", response)
         assert response['error_code'] == errors.generic_error_1['error_code']
 
-    def test_no_salutation_parameter(self):
-        data = {
-            "customer": {
-                "customer_id": 8,
-                "first_name": "abc",
-                "middle_name": "abc",
-                "last_name": "abc",
-                "gender": "mal",
-                "date_of_birth": "2019-10-25",
-                "relation_with_applicant": 0,
-                "marital_status": "married",
-                "father_first_name": "abc",
-                "father_middle_name": "abc",
-                "father_last_name": "abc",
-                "mother_first_name": "abc",
-                "mother_middle_name": "abc",
-                "mother_last_name": "abc",
-                "spouse_first_name": "abc",
-                "spouse_middle_name": "abc",
-                "spouse_last_name": "abc",
-                "no_of_family_members": 4,
-                "household_income_monthly": 5000
-            }
-        }
-        data = json.dumps(data)
-        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = update_customer(data)
-        logger.info("response: %s", response)
-        assert response['error_code'] == errors.success['error_code']
 
     def test_no_firstname_parameter(self):
         data = {
@@ -1010,515 +1022,7 @@ class Test_Customer_Update():
         logger.info("response: %s", response)
         assert response['error_code'] == errors.generic_error_1['error_code']
 
-    def test_no_middle_name_parameter(self):
-        data = {
-            "customer": {
-                "customer_id": 8,
-                "salutation": "mr",
-                "first_name": "abc",
-                "last_name": "abc",
-                "gender": "male",
-                "date_of_birth": "2019-10-25",
-                "relation_with_applicant": 0,
-                "marital_status": "married",
-                "father_first_name": "abc",
-                "father_middle_name": "abc",
-                "father_last_name": "abc",
-                "mother_first_name": "abc",
-                "mother_middle_name": "abc",
-                "mother_last_name": "abc",
-                "spouse_first_name": "abc",
-                "spouse_middle_name": "abc",
-                "spouse_last_name": "abc",
-                "no_of_family_members": 4,
-                "household_income_monthly": 5000
-            }
-        }
-        data = json.dumps(data)
-        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = update_customer(data)
-        logger.info("response: %s", response)
-        assert response['error_code'] == errors.success['error_code']
 
-    def test_no_last_name_parameter(self):
-        data = {
-            "customer": {
-                "customer_id": 8,
-                "salutation": "mr",
-                "first_name": "abc",
-                "middle_name": "abc",
-                "gender": "male",
-                "date_of_birth": "2019-10-25",
-                "relation_with_applicant": 0,
-                "marital_status": "married",
-                "father_first_name": "abc",
-                "father_middle_name": "abc",
-                "father_last_name": "abc",
-                "mother_first_name": "abc",
-                "mother_middle_name": "abc",
-                "mother_last_name": "abc",
-                "spouse_first_name": "abc",
-                "spouse_middle_name": "abc",
-                "spouse_last_name": "abc",
-                "no_of_family_members": 4,
-                "household_income_monthly": 5000
-            }
-        }
-        data = json.dumps(data)
-        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = update_customer(data)
-        logger.info("response: %s", response)
-        assert response['error_code'] == errors.success['error_code']
-
-    def test_no_gender_parameter(self):
-        data = {
-            "customer": {
-                "customer_id": 8,
-                "salutation": "mr",
-                "first_name": "abc",
-                "middle_name": "abc",
-                "last_name": "abc",
-                "date_of_birth": "2019-10-25",
-                "relation_with_applicant": 0,
-                "marital_status": "married",
-                "father_first_name": "abc",
-                "father_middle_name": "abc",
-                "father_last_name": "abc",
-                "mother_first_name": "abc",
-                "mother_middle_name": "abc",
-                "mother_last_name": "abc",
-                "spouse_first_name": "abc",
-                "spouse_middle_name": "abc",
-                "spouse_last_name": "abc",
-                "no_of_family_members": 4,
-                "household_income_monthly": 5000
-            }
-        }
-        data = json.dumps(data)
-        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = update_customer(data)
-        logger.info("response: %s", response)
-        assert response['error_code'] == errors.success['error_code']
-
-    def test_no_dob_parameter(self):
-        data = {
-            "customer": {
-                "customer_id": 8,
-                "salutation": "mr",
-                "first_name": "abc",
-                "middle_name": "abc",
-                "last_name": "abc",
-                "gender": "male",
-                "relation_with_applicant": 0,
-                "marital_status": "married",
-                "father_first_name": "abc",
-                "father_middle_name": "abc",
-                "father_last_name": "abc",
-                "mother_first_name": "abc",
-                "mother_middle_name": "abc",
-                "mother_last_name": "abc",
-                "spouse_first_name": "abc",
-                "spouse_middle_name": "abc",
-                "spouse_last_name": "abc",
-                "no_of_family_members": 4,
-                "household_income_monthly": 5000
-            }
-        }
-        data = json.dumps(data)
-        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = update_customer(data)
-        logger.info("response: %s", response)
-        assert response['error_code'] == errors.success['error_code']
-
-    def test_no_relation_with_applicant_parameter(self):
-        data = {
-            "customer": {
-                "customer_id": 8,
-                "salutation": "mr",
-                "first_name": "abc",
-                "middle_name": "abc",
-                "last_name": "abc",
-                "gender": "male",
-                "date_of_birth": "2019-10-25",
-                "marital_status": "married",
-                "father_first_name": "abc",
-                "father_middle_name": "abc",
-                "father_last_name": "abc",
-                "mother_first_name": "abc",
-                "mother_middle_name": "abc",
-                "mother_last_name": "abc",
-                "spouse_first_name": "abc",
-                "spouse_middle_name": "abc",
-                "spouse_last_name": "abc",
-                "no_of_family_members": 4,
-                "household_income_monthly": 5000
-            }
-        }
-        data = json.dumps(data)
-        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = update_customer(data)
-        logger.info("response: %s", response)
-        assert response['error_code'] == errors.success['error_code']
-
-    def test_no_marital_status_parameter(self):
-        data = {
-            "customer": {
-                "customer_id": 8,
-                "salutation": "mr",
-                "first_name": "abc",
-                "middle_name": "abc",
-                "last_name": "abc",
-                "gender": "male",
-                "date_of_birth": "2019-10-25",
-                "relation_with_applicant": 0,
-                "father_first_name": "abc",
-                "father_middle_name": "abc",
-                "father_last_name": "abc",
-                "mother_first_name": "abc",
-                "mother_middle_name": "abc",
-                "mother_last_name": "abc",
-                "spouse_first_name": "abc",
-                "spouse_middle_name": "abc",
-                "spouse_last_name": "abc",
-                "no_of_family_members": 4,
-                "household_income_monthly": 5000
-            }
-        }
-        data = json.dumps(data)
-        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = update_customer(data)
-        logger.info("response: %s", response)
-        assert response['error_code'] == errors.success['error_code']
-
-    def test_no_father_first_name_parameter(self):
-        data = {
-            "customer": {
-                "customer_id": 8,
-                "salutation": "mr",
-                "first_name": "abc",
-                "middle_name": "abc",
-                "last_name": "abc",
-                "gender": "male",
-                "date_of_birth": "2019-10-25",
-                "relation_with_applicant": 0,
-                "marital_status": "married",
-                "father_middle_name": "abc",
-                "father_last_name": "abc",
-                "mother_first_name": "abc",
-                "mother_middle_name": "abc",
-                "mother_last_name": "abc",
-                "spouse_first_name": "abc",
-                "spouse_middle_name": "abc",
-                "spouse_last_name": "abc",
-                "no_of_family_members": 4,
-                "household_income_monthly": 5000
-            }
-        }
-        data = json.dumps(data)
-        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = update_customer(data)
-        logger.info("response: %s", response)
-        assert response['error_code'] == errors.success['error_code']
-
-    def test_no_father_middle_name_parameter(self):
-        data = {
-            "customer": {
-                "customer_id": 8,
-                "salutation": "mr",
-                "first_name": "abc",
-                "middle_name": "abc",
-                "last_name": "abc",
-                "gender": "male",
-                "date_of_birth": "2019-10-25",
-                "relation_with_applicant": 0,
-                "marital_status": "married",
-                "father_first_name": "abc",
-                "father_last_name": "abc",
-                "mother_first_name": "abc",
-                "mother_middle_name": "abc",
-                "mother_last_name": "abc",
-                "spouse_first_name": "abc",
-                "spouse_middle_name": "abc",
-                "spouse_last_name": "abc",
-                "no_of_family_members": 4,
-                "household_income_monthly": 5000
-            }
-        }
-        data = json.dumps(data)
-        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = update_customer(data)
-        logger.info("response: %s", response)
-        assert response['error_code'] == errors.success['error_code']
-
-    def test_no_father_last_name_parameter(self):
-        data = {
-            "customer": {
-                "customer_id": 8,
-                "salutation": "mr",
-                "first_name": "abc",
-                "middle_name": "abc",
-                "last_name": "abc",
-                "gender": "male",
-                "date_of_birth": "2019-10-25",
-                "relation_with_applicant": 0,
-                "marital_status": "married",
-                "father_first_name": "abc",
-                "father_middle_name": "abc",
-                "mother_first_name": "abc",
-                "mother_middle_name": "abc",
-                "mother_last_name": "abc",
-                "spouse_first_name": "abc",
-                "spouse_middle_name": "abc",
-                "spouse_last_name": "abc",
-                "no_of_family_members": 4,
-                "household_income_monthly": 5000
-            }
-        }
-        data = json.dumps(data)
-        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = update_customer(data)
-        logger.info("response: %s", response)
-        assert response['error_code'] == errors.success['error_code']
-
-    def test_no_mother_first_name_parameter(self):
-        data = {
-            "customer": {
-                "customer_id": 8,
-                "salutation": "mr",
-                "first_name": "abc",
-                "middle_name": "abc",
-                "last_name": "abc",
-                "gender": "male",
-                "date_of_birth": "2019-10-25",
-                "relation_with_applicant": 0,
-                "marital_status": "married",
-                "father_first_name": "abc",
-                "father_middle_name": "abc",
-                "father_last_name": "abc",
-                "mother_middle_name": "abc",
-                "mother_last_name": "abc",
-                "spouse_first_name": "abc",
-                "spouse_middle_name": "abc",
-                "spouse_last_name": "abc",
-                "no_of_family_members": 4,
-                "household_income_monthly": 5000
-            }
-        }
-        data = json.dumps(data)
-        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = update_customer(data)
-        logger.info("response: %s", response)
-        assert response['error_code'] == errors.success['error_code']
-
-    def test_no_mother_middle_name_parameter(self):
-        data = {
-            "customer": {
-                "customer_id": 8,
-                "salutation": "mr",
-                "first_name": "abc",
-                "middle_name": "abc",
-                "last_name": "abc",
-                "gender": "male",
-                "date_of_birth": "2019-10-25",
-                "relation_with_applicant": 0,
-                "marital_status": "married",
-                "father_first_name": "abc",
-                "father_middle_name": "abc",
-                "father_last_name": "abc",
-                "mother_first_name": "abc",
-                "mother_last_name": "abc",
-                "spouse_first_name": "abc",
-                "spouse_middle_name": "abc",
-                "spouse_last_name": "abc",
-                "no_of_family_members": 4,
-                "household_income_monthly": 5000
-            }
-        }
-        data = json.dumps(data)
-        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = update_customer(data)
-        logger.info("response: %s", response)
-        assert response['error_code'] == errors.success['error_code']
-
-    def test_no_mother_last_name_parameter(self):
-        data = {
-            "customer": {
-                "customer_id": 8,
-                "salutation": "mr",
-                "first_name": "abc",
-                "middle_name": "abc",
-                "last_name": "abc",
-                "gender": "male",
-                "date_of_birth": "2019-10-25",
-                "relation_with_applicant": 0,
-                "marital_status": "married",
-                "father_first_name": "abc",
-                "father_middle_name": "abc",
-                "father_last_name": "abc",
-                "mother_first_name": "abc",
-                "mother_middle_name": "abc",
-                "spouse_first_name": "abc",
-                "spouse_middle_name": "abc",
-                "spouse_last_name": "abc",
-                "no_of_family_members": 4,
-                "household_income_monthly": 5000
-            }
-        }
-        data = json.dumps(data)
-        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = update_customer(data)
-        logger.info("response: %s", response)
-        assert response['error_code'] == errors.success['error_code']
-
-    def test_no_spouse_first_name_parameter(self):
-        data = {
-            "customer": {
-                "customer_id": 8,
-                "salutation": "mr",
-                "first_name": "abc",
-                "middle_name": "abc",
-                "last_name": "abc",
-                "gender": "male",
-                "date_of_birth": "2019-10-25",
-                "relation_with_applicant": 0,
-                "marital_status": "married",
-                "father_first_name": "abc",
-                "father_middle_name": "abc",
-                "father_last_name": "abc",
-                "mother_first_name": "abc",
-                "mother_middle_name": "abc",
-                "mother_last_name": "abc",
-                "spouse_middle_name": "abc",
-                "spouse_last_name": "abc",
-                "no_of_family_members": 4,
-                "household_income_monthly": 5000
-            }
-        }
-        data = json.dumps(data)
-        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = update_customer(data)
-        logger.info("response: %s", response)
-        assert response['error_code'] == errors.success['error_code']
-
-    def test_no_spouse_middle_name_parameter(self):
-        data = {
-            "customer": {
-                "customer_id": 8,
-                "salutation": "mr",
-                "first_name": "abc",
-                "middle_name": "abc",
-                "last_name": "abc",
-                "gender": "male",
-                "date_of_birth": "2019-10-25",
-                "relation_with_applicant": 0,
-                "marital_status": "married",
-                "father_first_name": "abc",
-                "father_middle_name": "abc",
-                "father_last_name": "abc",
-                "mother_first_name": "abc",
-                "mother_middle_name": "abc",
-                "mother_last_name": "abc",
-                "spouse_first_name": "abc",
-                "spouse_last_name": "abc",
-                "no_of_family_members": 4,
-                "household_income_monthly": 5000
-            }
-        }
-        data = json.dumps(data)
-        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = update_customer(data)
-        logger.info("response: %s", response)
-        assert response['error_code'] == errors.success['error_code']
-
-    def test_no_spouse_last_name_parameter(self):
-        data = {
-            "customer": {
-                "customer_id": 8,
-                "salutation": "mr",
-                "first_name": "abc",
-                "middle_name": "abc",
-                "last_name": "abc",
-                "gender": "male",
-                "date_of_birth": "2019-10-25",
-                "relation_with_applicant": 0,
-                "marital_status": "married",
-                "father_first_name": "abc",
-                "father_middle_name": "abc",
-                "father_last_name": "abc",
-                "mother_first_name": "abc",
-                "mother_middle_name": "abc",
-                "mother_last_name": "abc",
-                "spouse_first_name": "abc",
-                "spouse_middle_name": "abc",
-                "no_of_family_members": 4,
-                "household_income_monthly": 5000
-            }
-        }
-        data = json.dumps(data)
-        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = update_customer(data)
-        logger.info("response: %s", response)
-        assert response['error_code'] == errors.success['error_code']
-
-    def test_no_family_members_no_parameter(self):
-        data = {
-            "customer": {
-                "customer_id": 8,
-                "salutation": "mr",
-                "first_name": "abc",
-                "middle_name": "abc",
-                "last_name": "abc",
-                "gender": "male",
-                "date_of_birth": "2019-10-25",
-                "relation_with_applicant": 0,
-                "marital_status": "married",
-                "father_first_name": "abc",
-                "father_middle_name": "abc",
-                "father_last_name": "abc",
-                "mother_first_name": "abc",
-                "mother_middle_name": "abc",
-                "mother_last_name": "abc",
-                "spouse_first_name": "abc",
-                "spouse_middle_name": "abc",
-                "spouse_last_name": "abc",
-                "household_income_monthly": 5000
-            }
-        }
-        data = json.dumps(data)
-        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = update_customer(data)
-        logger.info("response: %s", response)
-        assert response['error_code'] == errors.success['error_code']
-
-    def test_no_household_income_monthly_parameter(self):
-        data = {
-            "customer": {
-                "customer_id": 8,
-                "salutation": "mr",
-                "first_name": "abc",
-                "middle_name": "abc",
-                "last_name": "abc",
-                "gender": "male",
-                "date_of_birth": "2019-10-25",
-                "relation_with_applicant": 0,
-                "marital_status": "married",
-                "father_first_name": "abc",
-                "father_middle_name": "abc",
-                "father_last_name": "abc",
-                "mother_first_name": "abc",
-                "mother_middle_name": "abc",
-                "mother_last_name": "abc",
-                "spouse_first_name": "abc",
-                "spouse_middle_name": "abc",
-                "spouse_last_name": "abc",
-                "no_of_family_members": 4,
-            }
-        }
-        data = json.dumps(data)
-        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = update_customer(data)
-        logger.info("response: %s", response)
-        assert response['error_code'] == errors.success['error_code']
 
     def test_no_customer_parameter(self):
         data = {
@@ -1544,6 +1048,7 @@ class Test_Customer_Update():
     def test_dob_format(self):
         data = {
             "customer": {
+                "customer_id": 8,
                 "first_name": "Abcdd",
                 "date_of_birth": "05-11-1995"
             }
@@ -1553,6 +1058,51 @@ class Test_Customer_Update():
         response = update_customer(data)
         logger.info("response: %s", response)
         assert response['error_code'] == errors.check_dob['error_code']
+
+    def test_relation_with_applicant_notint(self):
+        data = {
+            "customer": {
+                "customer_id": 8,
+                "first_name": "Abcdd",
+                "date_of_birth": "1995-05-11",
+                "relation_with_applicant": "gh67",
+            }
+        }
+        data = json.dumps(data)
+        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
+        response = update_customer(data)
+        logger.info("response: %s", response)
+        assert response['error_code'] == errors.check_numeric['error_code']
+
+    def test_no_of_family_members_notint(self):
+        data = {
+            "customer": {
+                "customer_id": 8,
+                "first_name": "Abcdd",
+                "date_of_birth": "1995-05-11",
+                "no_of_family_members": "67gg",
+            }
+        }
+        data = json.dumps(data)
+        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
+        response = update_customer(data)
+        logger.info("response: %s", response)
+        assert response['error_code'] == errors.check_numeric['error_code']
+
+    def test_household_income_monthly_notint(self):
+        data = {
+            "customer": {
+                "customer_id": 8,
+                "first_name": "Abcdd",
+                "date_of_birth": "1995-05-11",
+                "household_income_monthly": "67gg",
+            }
+        }
+        data = json.dumps(data)
+        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
+        response = update_customer(data)
+        logger.info("response: %s", response)
+        assert response['error_code'] == errors.check_numeric['error_code']
 
     def test_customer_update_service_success(self):
         current_time = django.utils.timezone.now()

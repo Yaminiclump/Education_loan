@@ -58,10 +58,11 @@ def create_service(req_data):
                     response_obj = {"error_code": errors.name["error_code"],"message": errors.name["message"]}
                     return response_obj
                 if salutation:
-                    salutation_val = LosDictionary.salutation[salutation]
+
                     if salutation not in LosDictionary.salutation.keys():
                         response_obj = {"error_code": errors.salutation["error_code"],"message": errors.salutation["message"]}
                         return response_obj
+                    salutation_val = LosDictionary.salutation[salutation]
                 else:
                     salutation_val = None
 
@@ -235,10 +236,10 @@ def update_customer(req_data):
                     response_obj = {"error_code": errors.name["error_code"], "message": errors.name["message"]}
                     return response_obj
                 if salutation:
-                    salutation_val = LosDictionary.salutation[salutation]
                     if salutation not in LosDictionary.salutation.keys():
                         response_obj = {"error_code": errors.salutation["error_code"], "message": errors.salutation["message"]}
                         return response_obj
+                    salutation_val = LosDictionary.salutation[salutation]
                 else:
                     salutation_val = None
 
