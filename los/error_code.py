@@ -10,7 +10,7 @@ class errors():
 
     salutation = {'error_code': 20005, 'message': "Please provide a valid salutation"}
     marital_status = {'error_code': 20006, 'message': "Please provide a valid marital status"}
-    first_name = {'error_code': 20007, 'message': "first name parameter is missing" }
+    first_name = {'error_code': 20007, 'message': "value should not be Null"}
     father_name = {'error_code': 20008, 'message': "Please provide a valid father name"}
     gender = {'error_code': 20009, 'message': "Please provide a valid gender name"}
     customer_id = {'error_code': 200010, 'message': "customer id parameter is missing"}
@@ -22,3 +22,4 @@ class errors():
     check_dob = {'error_code': 200014, 'message': "It should be YYYY-MM-DD format"}
     string_blank = {'error_code': 200015, 'message': "value is not valid"}
     id_notexist = {'error_code': 200016, 'message': "Coustermer id does not exist"}
+    check_parameter = {'error_code': 200017, 'message': "first name parameter is missing"}

@@ -52,6 +52,11 @@ def create_service(req_data):
                 no_of_family_members = customer.no_of_family_members if hasattr(customer, 'no_of_family_members') else None
                 household_income_monthly = customer.household_income_monthly if hasattr(customer, 'household_income_monthly') else None
 
+
+                if not hasattr(customer, 'first_name'):
+                    response_obj = {"error_code": errors.check_parameter["error_code"], "message": errors.check_parameter["message"]}
+                    return response_obj
+
                 if first_name:
                     first_name = string_check(first_name)
                     if len(first_name.strip()) == 0:
@@ -335,10 +340,6 @@ def update_customer(req_data):
                 no_of_family_members = customer.no_of_family_members if hasattr(customer, 'no_of_family_members') else None
                 household_income_monthly = customer.household_income_monthly if hasattr(customer, 'household_income_monthly') else None
 
-
-                # database select query
-                # sal_db_val
-
                 if customer_id:
                     if type(customer_id) == int:
                         if not Customer.objects.filter(id=customer_id).exists():
@@ -374,7 +375,8 @@ def update_customer(req_data):
                     middle_name = middle_name
                 else:
                     get_middle_name = get_customer[0].middle_name
-                    middle_name = get_middle_name if get_middle_name else None
+                    get_middle_name = None if hasattr(customer, 'middle_name') else get_middle_name
+                    middle_name = get_middle_name # if get_middle_name else None
 
                 if last_name:
                     last_name = string_check(last_name)
