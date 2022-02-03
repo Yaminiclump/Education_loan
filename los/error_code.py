@@ -21,4 +21,4 @@ class errors():
     check_numeric = {'error_code': 200013, 'message': "It should be numeric Value"}
     check_dob = {'error_code': 200014, 'message': "It should be YYYY-MM-DD format"}
     string_blank = {'error_code': 200015, 'message': "value is not valid"}
-    id_notexist = {'error_code': 200010, 'message': "Coustermer id does not exist"}
+    id_notexist = {'error_code': 200016, 'message': "Coustermer id does not exist"}
