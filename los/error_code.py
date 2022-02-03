@@ -13,7 +13,7 @@ class errors():
     first_name = {'error_code': 20007, 'message': "first name parameter is missing" }
     father_name = {'error_code': 20008, 'message': "Please provide a valid father name"}
     gender = {'error_code': 20009, 'message': "Please provide a valid gender name"}
-    customer_id = {'error_code': 200010, 'message': "Please provide a valid customer id"}
+    customer_id = {'error_code': 200010, 'message': "customer id parameter is missing"}
     mother_name = {'error_code': 200011, 'message': "Please provide a valid mother name"}
     spouse_name = {'error_code': 200012, 'message': "Please provide a valid spouse name"}
     test_get = {'error_code': 405}
@@ -21,3 +21,4 @@ class errors():
     check_numeric = {'error_code': 200013, 'message': "It should be numeric Value"}
     check_dob = {'error_code': 200014, 'message': "It should be YYYY-MM-DD format"}
     string_blank = {'error_code': 200015, 'message': "value is not valid"}
+    id_notexist = {'error_code': 200010, 'message': "Coustermer id does not exist"}
