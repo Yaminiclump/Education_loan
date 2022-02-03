@@ -72,7 +72,6 @@ def customer_create(request):
 
 
 
-
 @csrf_exempt
 @swagger_auto_schema(
     method="post",

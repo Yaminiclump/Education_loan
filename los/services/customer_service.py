@@ -12,7 +12,7 @@ from los.los_dict import LosDictionary
 from django.http import JsonResponse,HttpResponse
 import datetime
 from datetime import datetime,date
-
+from los.los_func import string_check
 logger = logging.getLogger("django")
 
 
@@ -27,39 +27,153 @@ def create_service(req_data):
             if hasattr(req_data, 'customer'):
                 customer = req_data.customer
 
-            if customer and hasattr(customer, 'first_name'):
-
-                salutation = customer.salutation if hasattr(customer, 'salutation') else ""
-                first_name = customer.first_name
+                salutation = customer.salutation if hasattr(customer, 'salutation') else None
+                first_name = customer.first_name if hasattr(customer, 'first_name') else None
                 middle_name = customer.middle_name if hasattr(customer, 'middle_name') else ""
 
                 last_name = customer.last_name if hasattr(customer, 'last_name') else ""
                 gender = customer.gender if hasattr(customer, 'gender') else ""
-                date_of_birth = customer.date_of_birth if hasattr(customer, 'date_of_birth') else ""
+                date_of_birth = customer.date_of_birth if hasattr(customer, 'date_of_birth') else None
 
-                relation_with_applicant = customer.relation_with_applicant if hasattr(customer, 'relation_with_applicant') else ""
-                marital_status = customer.marital_status if hasattr(customer, 'marital_status') else ""
-                father_first_name = customer.father_first_name if hasattr(customer, 'father_first_name') else ""
+                relation_with_applicant = customer.relation_with_applicant if hasattr(customer, 'relation_with_applicant') else None
+                marital_status = customer.marital_status if hasattr(customer, 'marital_status') else None
+                father_first_name = customer.father_first_name if hasattr(customer, 'father_first_name') else None
 
-                father_middle_name = customer.father_middle_name if hasattr(customer, 'father_middle_name') else ""
-                father_last_name = customer.father_last_name if hasattr(customer, 'father_last_name') else ""
-                mother_first_name = customer.mother_first_name if hasattr(customer, 'mother_first_name') else ""
+                father_middle_name = customer.father_middle_name if hasattr(customer, 'father_middle_name') else None
+                father_last_name = customer.father_last_name if hasattr(customer, 'father_last_name') else None
+                mother_first_name = customer.mother_first_name if hasattr(customer, 'mother_first_name') else None
 
-                mother_middle_name = customer.mother_middle_name if hasattr(customer, 'mother_middle_name') else ""
-                mother_last_name = customer.mother_last_name if hasattr(customer, 'mother_last_name') else ""
-                spouse_first_name = customer.spouse_first_name if hasattr(customer, 'spouse_first_name') else ""
+                mother_middle_name = customer.mother_middle_name if hasattr(customer, 'mother_middle_name') else None
+                mother_last_name = customer.mother_last_name if hasattr(customer, 'mother_last_name') else None
+                spouse_first_name = customer.spouse_first_name if hasattr(customer, 'spouse_first_name') else None
 
-                spouse_middle_name = customer.spouse_middle_name if hasattr(customer, 'spouse_middle_name') else ""
-                spouse_last_name = customer.spouse_last_name if hasattr(customer, 'spouse_last_name') else ""
-                no_of_family_members = customer.no_of_family_members if hasattr(customer, 'no_of_family_members') else ""
-                household_income_monthly = customer.household_income_monthly if hasattr(customer, 'household_income_monthly') else ""
+                spouse_middle_name = customer.spouse_middle_name if hasattr(customer, 'spouse_middle_name') else None
+                spouse_last_name = customer.spouse_last_name if hasattr(customer, 'spouse_last_name') else None
+                no_of_family_members = customer.no_of_family_members if hasattr(customer, 'no_of_family_members') else None
+                household_income_monthly = customer.household_income_monthly if hasattr(customer, 'household_income_monthly') else None
 
-                if len(first_name.strip()) == 0:
-                    response_obj = {"error_code": errors.name["error_code"],"message": errors.name["message"]}
+                if first_name:
+                    first_name = string_check(first_name)
+                    if len(first_name.strip()) == 0:
+                        response_obj = {"error_code": errors.string_blank["error_code"], "message": errors.string_blank["message"]}
+                        return response_obj
+                    else:
+                        first_name = first_name
+                else:
+                    response_obj = {"error_code": errors.first_name["error_code"], "message": errors.first_name["message"]}
                     return response_obj
 
-                if salutation:
+                if middle_name:
+                    middle_name = string_check(middle_name)
+                    if len(middle_name.strip()) == 0:
+                        response_obj = {"error_code": errors.string_blank["error_code"], "message": errors.string_blank["message"]}
+                        return response_obj
+                    else:
+                        middle_name = middle_name
+                else:
+                    middle_name = None
 
+                if last_name:
+                    last_name = string_check(last_name)
+                    if len(last_name.strip()) == 0:
+                        response_obj = {"error_code": errors.string_blank["error_code"], "message": errors.string_blank["message"]}
+                        return response_obj
+                    else:
+                        last_name = last_name
+                else:
+                    last_name = None
+
+                if father_first_name:
+                    father_first_name = string_check(father_first_name)
+                    if len(father_first_name.strip()) == 0:
+                        response_obj = {"error_code": errors.string_blank["error_code"], "message": errors.string_blank["message"]}
+                        return response_obj
+                    else:
+                        father_first_name = father_first_name
+                else:
+                    father_first_name = None
+
+                if father_middle_name:
+                    father_middle_name = string_check(father_middle_name)
+                    if len(father_middle_name.strip()) == 0:
+                        response_obj = {"error_code": errors.string_blank["error_code"], "message": errors.string_blank["message"]}
+                        return response_obj
+                    else:
+                        father_middle_name = father_middle_name
+                else:
+                    father_middle_name = None
+
+                if father_last_name:
+                    father_last_name = string_check(father_last_name)
+                    if len(father_last_name.strip()) == 0:
+                        response_obj = {"error_code": errors.string_blank["error_code"], "message": errors.string_blank["message"]}
+                        return response_obj
+                    else:
+                        father_last_name = father_last_name
+                else:
+                    father_last_name = None
+
+                if mother_first_name:
+                    mother_first_name = string_check(mother_first_name)
+                    if len(mother_first_name.strip()) == 0:
+                        response_obj = {"error_code": errors.string_blank["error_code"], "message": errors.string_blank["message"]}
+                        return response_obj
+                    else:
+                        mother_first_name = mother_first_name
+                else:
+                    mother_first_name = None
+
+                if mother_last_name:
+                    mother_last_name = string_check(mother_last_name)
+                    if len(mother_last_name.strip()) == 0:
+                        response_obj = {"error_code": errors.string_blank["error_code"], "message": errors.string_blank["message"]}
+                        return response_obj
+                    else:
+                        mother_last_name = mother_last_name
+                else:
+                    mother_last_name = None
+
+                if mother_middle_name:
+                    mother_middle_name = string_check(mother_middle_name)
+                    if len(mother_middle_name.strip()) == 0:
+                        response_obj = {"error_code": errors.string_blank["error_code"], "message": errors.string_blank["message"]}
+                        return response_obj
+                    else:
+                        mother_middle_name = mother_middle_name
+                else:
+                    mother_middle_name = None
+
+                if spouse_first_name:
+                    spouse_first_name = string_check(spouse_first_name)
+                    if len(spouse_first_name.strip()) == 0:
+                        response_obj = {"error_code": errors.string_blank["error_code"], "message": errors.string_blank["message"]}
+                        return response_obj
+                    else:
+                        spouse_first_name = spouse_first_name
+                else:
+                    spouse_first_name = None
+
+                if spouse_last_name:
+                    spouse_last_name = string_check(spouse_last_name)
+                    if len(spouse_last_name.strip()) == 0:
+                        response_obj = {"error_code": errors.string_blank["error_code"], "message": errors.string_blank["message"]}
+                        return response_obj
+                    else:
+                        spouse_last_name = spouse_last_name
+                else:
+                    spouse_last_name = None
+
+                if spouse_middle_name:
+                    spouse_middle_name = string_check(spouse_middle_name)
+                    if len(spouse_middle_name.strip()) == 0:
+                        response_obj = {"error_code": errors.string_blank["error_code"], "message": errors.string_blank["message"]}
+                        return response_obj
+                    else:
+                        spouse_middle_name = spouse_middle_name
+                else:
+                    spouse_middle_name = None
+
+                if salutation:
                     if salutation not in LosDictionary.salutation.keys():
                         response_obj = {"error_code": errors.salutation["error_code"],"message": errors.salutation["message"]}
                         return response_obj
@@ -195,6 +309,7 @@ def create_service(req_data):
     return response_obj
 
 
+
 def update_customer(req_data):
     response_obj = None
     try:
@@ -232,18 +347,21 @@ def update_customer(req_data):
                 spouse_last_name = customer.spouse_last_name if hasattr(customer, 'spouse_last_name') else ""
                 no_of_family_members = customer.no_of_family_members if hasattr(customer, 'no_of_family_members') else ""
                 household_income_monthly = customer.household_income_monthly if hasattr(customer, 'household_income_monthly') else ""
-
+                # database select query
+                # sal_db_val
                 if len(first_name.strip()) == 0:
                     response_obj = {"error_code": errors.name["error_code"], "message": errors.name["message"]}
                     return response_obj
 
                 if salutation:
+                    # salutation_val = check_keys()
                     if salutation not in LosDictionary.salutation.keys():
                         response_obj = {"error_code": errors.salutation["error_code"], "message": errors.salutation["message"]}
                         return response_obj
                     salutation_val = LosDictionary.salutation[salutation]
                 else:
                     salutation_val = None
+                    # salutation_val = sal_db_val if sal_db_val else None
 
                 if gender:
                     if gender not in LosDictionary.gender.keys():

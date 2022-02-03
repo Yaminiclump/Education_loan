@@ -10,7 +10,7 @@ class errors():
 
     salutation = {'error_code': 20005, 'message': "Please provide a valid salutation"}
     marital_status = {'error_code': 20006, 'message': "Please provide a valid marital status"}
-    name = {'error_code': 20007, 'message': "Please provide a valid name"}
+    first_name = {'error_code': 20007, 'message': "first name parameter is missing" }
     father_name = {'error_code': 20008, 'message': "Please provide a valid father name"}
     gender = {'error_code': 20009, 'message': "Please provide a valid gender name"}
     customer_id = {'error_code': 200010, 'message': "Please provide a valid customer id"}
@@ -20,3 +20,4 @@ class errors():
     test_post = {'error_code': 200}
     check_numeric = {'error_code': 200013, 'message': "It should be numeric Value"}
     check_dob = {'error_code': 200014, 'message': "It should be YYYY-MM-DD format"}
+    string_blank = {'error_code': 200015, 'message': "value is not valid"}
