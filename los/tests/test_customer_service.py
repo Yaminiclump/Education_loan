@@ -689,7 +689,7 @@ class Test_Customer_Update():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['status'] == Statuses.generic_error_2['status_code']
+        assert response['status'] == Statuses.first_name['status_code']
 
     def test_last_name_blank(self):
         current_time = django.utils.timezone.now()
@@ -723,6 +723,7 @@ class Test_Customer_Update():
         data = {
             "customer": {
                 "customer_id": create_customer.id,
+                "first_name": "abcd",
                 "last_name": "  ",
             }
         }
@@ -764,6 +765,7 @@ class Test_Customer_Update():
         data = {
             "customer": {
                 "customer_id": create_customer.id,
+                "first_name": "abcd",
                 "middle_name": "  ",
             }
         }
@@ -805,6 +807,7 @@ class Test_Customer_Update():
         data = {
             "customer": {
                 "customer_id": create_customer.id,
+                "first_name": "abc",
                 "father_first_name": "  ",
             }
         }
@@ -848,6 +851,7 @@ class Test_Customer_Update():
         data = {
             "customer": {
                 "customer_id": create_customer.id,
+                "first_name": "abc",
                 "father_middle_name": "  ",
             }
         }
@@ -889,6 +893,7 @@ class Test_Customer_Update():
         data = {
             "customer": {
                 "customer_id": create_customer.id,
+                "first_name": "abcd",
                 "father_last_name": "  ",
             }
         }
@@ -930,6 +935,7 @@ class Test_Customer_Update():
         data = {
             "customer": {
                 "customer_id": create_customer.id,
+                "first_name": "abc",
                 "mother_first_name": "  ",
             }
         }
@@ -971,6 +977,7 @@ class Test_Customer_Update():
         data = {
             "customer": {
                 "customer_id": create_customer.id,
+                "first_name": "abcd",
                 "mother_last_name": "  ",
             }
         }
@@ -1012,6 +1019,7 @@ class Test_Customer_Update():
         data = {
             "customer": {
                 "customer_id": create_customer.id,
+                "first_name": "abcd",
                 "mother_middle_name": "  ",
             }
         }
@@ -1053,6 +1061,7 @@ class Test_Customer_Update():
         data = {
             "customer": {
                 "customer_id": create_customer.id,
+                "first_name": "abcd",
                 "spouse_first_name": "  ",
             }
         }
@@ -1094,6 +1103,7 @@ class Test_Customer_Update():
         data = {
             "customer": {
                 "customer_id": create_customer.id,
+                "first_name": "abcd",
                 "spouse_last_name": "  ",
             }
         }
@@ -1136,6 +1146,7 @@ class Test_Customer_Update():
         data = {
             "customer": {
                 "customer_id": create_customer.id,
+                "first_name": "abcd",
                 "spouse_middle_name": "  ",
             }
         }
@@ -1176,6 +1187,7 @@ class Test_Customer_Update():
         data = {
             "customer": {
                 "customer_id": create_customer.id,
+                "first_name": "abc",
                 "salutation": "MR",
 
             }
@@ -1261,6 +1273,7 @@ class Test_Customer_Update():
         data = {
             "customer": {
                 "customer_id": create_customer.id,
+                "first_name": "abc",
                 "marital_status": "mar",
             }
         }
