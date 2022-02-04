@@ -9,7 +9,7 @@ from drf_yasg.inspectors import SwaggerAutoSchema
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.decorators import api_view, parser_classes
 from los.services.customer_service import create_service,update_customer
-from los.error_code import errors
+from los.status_code import Statuses
 
 logger = logging.getLogger("django")
 
@@ -61,11 +61,11 @@ def customer_create(request):
             response_obj = create_service(data)
             logger.debug("inserted customer and audit table")
         else:
-            response_obj = {"error_code": errors.invalid_request["error_code"], "message": errors.invalid_request["message"]}
+            response_obj = {"status_code": Statuses.invalid_request["status_code"], "message": Statuses.invalid_request["message"]}
 
     except Exception:
         logger.exception("Exception: ")
-        response_obj = {"error_code": errors.generic_error_2["error_code"], "message": errors.generic_error_2["message"]}
+        response_obj = {"status_code": Statuses.generic_error_2["status_code"], "message": Statuses.generic_error_2["message"]}
 
     logger.info("response: %s", response_obj)
     return JsonResponse(response_obj, safe=False)
@@ -80,7 +80,7 @@ def customer_create(request):
         required=["customer"],
         properties={"customer": openapi.Schema(
             type=openapi.TYPE_OBJECT,
-            required=["customer_id","first_name"],
+            required=["customer_id"],
             properties={
                 "customer_id": openapi.Schema(type=openapi.TYPE_INTEGER, description="first name"),
                 "salutation": openapi.Schema(type=openapi.TYPE_STRING, description="mr:1, mrs:2, dr:3 undefined:0"),
@@ -121,11 +121,11 @@ def customer_update(request):
             response_obj = update_customer(data)
             logger.debug("inserted customer and audit table")
         else:
-            response_obj = {"error_code": errors.invalid_request["error_code"], "message": errors.invalid_request["message"]}
+            response_obj = {"status_code": Statuses.invalid_request["status_code"], "message": Statuses.invalid_request["message"]}
 
     except Exception:
         logger.exception("Exception: ")
-        response_obj = {"error_code": errors.generic_error_2["error_code"], "message": errors.generic_error_2["message"]}
+        response_obj = {"status_code": Statuses.generic_error_2["status_code"], "message": Statuses.generic_error_2["message"]}
 
     logger.info("response: %s", response_obj)
     return JsonResponse(response_obj, safe=False)

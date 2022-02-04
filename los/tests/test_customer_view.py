@@ -14,8 +14,7 @@ import logging
 from django.urls import reverse_lazy, reverse
 from types import SimpleNamespace
 import requests
-from los.error_code import errors
-
+from los.status_code import Statuses
 
 logger = logging.getLogger("django")
 
@@ -28,7 +27,7 @@ class Test_Customer_Create_View():
         url = reverse('customer_create')
         response = client.get(url)
         logger.info("response for get method : %s", response)
-        assert response.status_code == errors.test_get['error_code']
+        assert response.status_code == Statuses.test_get['status_code']
 
     def test_create_customer_view_POST(self, client):
         data = {
@@ -59,7 +58,7 @@ class Test_Customer_Create_View():
         data = json.dumps(data)
         response = client.post(url, data=data, content_type='application/json')
         logger.info("response for post method: %s", response)
-        assert response.status_code == errors.test_post['error_code']
+        assert response.status_code == Statuses.test_post['status_code']
 
 
 @pytest.mark.django_db
@@ -69,7 +68,7 @@ class Test_Customer_Update_View():
         url = reverse('customer_update')
         response = client.get(url)
         logger.info("response for get method : %s", response)
-        assert response.status_code == errors.test_get['error_code']
+        assert response.status_code == Statuses.test_get['status_code']
 
     def test_update_customer_view_POST(self,client):
         current_time = django.utils.timezone.now()
@@ -128,4 +127,4 @@ class Test_Customer_Update_View():
         data = json.dumps(data)
         response = client.post(url, data=data, content_type='application/json')
         logger.info("response for post method: %s", response)
-        assert response.status_code == errors.test_post['error_code']
+        assert response.status_code == Statuses.test_post['status_code']
