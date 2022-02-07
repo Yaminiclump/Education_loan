@@ -1,3 +1,18 @@
+import logging
+from io import BytesIO
+import django.utils.timezone
+from django.core.files.storage import default_storage
+from los.status_code import get_response
+from los.models.customer_contact_model import Contact
+from los.los_dict import LosDictionary
+from django.http import JsonResponse,HttpResponse
+import datetime
+from datetime import datetime,date
+from los.custom_helper import get_string_lower, clean_string, get_value, validate_numeric,validate_dict,fetch_value
+logger = logging.getLogger("django")
+
+
+
 def customer_contact(req_data):
     response_obj = None
     try:

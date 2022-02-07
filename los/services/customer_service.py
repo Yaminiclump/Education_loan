@@ -1,9 +1,7 @@
 import logging
 from io import BytesIO
-
 import django.utils.timezone
 from django.core.files.storage import default_storage
-
 from los.status_code import get_response
 from los.models.customer_auditlog_model import Customerauditlog
 from los.models.customer_model import Customer
