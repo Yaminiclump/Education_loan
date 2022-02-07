@@ -1,4 +1,3 @@
-from django.http import JsonResponse, HttpResponse
 import json
 import logging
 from types import SimpleNamespace
@@ -129,5 +128,4 @@ def customer_update(request):
 
     logger.info("response: %s", response_obj)
     return JsonResponse(response_obj, safe=False)
-
 

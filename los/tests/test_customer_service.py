@@ -89,7 +89,6 @@ class Test_Customer_Create():
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
-
     def test_blank_last_name(self):
         data = {
             "customer": {
@@ -539,6 +538,7 @@ class Test_Customer_Create():
     def test_no_data_in_customer_object(self):
         data = {
             "customer": {
+
             }
         }
         data = json.dumps(data)
@@ -546,7 +546,6 @@ class Test_Customer_Create():
         response = customer_service.create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.check_parameter['status_code']
-
 
     def test_dob_format(self):
         data = {
@@ -603,6 +602,45 @@ class Test_Customer_Create():
         logger.info("response: %s", response)
         assert response['status'] == Statuses.check_numeric['status_code']
 
+    def test_relation_with_applicant_float(self):
+        data = {
+            "customer": {
+                "first_name": "Abcdd",
+                "relation_with_applicant": 5.5
+            }
+        }
+        data = json.dumps(data)
+        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
+        response = customer_service.create_service(data)
+        logger.info("response: %s", response)
+        assert response['status'] == Statuses.check_numeric['status_code']
+
+    def test_no_of_family_members_float(self):
+        data = {
+            "customer": {
+                "first_name": "Abcdd",
+                "no_of_family_members": 5.5
+            }
+        }
+        data = json.dumps(data)
+        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
+        response = customer_service.create_service(data)
+        logger.info("response: %s", response)
+        assert response['status'] == Statuses.check_numeric['status_code']
+
+    def test_household_income_monthly_float(self):
+        data = {
+            "customer": {
+                "first_name": "Abcdd",
+                "household_income_monthly": 5.5
+            }
+        }
+        data = json.dumps(data)
+        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
+        response = customer_service.create_service(data)
+        logger.info("response: %s", response)
+        assert response['status'] == Statuses.check_numeric['status_code']
+
     def test_customer_create_service_success(self):
         data = {
             "customer": {
@@ -644,7 +682,6 @@ class Test_Customer_Create():
         response = customer_service.create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
-
 
 
 @pytest.mark.django_db
@@ -816,8 +853,6 @@ class Test_Customer_Update():
         response = update_customer(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
-
-
 
     def test_father_middle_name_blank(self):
         current_time = django.utils.timezone.now()
@@ -1113,7 +1148,6 @@ class Test_Customer_Update():
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
-
     def test_spouse_middle_name_blank(self):
         current_time = django.utils.timezone.now()
         logger.debug("current_time india: %s", current_time)
@@ -1283,7 +1317,7 @@ class Test_Customer_Update():
         logger.info("response: %s", response)
         assert response['status'] == Statuses.marital_status['status_code']
 
-    def test_customer_id_invalid(self):
+    def test_customer_id_not_exist(self):
         current_time = django.utils.timezone.now()
         logger.debug("current_time india: %s", current_time)
         create_customer = Customer(
@@ -1321,6 +1355,45 @@ class Test_Customer_Update():
         response = update_customer(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.id_notexist['status_code']
+
+    def test_customer_id_invalid(self):
+        current_time = django.utils.timezone.now()
+        logger.debug("current_time india: %s", current_time)
+        create_customer = Customer(
+            salutation=1,
+            first_name="abc",
+            middle_name="",
+            last_name="",
+            gender=1,
+            date_of_birth="2019-10-25",
+            relation_with_applicant=0,
+            marital_status=1,
+            father_first_name="abc",
+            father_middle_name="abc",
+            father_last_name="",
+            mother_first_name="",
+            mother_middle_name="",
+            mother_last_name="",
+            spouse_first_name="",
+            spouse_middle_name="",
+            spouse_last_name="",
+            no_of_family_members=4,
+            household_income_monthly=5000,
+            status=1,
+            creation_date=current_time,
+            creation_by="System"
+        )
+        create_customer.save()
+        data = {
+            "customer": {
+                "customer_id": "gh67",
+            }
+        }
+        data = json.dumps(data)
+        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
+        response = update_customer(data)
+        logger.info("response: %s", response)
+        assert response['status'] == Statuses.check_numeric['status_code']
 
     def test_no_customer_id_parameter(self):
         current_time = django.utils.timezone.now()
@@ -1549,6 +1622,129 @@ class Test_Customer_Update():
         logger.info("response: %s", response)
         assert response['status'] == Statuses.check_numeric['status_code']
 
+    def test_relation_with_applicant_float(self):
+        current_time = django.utils.timezone.now()
+        logger.debug("current_time india: %s", current_time)
+        create_customer = Customer(
+            salutation=1,
+            first_name="abc",
+            middle_name="",
+            last_name="",
+            gender=1,
+            date_of_birth="2019-10-25",
+            relation_with_applicant=0,
+            marital_status=1,
+            father_first_name="abc",
+            father_middle_name="abc",
+            father_last_name="",
+            mother_first_name="",
+            mother_middle_name="",
+            mother_last_name="",
+            spouse_first_name="",
+            spouse_middle_name="",
+            spouse_last_name="",
+            no_of_family_members=4,
+            household_income_monthly=5000,
+            status=1,
+            creation_date=current_time,
+            creation_by="System"
+        )
+        create_customer.save()
+        data = {
+            "customer": {
+                "customer_id": create_customer.id,
+                "first_name": "Abcdd",
+                "relation_with_applicant": 5.5
+            }
+        }
+        data = json.dumps(data)
+        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
+        response = update_customer(data)
+        logger.info("response: %s", response)
+        assert response['status'] == Statuses.check_numeric['status_code']
+
+    def test_no_of_family_members_float(self):
+        current_time = django.utils.timezone.now()
+        logger.debug("current_time india: %s", current_time)
+        create_customer = Customer(
+            salutation=1,
+            first_name="abc",
+            middle_name="",
+            last_name="",
+            gender=1,
+            date_of_birth="2019-10-25",
+            relation_with_applicant=0,
+            marital_status=1,
+            father_first_name="abc",
+            father_middle_name="abc",
+            father_last_name="",
+            mother_first_name="",
+            mother_middle_name="",
+            mother_last_name="",
+            spouse_first_name="",
+            spouse_middle_name="",
+            spouse_last_name="",
+            no_of_family_members=4,
+            household_income_monthly=5000,
+            status=1,
+            creation_date=current_time,
+            creation_by="System"
+        )
+        create_customer.save()
+        data = {
+            "customer": {
+                "customer_id": create_customer.id,
+                "first_name": "Abcdd",
+                "no_of_family_members": 5.5
+            }
+        }
+        data = json.dumps(data)
+        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
+        response = update_customer(data)
+        logger.info("response: %s", response)
+        assert response['status'] == Statuses.check_numeric['status_code']
+
+    def test_household_income_monthly_float(self):
+        current_time = django.utils.timezone.now()
+        logger.debug("current_time india: %s", current_time)
+        create_customer = Customer(
+            salutation=1,
+            first_name="abc",
+            middle_name="",
+            last_name="",
+            gender=1,
+            date_of_birth="2019-10-25",
+            relation_with_applicant=0,
+            marital_status=1,
+            father_first_name="abc",
+            father_middle_name="abc",
+            father_last_name="",
+            mother_first_name="",
+            mother_middle_name="",
+            mother_last_name="",
+            spouse_first_name="",
+            spouse_middle_name="",
+            spouse_last_name="",
+            no_of_family_members=4,
+            household_income_monthly=5000,
+            status=1,
+            creation_date=current_time,
+            creation_by="System"
+        )
+        create_customer.save()
+        data = {
+            "customer": {
+                "customer_id": create_customer.id,
+                "first_name": "Abcdd",
+                "household_income_monthly": 5.5
+            }
+        }
+        data = json.dumps(data)
+        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
+        response = update_customer(data)
+        logger.info("response: %s", response)
+        assert response['status'] == Statuses.check_numeric['status_code']
+
     def test_customer_update_service_success(self):
         current_time = django.utils.timezone.now()
         logger.debug("current_time india: %s", current_time)
@@ -1607,5 +1803,3 @@ class Test_Customer_Update():
         response = update_customer(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
-
-

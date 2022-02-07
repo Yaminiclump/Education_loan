@@ -8,7 +8,7 @@ class Statuses():
     generic_error_3 = {'status_code': 20004, 'message': "There was some error while processing the request"}
     salutation = {'status_code': 20005, 'message': "salutation type not implemented"}
     marital_status = {'status_code': 20006, 'message': "marital type not implemented"}
-    first_name = {'status_code': 20007, 'message': "first name should not be Null"}
+    first_name = {'status_code': 20007, 'message': "first name is missing"}
     father_name = {'status_code': 20008, 'message': "Please provide a valid father name"}
     gender = {'status_code': 20009, 'message': "gender type not implemented"}
     customer_id = {'status_code': 200010, 'message': "customer id parameters might be missing"}
