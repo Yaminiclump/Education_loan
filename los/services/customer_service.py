@@ -12,7 +12,7 @@ from los.los_dict import LosDictionary
 from django.http import JsonResponse,HttpResponse
 import datetime
 from datetime import datetime,date
-from los.custom_helper import validate_string, set_value, validate_numeric,validate_dict,fetch_value
+from los.custom_helper import get_string_lower, clean_string, get_value, validate_numeric,validate_dict,fetch_value
 logger = logging.getLogger("django")
 
 
@@ -27,74 +27,53 @@ def create_service(req_data):
             if hasattr(req_data, 'customer'):
                 customer = req_data.customer
 
-                salutation = set_value(customer, 'salutation')
-                first_name = set_value(customer, 'first_name')
-                middle_name = set_value(customer, 'middle_name')
+                salutation = get_value(customer, 'salutation')
+                first_name = get_string_lower(customer, 'first_name')
+                middle_name = get_string_lower(customer, 'middle_name')
                 logger.debug("middle_name_data: %s", middle_name)
-                last_name = set_value(customer, 'last_name')
-                gender = set_value(customer, 'gender')
-                date_of_birth = set_value(customer,'date_of_birth')
+                last_name = get_string_lower(customer, 'last_name')
+                gender = get_value(customer, 'gender')
+                date_of_birth = get_string_lower(customer, 'date_of_birth')
 
-                relation_with_applicant= set_value(customer, 'relation_with_applicant')
+                relation_with_applicant= get_value(customer, 'relation_with_applicant')
                 logger.debug("relation_with_applicant_data: %s", relation_with_applicant)
-                marital_status = set_value(customer, 'marital_status')
-                father_first_name = set_value(customer, 'father_first_name')
+                marital_status = get_value(customer, 'marital_status')
+                father_first_name = get_string_lower(customer, 'father_first_name')
 
-                father_middle_name = set_value(customer, 'father_middle_name')
-                father_last_name = set_value(customer, 'father_last_name')
-                mother_first_name = set_value(customer, 'mother_first_name')
+                father_middle_name = get_string_lower(customer, 'father_middle_name')
+                father_last_name = get_string_lower(customer, 'father_last_name')
+                mother_first_name = get_string_lower(customer, 'mother_first_name')
 
-                mother_middle_name = set_value(customer, 'mother_middle_name')
-                mother_last_name = set_value(customer, 'mother_last_name')
-                spouse_first_name = set_value(customer, 'spouse_first_name')
+                mother_middle_name = get_string_lower(customer, 'mother_middle_name')
+                mother_last_name = get_string_lower(customer, 'mother_last_name')
+                spouse_first_name = get_string_lower(customer, 'spouse_first_name')
 
-                spouse_middle_name = set_value(customer, 'spouse_middle_name')
-                spouse_last_name = set_value(customer, 'spouse_last_name')
-                no_of_family_members = set_value(customer, 'no_of_family_members')
-                household_income_monthly = set_value(customer, 'household_income_monthly')
+                spouse_middle_name = get_string_lower(customer, 'spouse_middle_name')
+                spouse_last_name = get_string_lower(customer, 'spouse_last_name')
+                no_of_family_members = get_value(customer, 'no_of_family_members')
+                household_income_monthly = get_value(customer, 'household_income_monthly')
 
-                # string validation
-                middle_name = validate_string(middle_name)
-                logger.debug("middle_name_valid: %s", middle_name)
-                last_name = validate_string(last_name)
-                father_first_name = validate_string(father_first_name)
-                father_middle_name = validate_string(father_middle_name)
-                father_last_name = validate_string(father_last_name)
-                mother_first_name = validate_string(mother_first_name)
-                mother_last_name = validate_string(mother_last_name)
-                mother_middle_name = validate_string(mother_middle_name)
-                spouse_first_name = validate_string(spouse_first_name)
-                spouse_last_name = validate_string(spouse_last_name)
-                spouse_middle_name = validate_string(spouse_middle_name)
-                salutation_val = validate_dict(salutation, 'salutation')
-                marital_status = validate_dict(marital_status, 'marital_status')
+                salutation_val = validate_dict(salutation, LosDictionary.salutation)
+                gender_val = validate_dict(gender, LosDictionary.gender)
+                marital_status = validate_dict(marital_status, LosDictionary.marital_status)
+
                 relation_with_applicant = validate_numeric(relation_with_applicant)
                 no_of_family_members = validate_numeric(no_of_family_members)
                 household_income_monthly = validate_numeric(household_income_monthly)
 
-                if not hasattr(customer, 'first_name'):
-                    response_obj = get_response("check_parameter")
-                    return response_obj
-
-                if first_name:
-                    first_name = validate_string(first_name)
-                    if first_name is None:
-                        response_obj = get_response("first_name")
-                        return response_obj
-                else:
+                if first_name is None:
                     response_obj = get_response("first_name")
                     return response_obj
 
-                if salutation_val == dict():
+                if salutation_val is None:
                     response_obj = get_response("salutation")
                     return response_obj
 
-                gender_val = validate_dict(gender, 'gender')
-                if gender_val == dict():
+                if gender_val is None:
                     response_obj = get_response("gender")
                     return response_obj
 
-                if marital_status == dict():
+                if marital_status is None:
                     response_obj = get_response("marital_status")
                     return response_obj
 
@@ -105,8 +84,6 @@ def create_service(req_data):
                     except ValueError:
                         response_obj = get_response("check_dob")
                         return response_obj
-                else:
-                    date_of_birth = None
 
                 if relation_with_applicant == int():
                     response_obj = get_response("check_numeric")
@@ -202,44 +179,32 @@ def update_customer(req_data):
             if hasattr(req_data, 'customer'):
                 customer = req_data.customer
 
-                customer_id = set_value(customer, 'customer_id')
-                salutation = set_value(customer, 'salutation')
-                first_name = set_value(customer, 'first_name')
-                middle_name = set_value(customer, 'middle_name')
+                customer_id = get_value(customer, 'customer_id')
+                salutation = get_value(customer, 'salutation')
+                first_name = get_string_lower(customer, 'first_name')
+                middle_name = get_string_lower(customer, 'middle_name')
+                last_name = get_string_lower(customer, 'last_name')
 
-                last_name = set_value(customer, 'last_name')
-                gender = set_value(customer, 'gender')
-                date_of_birth = set_value(customer, 'date_of_birth')
-                relation_with_applicant = set_value(customer, 'relation_with_applicant')
+                gender = get_value(customer, 'gender')
+                date_of_birth = get_value(customer, 'date_of_birth')
+                relation_with_applicant = get_value(customer, 'relation_with_applicant')
 
-                marital_status = set_value(customer, 'marital_status')
-                father_first_name = set_value(customer, 'father_first_name')
-                father_middle_name = set_value(customer, 'father_middle_name')
-                father_last_name = set_value(customer, 'father_last_name')
+                marital_status = get_value(customer, 'marital_status')
+                father_first_name = get_string_lower(customer, 'father_first_name')
+                father_middle_name = get_string_lower(customer, 'father_middle_name')
+                father_last_name = get_string_lower(customer, 'father_last_name')
 
-                mother_first_name = set_value(customer, 'mother_first_name')
-                mother_middle_name = set_value(customer, 'mother_middle_name')
-                mother_last_name = set_value(customer, 'mother_last_name')
-                spouse_first_name = set_value(customer, 'spouse_first_name')
+                mother_first_name = get_string_lower(customer, 'mother_first_name')
+                mother_middle_name = get_string_lower(customer, 'mother_middle_name')
+                mother_last_name = get_string_lower(customer, 'mother_last_name')
+                spouse_first_name = get_string_lower(customer, 'spouse_first_name')
+                spouse_middle_name = get_string_lower(customer, 'spouse_middle_name')
+                spouse_last_name = get_string_lower(customer, 'spouse_last_name')
 
-                spouse_middle_name = set_value(customer, 'spouse_middle_name')
-                spouse_last_name = set_value(customer, 'spouse_last_name')
-                no_of_family_members = set_value(customer, 'no_of_family_members')
-                household_income_monthly = set_value(customer, 'household_income_monthly')
+                no_of_family_members = get_value(customer, 'no_of_family_members')
+                household_income_monthly = get_value(customer, 'household_income_monthly')
 
                 # validations
-                first_name = validate_string(first_name)
-                middle_name = validate_string(middle_name)
-                last_name = validate_string(last_name)
-                father_first_name = validate_string(father_first_name)
-                father_middle_name = validate_string(father_middle_name)
-                father_last_name = validate_string(father_last_name)
-                mother_first_name = validate_string(mother_first_name)
-                mother_middle_name = validate_string(mother_middle_name)
-                mother_last_name = validate_string(mother_last_name)
-                spouse_first_name = validate_string(spouse_first_name)
-                spouse_last_name = validate_string(spouse_last_name)
-                spouse_middle_name = validate_string(spouse_middle_name)
                 salutation_val = validate_dict(salutation, 'salutation')
                 gender_val = validate_dict(gender, 'gender')
                 marital_status = validate_dict(marital_status, 'marital_status')
