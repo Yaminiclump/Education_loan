@@ -21,9 +21,10 @@ def customer_contact(req_data):
             customer = None
             if hasattr(req_data, 'customer'):
                 customer = req_data.customer
-                customer_id = customer.customer_id
-                logger.info("response_data: %s", customer.customer_id)
-
+                customer_id = get_value(customer, 'customer_id')
+                logger.info("response_data: %s", customer_id)
+                response_obj = get_response("success")
+                return response_obj
     except Exception as e:
         logger.exception("Exception: ")
         response_obj = get_response("generic_error_2")
