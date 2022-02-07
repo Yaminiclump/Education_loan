@@ -8,7 +8,7 @@ class Statuses():
     generic_error_3 = {'status_code': 20004, 'message': "There was some error while processing the request"}
     salutation = {'status_code': 20005, 'message': "salutation type not implemented"}
     marital_status = {'status_code': 20006, 'message': "marital type not implemented"}
-    first_name = {'status_code': 20007, 'message': "value should not be Null"}
+    first_name = {'status_code': 20007, 'message': "first name should not be Null"}
     father_name = {'status_code': 20008, 'message': "Please provide a valid father name"}
     gender = {'status_code': 20009, 'message': "gender type not implemented"}
     customer_id = {'status_code': 200010, 'message': "customer id parameters might be missing"}
@@ -19,7 +19,7 @@ class Statuses():
     check_numeric = {'status_code': 200013, 'message': "It should be numeric Value"}
     check_dob = {'status_code': 200014, 'message': "Date should be YYYY-MM-DD format"}
     string_blank = {'status_code': 200015, 'message': "value is not valid"}
-    id_notexist = {'status_code': 200016, 'message': "Coustermer id does not exist"}
+    id_notexist = {'status_code': 200016, 'message': "Customer id does not exist"}
     check_parameter = {'status_code': 200017, 'message': "Some parameters might be missing or are in wrong format"}
 
 
