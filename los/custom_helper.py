@@ -6,16 +6,33 @@ from los.status_code import get_response
 
 logger = logging.getLogger("django")
 
-def validate_string(str_val):
+def get_value(obj, param):
+    return getattr(obj,param) if hasattr(obj,param) else None
+
+
+def clean_string(str_val):
     if str_val:
-        sanitized = str_val.strip().lower()
+        sanitized = str_val.strip()
         sanitized = sanitized if sanitized else None
         return sanitized
     else:
         return None
 
-def set_value(obj,param):
-    return getattr(obj,param) if hasattr(obj,param) else None
+
+def lower_case_string(str_val):
+    if str_val:
+        sanitized = str_val.lower()
+        return sanitized
+    else:
+        return None
+
+
+def get_string_lower(obj, param):
+    str_val = get_value(obj, param)
+    trim_string = clean_string(str_val)
+    lower_string = lower_case_string(trim_string)
+    return lower_string
+
 
 def validate_numeric(num_val):
     if num_val:
@@ -28,36 +45,20 @@ def validate_numeric(num_val):
     else:
         return None
 
+
 def fetch_value(swagger_obj, db_obj, param):
     return None if hasattr(swagger_obj, param) else getattr(db_obj[0], param)
 
-def validate_dict(dict_val,obj):
+
+def validate_dict(dict_val, obj):
     if dict_val:
-        if obj == 'salutation':
-            if dict_val in LosDictionary.salutation.keys():
-                dict_val = LosDictionary.salutation[dict_val]
-                return dict_val
-            else:
-                dict_val = dict()
-                return dict_val
-        if obj == 'gender':
-            if dict_val in LosDictionary.gender.keys():
-                dict_val = LosDictionary.gender[dict_val]
-                return dict_val
-            else:
-                dict_val = dict()
-                return dict_val
-        if obj == 'marital_status':
-            if dict_val in LosDictionary.marital_status.keys():
-                dict_val = LosDictionary.marital_status[dict_val]
-                return dict_val
-            else:
-                dict_val = dict()
-                return dict_val
+        if dict_val in obj.keys():
+            dict_val = obj[dict_val]
+            return dict_val
+        else:
+            dict_val = None
+            return dict_val
     else:
         return None
-
-
-
 
 
