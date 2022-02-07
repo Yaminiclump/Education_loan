@@ -539,6 +539,7 @@ class Test_Customer_Create():
     def test_no_data_in_customer_object(self):
         data = {
             "customer": {
+
             }
         }
         data = json.dumps(data)

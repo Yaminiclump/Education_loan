@@ -61,6 +61,10 @@ def create_service(req_data):
                 no_of_family_members = validate_numeric(no_of_family_members)
                 household_income_monthly = validate_numeric(household_income_monthly)
 
+                if not hasattr(customer, 'first_name'):
+                    response_obj = get_response("check_parameter")
+                    return response_obj
+
                 if first_name is None:
                     response_obj = get_response("first_name")
                     return response_obj
