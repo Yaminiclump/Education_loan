@@ -205,9 +205,9 @@ def update_customer(req_data):
                 household_income_monthly = get_value(customer, 'household_income_monthly')
 
                 # validations
-                salutation_val = validate_dict(salutation, 'salutation')
-                gender_val = validate_dict(gender, 'gender')
-                marital_status = validate_dict(marital_status, 'marital_status')
+                salutation_val = validate_dict(salutation, LosDictionary.salutation)
+                gender_val = validate_dict(gender, LosDictionary.gender)
+                marital_status = validate_dict(marital_status, LosDictionary.marital_status)
                 relation_with_applicant = validate_numeric(relation_with_applicant)
                 no_of_family_members = validate_numeric(no_of_family_members)
                 household_income_monthly = validate_numeric(household_income_monthly)
@@ -385,8 +385,9 @@ def customer_contact(req_data):
             customer = None
             if hasattr(req_data, 'customer'):
                 customer = req_data.customer
-                logger.info("response: %s", customer)
-                
+                customer_id = customer.customer_id
+                # logger.info("response_data: %s", customer.customer_id)
+
     except Exception as e:
         logger.exception("Exception: ")
         response_obj = get_response("generic_error_2")
