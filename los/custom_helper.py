@@ -56,7 +56,7 @@ def validate_dict(dict_val, obj):
             dict_val = obj[dict_val]
             return dict_val
         else:
-            dict_val = None
+            dict_val = dict()
             return dict_val
     else:
         return None

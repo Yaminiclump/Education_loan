@@ -30,7 +30,7 @@ def create_service(req_data):
                 salutation = get_value(customer, 'salutation')
                 first_name = get_string_lower(customer, 'first_name')
                 middle_name = get_string_lower(customer, 'middle_name')
-                logger.debug("middle_name_data: %s", middle_name)
+                logger.debug("middle_name: %s", middle_name)
                 last_name = get_string_lower(customer, 'last_name')
                 gender = get_value(customer, 'gender')
                 date_of_birth = get_string_lower(customer, 'date_of_birth')
@@ -65,15 +65,15 @@ def create_service(req_data):
                     response_obj = get_response("first_name")
                     return response_obj
 
-                if salutation_val is None:
+                if salutation_val == dict():
                     response_obj = get_response("salutation")
                     return response_obj
 
-                if gender_val is None:
+                if gender_val == dict():
                     response_obj = get_response("gender")
                     return response_obj
 
-                if marital_status is None:
+                if marital_status == dict():
                     response_obj = get_response("marital_status")
                     return response_obj
 
