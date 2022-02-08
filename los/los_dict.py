@@ -24,3 +24,12 @@ class LosDictionary():
         "mob": 10,
         "email": 11,
     }
+    marks_type = {
+        "percent": 10,
+        "CGPA": 11
+    }
+
+    course_type = {
+        "full_time": 10,
+        "part_time": 11
+    }

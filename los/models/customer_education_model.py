@@ -1,4 +1,3 @@
-from tkinter.tix import COLUMN
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
