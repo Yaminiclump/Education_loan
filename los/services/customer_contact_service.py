@@ -12,19 +12,31 @@ from los.custom_helper import get_string_lower, clean_string, get_value, validat
 logger = logging.getLogger("django")
 
 
-
-def customer_contact(req_data):
+def contact_service(req_data):
     response_obj = None
+    logger.info("tryservice: %s", req_data)
     try:
-        logger.info("request: %s", req_data)
+        logger.info("request_service: %s", req_data)
+
         if req_data:
             customer = None
             if hasattr(req_data, 'customer'):
                 customer = req_data.customer
                 customer_id = get_value(customer, 'customer_id')
-                logger.info("response_data: %s", customer_id)
-                response_obj = get_response("success")
-                return response_obj
+                contact = get_value(customer, 'contacts')
+
+                # contacts = req_data.customer.contacts
+                for i in contact:
+                    type = get_value(i, "type")
+                    value = get_value(i, "value")
+                    value_extra_1 = get_value(i, "value_extra_1")
+                    country_code = get_value(i, "country_code")
+                    logger.info("for_loop: %s", type)
+
+                # logger.info("get_contact: %s", req_data.customer.contacts)
+                # logger.info("get_contactitem: %s", req_data.customer.contacts[0].type)
+                # type = get_value(customer.contacts, 'type')
+
     except Exception as e:
         logger.exception("Exception: ")
         response_obj = get_response("generic_error_2")
