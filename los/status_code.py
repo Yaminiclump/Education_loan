@@ -25,6 +25,8 @@ class Statuses():
     type = {'status_code': 200019, 'message': "type not implemented"}
     email_validate = {'status_code': 200020, 'message': "Invalid Email"}
     mob_validate = {'status_code': 200020, 'message': "Invalid mobile number."}
+    id_error = {'status_code': 200020, 'message': "contact id and customer id are not exist."}
+    id_param = {'status_code': 200020, 'message': "contact id and customer id might be missing"}
 
 
 

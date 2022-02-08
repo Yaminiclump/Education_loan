@@ -81,7 +81,7 @@ def customer_create(request):
             type=openapi.TYPE_OBJECT,
             required=["customer_id"],
             properties={
-                "customer_id": openapi.Schema(type=openapi.TYPE_INTEGER, description="first name"),
+                "customer_id": openapi.Schema(type=openapi.TYPE_INTEGER, description="customer id"),
                 "salutation": openapi.Schema(type=openapi.TYPE_STRING, description="mr:1, mrs:2, dr:3 undefined:0"),
                 "first_name": openapi.Schema(type=openapi.TYPE_STRING, description="first name"),
                 "middle_name": openapi.Schema(type=openapi.TYPE_STRING, description="middle name"),
