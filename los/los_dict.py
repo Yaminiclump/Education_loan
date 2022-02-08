@@ -19,3 +19,13 @@ class LosDictionary():
         "separated": 3,
         "will_hide":0,
     }
+
+    marks_type={
+        "percent":10,
+        "CGPA":11
+    }
+
+    course_type={
+        "full_time":10,
+        "part_time":11
+    }

@@ -11,7 +11,7 @@ from los.los_dict import LosDictionary
 from django.http import JsonResponse,HttpResponse
 import datetime
 from datetime import datetime,date
-from los.custom_helper import validate_string, set_value, validate_numeric,validate_dict,fetch_value
+from los.custom_helper import get_value
 logger = logging.getLogger("django")
 
 
@@ -26,21 +26,21 @@ def create_education_service(req_data):
             if hasattr(req_data, 'education'):
                 education = req_data.education
 
-                institute_id = set_value(education, 'institute_id')
-                institute_name = set_value(education, 'first_name')
-                course_id = set_value(education, 'course_id')
-                course_name = set_value(education, 'course_name')
-                stream_id = set_value(education, 'stream_id')
-                stream_name = set_value(education, 'stream_name')
+                institute_id = get_value(education, 'institute_id')
+                institute_name = get_value(education, 'first_name')
+                course_id = get_value(education, 'course_id')
+                course_name = get_value(education, 'course_name')
+                stream_id = get_value(education, 'stream_id')
+                stream_name = get_value(education, 'stream_name')
                 logger.debug("stream_name_data: %s", stream_name)
-                start_month_year = set_value(education, 'start_month_year')
-                end_month_year = set_value(education, 'end_month_year')
-                marks = set_value(education,'marks')
-                max_marks = set_value(education,'max_marks')
-                marks_type = set_value(education,'marks_type')
-                duration_month=set_value(education,'duration_month')
-                course_type=set_value(education,'course_type')
-                status=set_value(education,'status')
+                start_month_year = get_value(education, 'start_month_year')
+                end_month_year = get_value(education, 'end_month_year')
+                marks = get_value(education,'marks')
+                max_marks = get_value(education,'max_marks')
+                marks_type = get_value(education,'marks_type')
+                duration_month=get_value(education,'duration_month')
+                course_type=get_value(education,'course_type')
+                status=get_value(education,'status')
                 logger.debug("status_data: %d", status)
 
                 # string validation
@@ -103,21 +103,21 @@ def update_education(req_data):
             if hasattr(req_data, 'education'):
                 education = req_data.education
 
-                institute_id = set_value(education, 'institute_id')
-                institute_name = set_value(education, 'first_name')
-                course_id = set_value(education, 'course_id')
-                course_name = set_value(education, 'course_name')
-                stream_id = set_value(education, 'stream_id')
-                stream_name = set_value(education, 'stream_name')
+                institute_id = get_value(education, 'institute_id')
+                institute_name = get_value(education, 'first_name')
+                course_id = get_value(education, 'course_id')
+                course_name = get_value(education, 'course_name')
+                stream_id = get_value(education, 'stream_id')
+                stream_name = get_value(education, 'stream_name')
                 logger.debug("stream_name_data: %s", stream_name)
-                start_month_year = set_value(education, 'start_month_year')
-                end_month_year = set_value(education, 'end_month_year')
-                marks = set_value(education,'marks')
-                max_marks = set_value(education,'max_marks')
-                marks_type = set_value(education,'marks_type')
-                duration_month=set_value(education,'duration_month')
-                course_type=set_value(education,'course_type')
-                status=set_value(education,'status')
+                start_month_year = get_value(education, 'start_month_year')
+                end_month_year = get_value(education, 'end_month_year')
+                marks = get_value(education,'marks')
+                max_marks = get_value(education,'max_marks')
+                marks_type = get_value(education,'marks_type')
+                duration_month=get_value(education,'duration_month')
+                course_type=get_value(education,'course_type')
+                status=get_value(education,'status')
                 logger.debug("status_data: %d", status)
 
                 # string validation
