@@ -3,7 +3,7 @@ import datetime
 from datetime import datetime,date
 import logging
 from los.status_code import get_response
-
+import re
 logger = logging.getLogger("django")
 
 def get_value(obj, param):
@@ -61,4 +61,26 @@ def validate_dict(dict_val, obj):
     else:
         return None
 
+
+def validate_email(email_val):
+    regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+    if email_val:
+        if (re.fullmatch(regex, email_val)):
+            return email_val
+        else:
+            email_val = str()
+            return email_val
+    else:
+        return None
+
+def validate_mob(mob_val):
+    regex = r'^(\+91[\-\s]?)?[0]?(91)?[789]\d{9}$'
+    if mob_val:
+        if (re.fullmatch(regex, mob_val)):
+            return mob_val
+        else:
+            mob_val = str()
+            return mob_val
+    else:
+        return None
 

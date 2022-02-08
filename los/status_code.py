@@ -22,7 +22,9 @@ class Statuses():
     id_notexist = {'status_code': 200016, 'message': "Customer id does not exist"}
     check_parameter = {'status_code': 200017, 'message': "Some parameters might be missing or are in wrong format"}
     check_country_code = {'status_code': 200018, 'message': "country code parameters might be missing"}
-    type = {'status_code': 200018, 'message': "type not implemented"}
+    type = {'status_code': 200019, 'message': "type not implemented"}
+    email_validate = {'status_code': 200020, 'message': "Invalid Email"}
+    mob_validate = {'status_code': 200020, 'message': "Invalid mobile number."}
 
 
 

@@ -8,7 +8,7 @@ from los.los_dict import LosDictionary
 from django.http import JsonResponse,HttpResponse
 import datetime
 from datetime import datetime,date
-from los.custom_helper import get_string_lower, clean_string, get_value, validate_numeric,validate_dict,fetch_value
+from los.custom_helper import get_string_lower, clean_string, get_value, validate_numeric,validate_dict,fetch_value,validate_email,validate_mob
 from los.models.customer_model import Customer
 from los.models.customer_contact_model import Contact, ContactLog
 logger = logging.getLogger("django")
@@ -23,10 +23,9 @@ def contact_service(req_data):
             customer = None
             if hasattr(req_data, 'customer'):
                 customer = req_data.customer
-                logger.info("customer_get: %s", customer)
+                logger.info("customer_get: %s",req_data.customer)
                 customer_id = get_value(customer, 'customer_id')
                 contact = get_value(customer, 'contacts')
-
 
                 if customer_id:
                     if type(customer_id) == int:
@@ -40,10 +39,6 @@ def contact_service(req_data):
                 else:
                     response_obj = get_response("customer_id")
                     return response_obj
-
-                # if contact is None:
-                #     response_obj = get_response("check_parameter")
-                #     return response_obj
 
                 if contact:
                     for i in contact:
@@ -61,16 +56,28 @@ def contact_service(req_data):
                             response_obj = get_response("check_parameter")
                             return response_obj
 
-                        #validation
+                        # validation
                         type_val = validate_dict(type_val, LosDictionary.type)
+                        if type_val == dict():
+                            response_obj = get_response("type")
+                            return response_obj
+
                         if type_val == 10:
+                            check_mob = validate_mob(value)
+                            if check_mob == str():
+                                response_obj = get_response("mob_validate")
+                                return response_obj
+
                             if country_code is None:
                                 response_obj = get_response("check_country_code")
                                 return response_obj
 
-                        if type_val == dict():
-                            response_obj = get_response("type")
-                            return response_obj
+                        if type_val == 11:
+                            check_email = validate_email(value)
+                            if check_email == str():
+                                response_obj = get_response("email_validate")
+                                return response_obj
+
                         logger.info("dict_type: %s", type_val)
                         current_time = django.utils.timezone.now()
                         logger.debug("current_time india: %s", current_time)
@@ -100,7 +107,7 @@ def contact_service(req_data):
                     response_obj = get_response("check_parameter")
                     return response_obj
             else:
-                response_obj = get_response("generic_error_1")
+                response_obj = get_response("check_parameter")
         else:
             response_obj = get_response("generic_error_1")
     except Exception as e:
