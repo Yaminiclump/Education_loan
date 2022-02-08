@@ -66,8 +66,12 @@ def validate_email(email_val):
     regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
     if email_val:
         email_val = clean_string(email_val)
-        if (re.fullmatch(regex, email_val)):
-            return email_val
+        if email_val is not None:
+            if (re.fullmatch(regex, email_val)):
+                return email_val
+            else:
+                email_val = str()
+                return email_val
         else:
             email_val = str()
             return email_val
@@ -78,8 +82,12 @@ def validate_mob(mob_val):
     regex = r'^(\+91[\-\s]?)?[0]?(91)?[789]\d{9}$'
     if mob_val:
         mob_val = clean_string(mob_val)
-        if (re.fullmatch(regex, mob_val)):
-            return mob_val
+        if mob_val is not None:
+            if (re.fullmatch(regex, mob_val)):
+                return mob_val
+            else:
+                mob_val = str()
+                return mob_val
         else:
             mob_val = str()
             return mob_val
