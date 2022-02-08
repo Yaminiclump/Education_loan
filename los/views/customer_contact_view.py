@@ -28,10 +28,10 @@ logger = logging.getLogger("django")
                                 type=openapi.TYPE_OBJECT,
                                 required=["type", "value"],
                                 properties={
-                                    "type": openapi.Schema(type=openapi.TYPE_INTEGER, description=""),
+                                    "type": openapi.Schema(type=openapi.TYPE_STRING, description=""),
                                     "value": openapi.Schema(type=openapi.TYPE_STRING, description="name & value of variables"),
                                     "value_extra_1": openapi.Schema(type=openapi.TYPE_STRING, description="name & value of variables"),
-                                    "country_code": openapi.Schema(type=openapi.TYPE_STRING, description="name & value of variables"),
+                                    "country_code": openapi.Schema(type=openapi.TYPE_INTEGER, description="name & value of variables"),
                                 }),
                             description="define all the variable, put their name and values"),
                         }, description="message body"),
@@ -52,15 +52,15 @@ def customer_contact(request):
             logger.debug("post_after: %s", data.customer.customer_id)
 
             response_obj = contact_service(data)
-            logger.debug("customer_obj: %s", response_obj)
-            logger.debug("inserted customer and audit table")
-            logger.info("response: %s", data)
-            return HttpResponse(data)
+            # logger.debug("customer_obj: %s", response_obj)
+            # logger.debug("inserted customer and audit table")
+            # logger.info("response: %s", data)
+            # return HttpResponse(data)
         else:
             response_obj = {"status_code": Statuses.invalid_request["status_code"], "message": Statuses.invalid_request["message"]}
 
     except Exception:
         logger.exception("Exception: ")
         response_obj = {"status_code": Statuses.generic_error_2["status_code"], "message": Statuses.generic_error_2["message"]}
-    logger.info("response: %s", "innnnn")
+    logger.info("response: %s", response_obj)
     return JsonResponse(response_obj, safe=False)

@@ -21,6 +21,9 @@ class Statuses():
     string_blank = {'status_code': 200015, 'message': "value is not valid"}
     id_notexist = {'status_code': 200016, 'message': "Customer id does not exist"}
     check_parameter = {'status_code': 200017, 'message': "Some parameters might be missing or are in wrong format"}
+    check_country_code = {'status_code': 200018, 'message': "country code parameters might be missing"}
+    type = {'status_code': 200018, 'message': "type not implemented"}
+
 
 
 def get_response(type, data=None):

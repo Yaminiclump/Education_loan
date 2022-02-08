@@ -9,7 +9,7 @@ class Contact(models.Model):
     value = models.TextField(null=False)
     value_extra_1 = models.TextField(null=True)
     country_code = models.PositiveSmallIntegerField(validators=[MinValueValidator(0),
-                                                              MaxValueValidator(999)], null=False)
+                                                              MaxValueValidator(999)], null=True)
     status = models.PositiveSmallIntegerField(validators=[MinValueValidator(0),
                                                           MaxValueValidator(9)], null=False)
     creation_date = models.DateTimeField(null=False)
@@ -26,7 +26,7 @@ class ContactLog(models.Model):
     value = models.TextField(null=False)
     value_extra_1 = models.TextField(null=True)
     country_code = models.PositiveSmallIntegerField(validators=[MinValueValidator(0),
-                                                                MaxValueValidator(999)], null=False)
+                                                                MaxValueValidator(999)], null=True)
     status = models.PositiveSmallIntegerField(validators=[MinValueValidator(0),
                                                           MaxValueValidator(9)], null=False)
     creation_date = models.DateTimeField(null=False)

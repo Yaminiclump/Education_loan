@@ -19,3 +19,8 @@ class LosDictionary():
         "separated": 3,
         "will_hide":0,
     }
+
+    type = {
+        "mob": 10,
+        "email": 11,
+    }
