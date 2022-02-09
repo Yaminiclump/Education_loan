@@ -152,7 +152,7 @@ def contact_update(req_data):
                         value_extra_1 = get_value(i, "value_extra_1")
                         country_code = get_value(i, "country_code")
                         logger.info("type_val: %s", type_val)
-                        # get_contact[0].type
+
                         # validation
                         type_val = validate_dict(type_val, LosDictionary.type)
                         if type_val == dict():
@@ -177,10 +177,8 @@ def contact_update(req_data):
                         if type_val is None:
                             type_val = fetch_value(contact, get_contact, 'type')
 
-
                         if value is None:
                             value = fetch_value(contact, get_contact, 'value')
-
 
                         if country_code is None:
                             country_code = fetch_value(contact, get_contact, 'country_code')

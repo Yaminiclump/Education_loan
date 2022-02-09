@@ -24,9 +24,9 @@ class Statuses():
     check_country_code = {'status_code': 200018, 'message': "country code parameters might be missing"}
     type = {'status_code': 200019, 'message': "type not implemented"}
     email_validate = {'status_code': 200020, 'message': "Invalid Email"}
-    mob_validate = {'status_code': 200020, 'message': "Invalid mobile number."}
-    id_error = {'status_code': 200020, 'message': "contact id and customer id are not exist."}
-    id_param = {'status_code': 200020, 'message': "contact id and customer id might be missing"}
+    mob_validate = {'status_code': 200021, 'message': "Invalid mobile number."}
+    id_error = {'status_code': 200022, 'message': "contact id and customer id are not exist."}
+    id_param = {'status_code': 200023, 'message': "contact id and customer id might be missing"}
 
 
 

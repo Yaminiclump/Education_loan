@@ -81,7 +81,6 @@ def customer_contact(request):
                             type=openapi.TYPE_ARRAY,
                             items=openapi.Items(
                                 type=openapi.TYPE_OBJECT,
-                                # required=["type", "value"],
                                 properties={
                                     "type": openapi.Schema(type=openapi.TYPE_STRING, description="mob:10, email:11"),
                                     "value": openapi.Schema(type=openapi.TYPE_STRING, description="value"),
