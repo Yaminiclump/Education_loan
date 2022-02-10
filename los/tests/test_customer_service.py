@@ -5,7 +5,7 @@ from http import HTTPStatus
 from django.urls import reverse
 from django.conf import settings
 from los.services import customer_service
-from los.services.customer_service import update_customer
+from los.services.customer_service import create_service,update_customer
 from los.models.customer_auditlog_model import Customerauditlog
 from los.models.customer_model import Customer
 import django.utils.timezone
@@ -32,11 +32,23 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.first_name['status_code']
 
-    def test_salutation_invalid(self):
+    def test_int_for_string(self):
+        data = {
+            "customer": {
+                "first_name": 5,
+            }
+        }
+        data = json.dumps(data)
+        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
+        response = create_service(data)
+        logger.info("response: %s", response)
+        assert response['status'] == Statuses.first_name['status_code']
+
+    def test_salutation_uppercase(self):
         data = {
             "customer": {
                 "salutation": "MR",
@@ -45,9 +57,35 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
+        logger.info("response: %s", response)
+        assert response['status'] == Statuses.success['status_code']
+
+    def test_salutation_invalid(self):
+        data = {
+            "customer": {
+                "salutation": "MRr",
+                "first_name": "abc",
+            }
+        }
+        data = json.dumps(data)
+        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
+        response = create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.salutation['status_code']
+
+    def test_salutation_int(self):
+        data = {
+            "customer": {
+                "salutation": 1,
+                "first_name": "abc",
+            }
+        }
+        data = json.dumps(data)
+        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
+        response = create_service(data)
+        logger.info("response: %s", response)
+        assert response['status'] == Statuses.generic_error_2['status_code']
 
     def test_gender_invalid(self):
         data = {
@@ -59,7 +97,7 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.gender['status_code']
 
@@ -72,7 +110,7 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.marital_status['status_code']
 
@@ -85,7 +123,7 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
@@ -98,7 +136,7 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
@@ -111,7 +149,7 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
@@ -124,7 +162,7 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
@@ -137,7 +175,7 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
@@ -150,7 +188,7 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
@@ -163,7 +201,7 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
@@ -176,7 +214,7 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
@@ -189,7 +227,7 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
@@ -202,7 +240,7 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
@@ -215,11 +253,11 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
-    def test_no_firstname_parameter(self):
+    def test_no_first_name_parameter(self):
         data = {
             "customer": {
                 "salutation": "mr",
@@ -228,9 +266,9 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
-        assert response['status'] == Statuses.check_parameter['status_code']
+        assert response['status'] == Statuses.first_name['status_code']
 
     def test_no_middle_name_parameter(self):
         data = {
@@ -241,7 +279,7 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
@@ -256,7 +294,7 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
@@ -272,7 +310,7 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
@@ -288,7 +326,7 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
@@ -305,7 +343,7 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
@@ -323,7 +361,7 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
@@ -340,7 +378,7 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
@@ -358,7 +396,7 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
@@ -374,7 +412,7 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
@@ -390,7 +428,7 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
@@ -413,7 +451,7 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
@@ -430,7 +468,7 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
@@ -449,7 +487,7 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
@@ -471,7 +509,7 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
@@ -493,7 +531,7 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
@@ -507,7 +545,7 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
@@ -521,7 +559,7 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
@@ -531,7 +569,7 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.generic_error_1['status_code']
 
@@ -543,9 +581,9 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
-        assert response['status'] == Statuses.check_parameter['status_code']
+        assert response['status'] == Statuses.first_name['status_code']
 
     def test_dob_format(self):
         data = {
@@ -556,23 +594,35 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.check_dob['status_code']
 
-    def test_relation_with_applicant_notint(self):
+    def test_relation_with_applicant_uppercase(self):
         data = {
             "customer": {
-                "first_name": "Abcdd",
-                "date_of_birth": "1995-05-11",
-                "relation_with_applicant": "gh67",
+                "first_name": "abc",
+                "relation_with_applicant": "FATHER"
             }
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
-        assert response['status'] == Statuses.check_numeric['status_code']
+        assert response['status'] == Statuses.success['status_code']
+
+    def test_relation_with_applicant_invalid(self):
+        data = {
+            "customer": {
+                "first_name": "abc",
+                "relation_with_applicant": "abc"
+            }
+        }
+        data = json.dumps(data)
+        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
+        response = create_service(data)
+        logger.info("response: %s", response)
+        assert response['status'] == Statuses.relation_with_applicant['status_code']
 
     def test_no_of_family_members_notint(self):
         data = {
@@ -584,9 +634,9 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
-        assert response['status'] == Statuses.check_numeric['status_code']
+        assert response['status'] == Statuses.check_numeric_family['status_code']
 
     def test_household_income_monthly_notint(self):
         data = {
@@ -598,22 +648,9 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
-        assert response['status'] == Statuses.check_numeric['status_code']
-
-    def test_relation_with_applicant_float(self):
-        data = {
-            "customer": {
-                "first_name": "Abcdd",
-                "relation_with_applicant": 5.5
-            }
-        }
-        data = json.dumps(data)
-        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
-        logger.info("response: %s", response)
-        assert response['status'] == Statuses.check_numeric['status_code']
+        assert response['status'] == Statuses.check_numeric_income['status_code']
 
     def test_no_of_family_members_float(self):
         data = {
@@ -624,9 +661,9 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
-        assert response['status'] == Statuses.check_numeric['status_code']
+        assert response['status'] == Statuses.check_numeric_family['status_code']
 
     def test_household_income_monthly_float(self):
         data = {
@@ -637,9 +674,9 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
-        assert response['status'] == Statuses.check_numeric['status_code']
+        assert response['status'] == Statuses.check_numeric_income['status_code']
 
     def test_customer_create_service_success(self):
         data = {
@@ -650,7 +687,7 @@ class Test_Customer_Create():
                 "last_name": "abc",
                 "gender": "male",
                 "date_of_birth": "2019-10-25",
-                "relation_with_applicant": 0,
+                "relation_with_applicant": "father",
                 "marital_status": "married",
                 "father_first_name": "abc",
                 "father_middle_name": "abc",
@@ -667,7 +704,7 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
@@ -679,7 +716,7 @@ class Test_Customer_Create():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_service.create_service(data)
+        response = create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
@@ -719,7 +756,7 @@ class Test_Customer_Update():
         data = {
             "customer": {
                 "customer_id": create_customer.id,
-                "first_name": "  ",
+                "first_name": " "
             }
         }
         data = json.dumps(data)
@@ -1190,7 +1227,7 @@ class Test_Customer_Update():
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
-    def test_salutation_invalid(self):
+    def test_salutation_uppercase(self):
         current_time = django.utils.timezone.now()
         logger.debug("current_time india: %s", current_time)
         create_customer = Customer(
@@ -1223,6 +1260,48 @@ class Test_Customer_Update():
                 "customer_id": create_customer.id,
                 "first_name": "abc",
                 "salutation": "MR",
+
+            }
+        }
+        data = json.dumps(data)
+        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
+        response = update_customer(data)
+        logger.info("response: %s", response)
+        assert response['status'] == Statuses.success['status_code']
+
+    def test_salutation_invalid(self):
+        current_time = django.utils.timezone.now()
+        logger.debug("current_time india: %s", current_time)
+        create_customer = Customer(
+            salutation=1,
+            first_name="abc",
+            middle_name="abc",
+            last_name="abc",
+            gender=1,
+            date_of_birth="2019-10-25",
+            relation_with_applicant=0,
+            marital_status=1,
+            father_first_name="abc",
+            father_middle_name="abc",
+            father_last_name="abc",
+            mother_first_name="abc",
+            mother_middle_name="abc",
+            mother_last_name="",
+            spouse_first_name="abc",
+            spouse_middle_name="",
+            spouse_last_name="",
+            no_of_family_members=4,
+            household_income_monthly=5000,
+            status=1,
+            creation_date=current_time,
+            creation_by="System"
+        )
+        create_customer.save()
+        data = {
+            "customer": {
+                "customer_id": create_customer.id,
+                "first_name": "abc",
+                "salutation": "MRr",
 
             }
         }
@@ -1386,14 +1465,14 @@ class Test_Customer_Update():
         create_customer.save()
         data = {
             "customer": {
-                "customer_id": "gh67",
+                "customer_id": 5.6,
             }
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['status'] == Statuses.check_numeric['status_code']
+        assert response['status'] == Statuses.id_notexist['status_code']
 
     def test_no_customer_id_parameter(self):
         current_time = django.utils.timezone.now()
@@ -1496,7 +1575,7 @@ class Test_Customer_Update():
         logger.info("response: %s", response)
         assert response['status'] == Statuses.check_dob['status_code']
 
-    def test_relation_with_applicant_notint(self):
+    def test_relation_with_applicant_uppercase(self):
         current_time = django.utils.timezone.now()
         logger.debug("current_time india: %s", current_time)
         create_customer = Customer(
@@ -1529,14 +1608,56 @@ class Test_Customer_Update():
                 "customer_id": create_customer.id,
                 "first_name": "Abcdd",
                 "date_of_birth": "1995-05-11",
-                "relation_with_applicant": "gh67",
+                "relation_with_applicant": "FATHER",
             }
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['status'] == Statuses.check_numeric['status_code']
+        assert response['status'] == Statuses.success['status_code']
+
+    def test_relation_with_applicant_invalid(self):
+        current_time = django.utils.timezone.now()
+        logger.debug("current_time india: %s", current_time)
+        create_customer = Customer(
+            salutation=1,
+            first_name="abc",
+            middle_name="",
+            last_name="",
+            gender=1,
+            date_of_birth="2019-10-25",
+            relation_with_applicant=0,
+            marital_status=1,
+            father_first_name="abc",
+            father_middle_name="abc",
+            father_last_name="",
+            mother_first_name="",
+            mother_middle_name="",
+            mother_last_name="",
+            spouse_first_name="",
+            spouse_middle_name="",
+            spouse_last_name="",
+            no_of_family_members=4,
+            household_income_monthly=5000,
+            status=1,
+            creation_date=current_time,
+            creation_by="System"
+        )
+        create_customer.save()
+        data = {
+            "customer": {
+                "customer_id": create_customer.id,
+                "first_name": "Abcdd",
+                "date_of_birth": "1995-05-11",
+                "relation_with_applicant": "random123",
+            }
+        }
+        data = json.dumps(data)
+        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
+        response = update_customer(data)
+        logger.info("response: %s", response)
+        assert response['status'] == Statuses.relation_with_applicant['status_code']
 
     def test_no_of_family_members_notint(self):
         current_time = django.utils.timezone.now()
@@ -1578,7 +1699,7 @@ class Test_Customer_Update():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['status'] == Statuses.check_numeric['status_code']
+        assert response['status'] == Statuses.check_numeric_family['status_code']
 
     def test_household_income_monthly_notint(self):
         current_time = django.utils.timezone.now()
@@ -1620,48 +1741,7 @@ class Test_Customer_Update():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['status'] == Statuses.check_numeric['status_code']
-
-    def test_relation_with_applicant_float(self):
-        current_time = django.utils.timezone.now()
-        logger.debug("current_time india: %s", current_time)
-        create_customer = Customer(
-            salutation=1,
-            first_name="abc",
-            middle_name="",
-            last_name="",
-            gender=1,
-            date_of_birth="2019-10-25",
-            relation_with_applicant=0,
-            marital_status=1,
-            father_first_name="abc",
-            father_middle_name="abc",
-            father_last_name="",
-            mother_first_name="",
-            mother_middle_name="",
-            mother_last_name="",
-            spouse_first_name="",
-            spouse_middle_name="",
-            spouse_last_name="",
-            no_of_family_members=4,
-            household_income_monthly=5000,
-            status=1,
-            creation_date=current_time,
-            creation_by="System"
-        )
-        create_customer.save()
-        data = {
-            "customer": {
-                "customer_id": create_customer.id,
-                "first_name": "Abcdd",
-                "relation_with_applicant": 5.5
-            }
-        }
-        data = json.dumps(data)
-        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = update_customer(data)
-        logger.info("response: %s", response)
-        assert response['status'] == Statuses.check_numeric['status_code']
+        assert response['status'] == Statuses.check_numeric_income['status_code']
 
     def test_no_of_family_members_float(self):
         current_time = django.utils.timezone.now()
@@ -1702,7 +1782,7 @@ class Test_Customer_Update():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['status'] == Statuses.check_numeric['status_code']
+        assert response['status'] == Statuses.check_numeric_family['status_code']
 
     def test_household_income_monthly_float(self):
         current_time = django.utils.timezone.now()
@@ -1743,7 +1823,7 @@ class Test_Customer_Update():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['status'] == Statuses.check_numeric['status_code']
+        assert response['status'] == Statuses.check_numeric_family['status_code']
 
     def test_customer_update_service_success(self):
         current_time = django.utils.timezone.now()

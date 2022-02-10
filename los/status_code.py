@@ -16,7 +16,6 @@ class Statuses():
     spouse_name = {'status_code': 200012, 'message': "Please provide a valid spouse name"}
     test_get = {'status_code': 405}
     test_post = {'status_code': 200}
-    check_numeric = {'status_code': 200013, 'message': "It should be numeric Value"}
     check_dob = {'status_code': 200014, 'message': "Date should be YYYY-MM-DD format"}
     string_blank = {'status_code': 200015, 'message': "value is not valid"}
     id_notexist = {'status_code': 200016, 'message': "Customer id does not exist"}
@@ -28,7 +27,9 @@ class Statuses():
     id_error = {'status_code': 200022, 'message': "contact id and customer id are not exist."}
     id_param = {'status_code': 200023, 'message': "contact id and customer id might be missing"}
 
-
+    relation_with_applicant = {'status_code': 200024, 'message': "relation with applicant type not implemented"}
+    check_numeric_family = {'status_code': 200025, 'message': "family should be numeric Value"}
+    check_numeric_income = {'status_code': 200025, 'message': "income should be numeric Value"}
 
 def get_response(type, data=None):
     status = getattr(Statuses, type)

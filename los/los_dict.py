@@ -20,6 +20,12 @@ class LosDictionary():
         "will_hide":0,
     }
 
+    relation_with_applicant = {
+        "father": 10,
+        "mother": 11,
+        "brother": 12,
+        "sister": 13,
+    }
     type = {
         "mob": 10,
         "email": 11,
@@ -32,4 +38,9 @@ class LosDictionary():
     course_type = {
         "full_time": 10,
         "part_time": 11
+    }
+
+    status = {
+        "active": 1,
+        "deleted": 0
     }
