@@ -3,8 +3,33 @@ import datetime
 from datetime import datetime,date
 import logging
 from los.status_code import get_response
+import inspect
 import re
 logger = logging.getLogger("django")
+
+
+def get_attributes(obj):
+    attribute_list = []
+    for i in inspect.getmembers(obj):
+
+        # to remove private and protected functions
+        if not i[0].startswith('_'):
+
+            # To remove other methods that doesnot start with a underscore
+            if not inspect.ismethod(i[1]):
+                attribute_list.append(i)
+
+    return attribute_list
+
+
+def set_db_attr_request(db_obj, req_obj, var_obj):
+    attribute_list = get_attributes(req_obj)
+    logger.debug("attribute_list: %s", attribute_list)
+    for attr in attribute_list:
+        logger.debug("attributes, name: %s, value: %s", attr[0], attr[1])
+        logger.debug("value 1: %s", getattr(var_obj, attr[0], ))
+        setattr(db_obj, attr[0], getattr(var_obj, attr[0]))
+
 
 def get_value(obj, param):
     return getattr(obj,param) if hasattr(obj,param) else None
@@ -62,6 +87,16 @@ def validate_dict(dict_val, obj):
         return None
 
 
+def validate_date(date_val):
+    formated_date = None
+    if date_val:
+        try:
+            formated_date = datetime.strptime(date_val, "%Y-%m-%d").date()
+        except ValueError:
+            formated_date = "ERROR_DATE"
+    return formated_date
+
+
 def validate_email(email_val):
     regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
     if email_val:
@@ -77,6 +112,7 @@ def validate_email(email_val):
             return email_val
     else:
         return None
+
 
 def validate_mob(mob_val):
     regex = r'^(\+91[\-\s]?)?[0]?(91)?[789]\d{9}$'

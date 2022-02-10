@@ -58,7 +58,7 @@ def customer_create(request):
             logger.debug("response data: %s", request.body)
             data = json.loads(request.body.decode("utf-8"), object_hook=lambda d: SimpleNamespace(**d))
             response_obj = create_service(data)
-            logger.debug("inserted customer and audit table")
+            logger.debug("finished create_service method")
         else:
             response_obj = {"status_code": Statuses.invalid_request["status_code"], "message": Statuses.invalid_request["message"]}
 
@@ -118,7 +118,7 @@ def customer_update(request):
             logger.debug("response data: %s", request.body)
             data = json.loads(request.body.decode("utf-8"), object_hook=lambda d: SimpleNamespace(**d))
             response_obj = update_customer(data)
-            logger.debug("inserted customer and audit table")
+            logger.debug("finished update_customer method")
         else:
             response_obj = {"status_code": Statuses.invalid_request["status_code"], "message": Statuses.invalid_request["message"]}
 

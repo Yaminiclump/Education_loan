@@ -1,15 +1,15 @@
 import logging
-from io import BytesIO
+
 import django.utils.timezone
-from django.core.files.storage import default_storage
-from los.status_code import get_response
+from django.core.exceptions import ObjectDoesNotExist
+
+from los.custom_helper import get_string_lower, get_value, validate_numeric, validate_dict, validate_date, set_db_attr_request
+from los.los_dict import LosDictionary
 from los.models.customer_auditlog_model import Customerauditlog
 from los.models.customer_model import Customer
-from los.los_dict import LosDictionary
-from django.http import JsonResponse,HttpResponse
-import datetime
-from datetime import datetime,date
-from los.custom_helper import get_string_lower, clean_string, get_value, validate_numeric,validate_dict,fetch_value
+from los.models.empty_class import EmptyClass
+from los.status_code import get_response
+
 logger = logging.getLogger("django")
 
 
@@ -24,29 +24,27 @@ def create_service(req_data):
             if hasattr(req_data, 'customer'):
                 customer = req_data.customer
 
-                salutation = get_value(customer, 'salutation')
+                salutation = get_string_lower(customer, 'salutation')
                 first_name = get_string_lower(customer, 'first_name')
                 middle_name = get_string_lower(customer, 'middle_name')
-                logger.debug("middle_name: %s", middle_name)
                 last_name = get_string_lower(customer, 'last_name')
-                gender = get_value(customer, 'gender')
+                gender = get_string_lower(customer, 'gender')
                 date_of_birth = get_string_lower(customer, 'date_of_birth')
 
-                relation_with_applicant= get_value(customer, 'relation_with_applicant')
-                logger.debug("relation_with_applicant_data: %s", relation_with_applicant)
-                marital_status = get_value(customer, 'marital_status')
+                relation_with_applicant= get_string_lower(customer, 'relation_with_applicant')
+                marital_status = get_string_lower(customer, 'marital_status')
                 father_first_name = get_string_lower(customer, 'father_first_name')
-
                 father_middle_name = get_string_lower(customer, 'father_middle_name')
                 father_last_name = get_string_lower(customer, 'father_last_name')
-                mother_first_name = get_string_lower(customer, 'mother_first_name')
 
+                mother_first_name = get_string_lower(customer, 'mother_first_name')
                 mother_middle_name = get_string_lower(customer, 'mother_middle_name')
                 mother_last_name = get_string_lower(customer, 'mother_last_name')
-                spouse_first_name = get_string_lower(customer, 'spouse_first_name')
 
+                spouse_first_name = get_string_lower(customer, 'spouse_first_name')
                 spouse_middle_name = get_string_lower(customer, 'spouse_middle_name')
                 spouse_last_name = get_string_lower(customer, 'spouse_last_name')
+
                 no_of_family_members = get_value(customer, 'no_of_family_members')
                 household_income_monthly = get_value(customer, 'household_income_monthly')
 
@@ -57,10 +55,6 @@ def create_service(req_data):
                 relation_with_applicant = validate_numeric(relation_with_applicant)
                 no_of_family_members = validate_numeric(no_of_family_members)
                 household_income_monthly = validate_numeric(household_income_monthly)
-
-                if not hasattr(customer, 'first_name'):
-                    response_obj = get_response("check_parameter")
-                    return response_obj
 
                 if first_name is None:
                     response_obj = get_response("first_name")
@@ -78,13 +72,10 @@ def create_service(req_data):
                     response_obj = get_response("marital_status")
                     return response_obj
 
-                if date_of_birth:
-                    try:
-                        formated_dob = datetime.strptime(date_of_birth, "%Y-%m-%d").date()
-                        date_of_birth = formated_dob
-                    except ValueError:
-                        response_obj = get_response("check_dob")
-                        return response_obj
+                date_of_birth = validate_date(date_of_birth)
+                if date_of_birth == "ERROR_DATE":
+                    response_obj = get_response("check_dob")
+                    return response_obj
 
                 if relation_with_applicant == int():
                     response_obj = get_response("check_numeric")
@@ -180,192 +171,100 @@ def update_customer(req_data):
             if hasattr(req_data, 'customer'):
                 customer = req_data.customer
 
-                customer_id = get_value(customer, 'customer_id')
-                salutation = get_value(customer, 'salutation')
-                first_name = get_string_lower(customer, 'first_name')
-                middle_name = get_string_lower(customer, 'middle_name')
-                last_name = get_string_lower(customer, 'last_name')
+                variables = EmptyClass()
+                variables.customer_id = get_value(customer, 'customer_id')
+                variables.salutation = get_string_lower(customer, 'salutation')
+                variables.first_name = get_string_lower(customer, 'first_name')
+                variables.middle_name = get_string_lower(customer, 'middle_name')
+                variables.last_name = get_string_lower(customer, 'last_name')
 
-                gender = get_value(customer, 'gender')
-                date_of_birth = get_value(customer, 'date_of_birth')
-                relation_with_applicant = get_value(customer, 'relation_with_applicant')
+                variables.gender = get_string_lower(customer, 'gender')
+                variables.date_of_birth = get_string_lower(customer, 'date_of_birth')
+                variables.relation_with_applicant = get_string_lower(customer, 'relation_with_applicant')
+                variables.marital_status = get_string_lower(customer, 'marital_status')
 
-                marital_status = get_value(customer, 'marital_status')
-                father_first_name = get_string_lower(customer, 'father_first_name')
-                father_middle_name = get_string_lower(customer, 'father_middle_name')
-                father_last_name = get_string_lower(customer, 'father_last_name')
+                variables.father_first_name = get_string_lower(customer, 'father_first_name')
+                variables.father_middle_name = get_string_lower(customer, 'father_middle_name')
+                variables.father_last_name = get_string_lower(customer, 'father_last_name')
 
-                mother_first_name = get_string_lower(customer, 'mother_first_name')
-                mother_middle_name = get_string_lower(customer, 'mother_middle_name')
-                mother_last_name = get_string_lower(customer, 'mother_last_name')
-                spouse_first_name = get_string_lower(customer, 'spouse_first_name')
-                spouse_middle_name = get_string_lower(customer, 'spouse_middle_name')
-                spouse_last_name = get_string_lower(customer, 'spouse_last_name')
+                variables.mother_first_name = get_string_lower(customer, 'mother_first_name')
+                variables.mother_middle_name = get_string_lower(customer, 'mother_middle_name')
+                variables.mother_last_name = get_string_lower(customer, 'mother_last_name')
 
-                no_of_family_members = get_value(customer, 'no_of_family_members')
-                household_income_monthly = get_value(customer, 'household_income_monthly')
+                variables.spouse_first_name = get_string_lower(customer, 'spouse_first_name')
+                variables.spouse_middle_name = get_string_lower(customer, 'spouse_middle_name')
+                variables.spouse_last_name = get_string_lower(customer, 'spouse_last_name')
+
+                variables.no_of_family_members = get_value(customer, 'no_of_family_members')
+                variables.household_income_monthly = get_value(customer, 'household_income_monthly')
 
                 # validations
-                salutation_val = validate_dict(salutation, LosDictionary.salutation)
-                gender_val = validate_dict(gender, LosDictionary.gender)
-                marital_status = validate_dict(marital_status, LosDictionary.marital_status)
-                relation_with_applicant = validate_numeric(relation_with_applicant)
-                no_of_family_members = validate_numeric(no_of_family_members)
-                household_income_monthly = validate_numeric(household_income_monthly)
+                variables.salutation = validate_dict(variables.salutation, LosDictionary.salutation)
+                variables.gender = validate_dict(variables.gender, LosDictionary.gender)
+                variables.marital_status = validate_dict(variables.marital_status, LosDictionary.marital_status)
 
-                if customer_id:
-                    if type(customer_id) == int:
-                        if not Customer.objects.filter(id=customer_id).exists():
-                            response_obj = get_response("id_notexist")
-                            return response_obj
-                        customer_id = customer_id
-                    else:
-                        response_obj = get_response("check_numeric")
+                variables.relation_with_applicant = validate_numeric(variables.relation_with_applicant)
+                variables.no_of_family_members = validate_numeric(variables.no_of_family_members)
+                variables.household_income_monthly = validate_numeric(variables.household_income_monthly)
+
+                customer_db = None
+                if variables.customer_id:
+                    try:
+                        customer_db = Customer.objects.get(pk=variables.customer_id)
+                    except ObjectDoesNotExist as e:
+                        response_obj = get_response("id_notexist")
                         return response_obj
                 else:
                     response_obj = get_response("customer_id")
                     return response_obj
 
-                get_customer = Customer.objects.filter(id=customer_id)
-                logger.info("get_customer: %s", get_customer)
+                logger.debug("customer_db: %s", customer_db)
 
-                if first_name is None:
-                    response_obj = get_response("first_name")
-                    return response_obj
-
-                if middle_name is None:
-                    middle_name = fetch_value(customer, get_customer, 'middle_name')
-
-                if last_name is None:
-                    last_name = fetch_value(customer, get_customer, 'last_name')
-
-                if father_first_name is None:
-                    father_first_name = fetch_value(customer, get_customer, 'father_first_name')
-
-                if father_middle_name is None:
-                    father_middle_name = fetch_value(customer, get_customer, 'father_middle_name')
-
-                if father_last_name is None:
-                    father_last_name = fetch_value(customer, get_customer, 'father_last_name')
-
-                if mother_first_name is None:
-                    mother_first_name = fetch_value(customer, get_customer, 'mother_first_name')
-
-                if mother_middle_name is None:
-                    mother_middle_name = fetch_value(customer, get_customer, 'mother_middle_name')
-
-                if mother_last_name is None:
-                    mother_last_name = fetch_value(customer, get_customer, 'mother_last_name')
-
-                if spouse_first_name is None:
-                    spouse_first_name = fetch_value(customer, get_customer, 'spouse_first_name')
-
-                if spouse_last_name is None:
-                    spouse_last_name = fetch_value(customer, get_customer, 'spouse_last_name')
-
-                if spouse_middle_name is None:
-                    spouse_middle_name = fetch_value(customer, get_customer, 'spouse_middle_name')
-
-                if salutation_val == dict():
+                if variables.salutation == dict():
                     response_obj = get_response("salutation")
                     return response_obj
-                if salutation is None:
-                    salutation_val = fetch_value(customer, get_customer, 'salutation')
 
-                if gender_val == dict():
+                if variables.gender == dict():
                     response_obj = get_response("gender")
                     return response_obj
-                if gender is None:
-                    gender_val = fetch_value(customer, get_customer, 'gender')
 
-                if marital_status == dict():
+                if variables.marital_status == dict():
                     response_obj = get_response("marital_status")
                     return response_obj
-                if marital_status is None:
-                    marital_status = fetch_value(customer, get_customer, 'marital_status')
 
-                if date_of_birth:
-                    try:
-                        formated_dob = datetime.strptime(date_of_birth, "%Y-%m-%d").date()
-                        date_of_birth = formated_dob
-                    except ValueError:
-                        response_obj = get_response("check_dob")
-                        return response_obj
-                else:
-                    date_of_birth = fetch_value(customer, get_customer, 'date_of_birth')
+                variables.date_of_birth = validate_date(variables.date_of_birth)
+                if variables.date_of_birth == "ERROR_DATE":
+                    response_obj = get_response("check_dob")
+                    return response_obj
 
-                if relation_with_applicant == int():
+                if variables.relation_with_applicant == int():
                     response_obj = get_response("check_numeric")
                     return response_obj
-                if relation_with_applicant is None:
-                    relation_with_applicant = fetch_value(customer, get_customer, 'relation_with_applicant')
 
-                if no_of_family_members == int():
+                if variables.no_of_family_members == int():
                     response_obj = get_response("check_numeric")
                     return response_obj
-                if no_of_family_members is None:
-                    no_of_family_members = fetch_value(customer, get_customer, 'no_of_family_members')
 
-                if household_income_monthly == int():
+                if variables.household_income_monthly == int():
                     response_obj = get_response("check_numeric")
                     return response_obj
-                if household_income_monthly is None:
-                    household_income_monthly = fetch_value(customer, get_customer, 'household_income_monthly')
+
+                set_db_attr_request(customer_db, customer, variables)
+                logger.debug("customer_db: %s", customer_db)
 
                 current_time = django.utils.timezone.now()
                 logger.debug("current_time india: %s", current_time)
-                customer = Customer.objects.get(pk=customer_id)
-                customer.salutation = salutation_val,
-                customer.first_name = first_name,
-                customer.middle_name = middle_name,
-                customer.last_name = last_name,
-                customer.gender = gender_val,
-                customer.date_of_birth = date_of_birth,
-                customer.relation_with_applicant = relation_with_applicant,
-                customer.marital_status = marital_status,
-                customer.father_first_name = father_first_name,
-                customer.father_middle_name = father_middle_name,
-                customer.father_last_name = father_last_name,
-                customer.mother_first_name = mother_first_name,
-                customer.mother_middle_name = mother_middle_name,
-                customer.mother_last_name = mother_last_name,
-                customer.spouse_first_name = spouse_first_name,
-                customer.spouse_middle_name = spouse_middle_name,
-                customer.spouse_last_name = spouse_last_name,
-                customer.no_of_family_members = no_of_family_members,
-                customer.household_income_monthly = household_income_monthly,
-                customer.status = 1,
-                customer.updation_date = current_time,
-                customer.updation_by = "System"
-                customer.save()
-                logger.info("updated id: %s", customer_id)
+                customer_db.updation_date = current_time
+                customer_db.updation_by = "System"
+                customer_db.save()
+                logger.info("updated id: %s", variables.customer_id)
 
-                customer_audit = Customerauditlog(
-                    salutation=salutation_val,
-                    first_name=first_name,
-                    middle_name=middle_name,
-                    last_name=last_name,
-                    gender=gender_val,
-                    date_of_birth=date_of_birth,
-                    relation_with_applicant=relation_with_applicant,
-                    marital_status=marital_status,
-                    father_first_name=father_first_name,
-                    father_middle_name=father_middle_name,
-                    father_last_name=father_last_name,
-                    mother_first_name=mother_first_name,
-                    mother_middle_name=mother_middle_name,
-                    mother_last_name=mother_last_name,
-                    spouse_first_name=spouse_first_name,
-                    spouse_middle_name=spouse_middle_name,
-                    spouse_last_name=spouse_last_name,
-                    no_of_family_members=no_of_family_members,
-                    household_income_monthly=household_income_monthly,
-                    status=1,
-                    creation_date=current_time,
-                    creation_by="System",
-                    customer_id=customer_id
-                )
+                customer_audit = Customerauditlog()
+                customer_audit.__dict__ = customer_db.__dict__.copy()
+                customer_audit.id = None
+                customer_audit.customer=customer_db
                 customer_audit.save()
+
                 logger.info("inserted in customer audit table")
                 response_obj = get_response("success")
             else:
