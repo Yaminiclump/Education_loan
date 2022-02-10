@@ -191,16 +191,16 @@ def contact_update(req_data):
                         current_time = django.utils.timezone.now()
                         logger.debug("current_time india: %s", current_time)
 
-                        contact = Contact.objects.filter(id=contact_id).update(
-                            type=type_val,
-                            value=value,
-                            value_extra_1=value_extra_1,
-                            country_code=country_code,
-                            status=1,
-                            updation_date=current_time,
-                            updation_by="System",
-                            customer_id=customer_id)
-
+                        # update
+                        contact = Contact.objects.get(pk=contact_id)
+                        contact.type = type_val
+                        contact.value = value
+                        contact.value_extra_1 = value_extra_1
+                        contact.status = 1
+                        contact.updation_date = current_time
+                        contact.updation_by = "System"
+                        contact.customer_id = customer_id
+                        contact.save()
                         contact_log = ContactLog(
                             type=type_val,
                             value=value,
