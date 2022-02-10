@@ -314,29 +314,30 @@ def update_customer(req_data):
 
                 current_time = django.utils.timezone.now()
                 logger.debug("current_time india: %s", current_time)
-                customer_update = Customer.objects.filter(id=customer_id).update(
-                    salutation=salutation_val,
-                    first_name=first_name,
-                    middle_name=middle_name,
-                    last_name=last_name,
-                    gender=gender_val,
-                    date_of_birth=date_of_birth,
-                    relation_with_applicant=relation_with_applicant,
-                    marital_status=marital_status,
-                    father_first_name=father_first_name,
-                    father_middle_name=father_middle_name,
-                    father_last_name=father_last_name,
-                    mother_first_name=mother_first_name,
-                    mother_middle_name=mother_middle_name,
-                    mother_last_name=mother_last_name,
-                    spouse_first_name=spouse_first_name,
-                    spouse_middle_name=spouse_middle_name,
-                    spouse_last_name=spouse_last_name,
-                    no_of_family_members=no_of_family_members,
-                    household_income_monthly=household_income_monthly,
-                    status=1,
-                    updation_date=current_time,
-                    updation_by="System")
+                customer = Customer.objects.get(pk=customer_id)
+                customer.salutation = salutation_val,
+                customer.first_name = first_name,
+                customer.middle_name = middle_name,
+                customer.last_name = last_name,
+                customer.gender = gender_val,
+                customer.date_of_birth = date_of_birth,
+                customer.relation_with_applicant = relation_with_applicant,
+                customer.marital_status = marital_status,
+                customer.father_first_name = father_first_name,
+                customer.father_middle_name = father_middle_name,
+                customer.father_last_name = father_last_name,
+                customer.mother_first_name = mother_first_name,
+                customer.mother_middle_name = mother_middle_name,
+                customer.mother_last_name = mother_last_name,
+                customer.spouse_first_name = spouse_first_name,
+                customer.spouse_middle_name = spouse_middle_name,
+                customer.spouse_last_name = spouse_last_name,
+                customer.no_of_family_members = no_of_family_members,
+                customer.household_income_monthly = household_income_monthly,
+                customer.status = 1,
+                customer.updation_date = current_time,
+                customer.updation_by = "System"
+                customer.save()
                 logger.info("updated id: %s", customer_id)
 
                 customer_audit = Customerauditlog(
