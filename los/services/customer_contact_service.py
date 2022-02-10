@@ -134,7 +134,7 @@ def contact_update(req_data):
 
                 if contact_id and customer_id:
                     if type(contact_id) == int and type(customer_id) == int:
-                        if not Contact.objects.filter(id=contact_id,customer_id=customer_id).exists():
+                        if not Contact.objects.filter(id=contact_id, customer_id=customer_id).exists():
                             response_obj = get_response("id_error")
                             return response_obj
                         contact_id = contact_id
