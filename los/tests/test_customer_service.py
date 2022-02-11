@@ -1424,7 +1424,7 @@ class TestCustomerUpdate:
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['status'] == Statuses.id_not_exist['status_code']
+        assert response['status'] == Statuses.customer_id_not_exist['status_code']
 
     def test_customer_id_invalid(self):
         current_time = django.utils.timezone.now()
@@ -1463,7 +1463,7 @@ class TestCustomerUpdate:
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['status'] == Statuses.id_not_exist['status_code']
+        assert response['status'] == Statuses.customer_id_not_exist['status_code']
 
     def test_no_customer_id_parameter(self):
         current_time = django.utils.timezone.now()
@@ -1502,7 +1502,7 @@ class TestCustomerUpdate:
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['status'] == Statuses.customer_id_not_exist['status_code']
+        assert response['status'] == Statuses.generic_error_2['status_code']
 
     def test_no_customer_parameter(self):
         data = {
@@ -1523,7 +1523,7 @@ class TestCustomerUpdate:
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['status'] == Statuses.customer_id_not_exist['status_code']
+        assert response['status'] == Statuses.generic_error_2['status_code']
 
     def test_dob_format(self):
         current_time = django.utils.timezone.now()

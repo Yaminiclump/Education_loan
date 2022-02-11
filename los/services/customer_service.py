@@ -213,7 +213,7 @@ def update_customer(req_data):
                     try:
                         customer_db = Customer.objects.get(pk=variables.customer_id)
                     except ObjectDoesNotExist as e:
-                        response_obj = get_response("id_not_exist")
+                        response_obj = get_response("customer_id_not_exist")
                         return response_obj
                 else:
                     response_obj = get_response("customer_id")
