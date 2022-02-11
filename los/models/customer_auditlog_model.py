@@ -34,3 +34,6 @@ class Customerauditlog(models.Model):
     creation_date = models.DateTimeField(null=False)
     creation_by = models.TextField(null=False)
 
+    class Meta:
+        db_table = "customer_log"
+

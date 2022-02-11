@@ -17,6 +17,9 @@ class Contact(models.Model):
     updation_date = models.DateTimeField(null=True)
     updation_by = models.TextField(null=True)
 
+    class Meta:
+        db_table = "customer_contact"
+
 
 class ContactLog(models.Model):
     id = models.BigAutoField(primary_key=True)
@@ -31,3 +34,6 @@ class ContactLog(models.Model):
                                                           MaxValueValidator(9)], null=False)
     creation_date = models.DateTimeField(null=False)
     creation_by = models.TextField(null=False)
+
+    class Meta:
+        db_table = "customer_contact_log"
