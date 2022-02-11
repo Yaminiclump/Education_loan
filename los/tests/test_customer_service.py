@@ -1,15 +1,6 @@
-from django.test import TestCase
-from rest_framework import status
-from rest_framework.test import APITestCase
-from http import HTTPStatus
-from django.urls import reverse
-from django.conf import settings
-from los.services import customer_service
-from los.services.customer_service import create_service,update_customer
-from los.models.customer_auditlog_model import Customerauditlog
+from los.services.customer_service import create_service, update_customer
 from los.models.customer_model import Customer
 import django.utils.timezone
-from los.los_dict import LosDictionary
 import pytest
 from types import SimpleNamespace
 import json
@@ -21,7 +12,7 @@ logger = logging.getLogger("django")
 
 
 @pytest.mark.django_db
-class Test_Customer_Create():
+class TestCustomerCreate:
 
     def test_first_name_blank(self):
         data = {
@@ -46,7 +37,7 @@ class Test_Customer_Create():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = create_service(data)
         logger.info("response: %s", response)
-        assert response['status'] == Statuses.first_name['status_code']
+        assert response['status'] == Statuses.success['status_code']
 
     def test_salutation_uppercase(self):
         data = {
@@ -85,7 +76,7 @@ class Test_Customer_Create():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = create_service(data)
         logger.info("response: %s", response)
-        assert response['status'] == Statuses.generic_error_2['status_code']
+        assert response['status'] == Statuses.salutation['status_code']
 
     def test_gender_invalid(self):
         data = {
@@ -588,7 +579,7 @@ class Test_Customer_Create():
     def test_dob_format(self):
         data = {
             "customer": {
-                "first_name": "Abcdd",
+                "first_name": "Abc dd",
                 "date_of_birth": "05-11-1995"
             }
         }
@@ -627,7 +618,7 @@ class Test_Customer_Create():
     def test_no_of_family_members_notint(self):
         data = {
             "customer": {
-                "first_name": "Abcdd",
+                "first_name": "Abc dd",
                 "date_of_birth": "1995-05-11",
                 "no_of_family_members": "67gg",
             }
@@ -641,7 +632,7 @@ class Test_Customer_Create():
     def test_household_income_monthly_notint(self):
         data = {
             "customer": {
-                "first_name": "Abcdd",
+                "first_name": "Abc dd",
                 "date_of_birth": "1995-05-11",
                 "household_income_monthly": "67gg",
             }
@@ -655,7 +646,7 @@ class Test_Customer_Create():
     def test_no_of_family_members_float(self):
         data = {
             "customer": {
-                "first_name": "Abcdd",
+                "first_name": "Abc dd",
                 "no_of_family_members": 5.5
             }
         }
@@ -668,7 +659,7 @@ class Test_Customer_Create():
     def test_household_income_monthly_float(self):
         data = {
             "customer": {
-                "first_name": "Abcdd",
+                "first_name": "Abc dd",
                 "household_income_monthly": 5.5
             }
         }
@@ -722,7 +713,7 @@ class Test_Customer_Create():
 
 
 @pytest.mark.django_db
-class Test_Customer_Update():
+class TestCustomerUpdate:
 
     def test_first_name_blank(self):
         current_time = django.utils.timezone.now()
@@ -1433,7 +1424,7 @@ class Test_Customer_Update():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['status'] == Statuses.id_notexist['status_code']
+        assert response['status'] == Statuses.id_not_exist['status_code']
 
     def test_customer_id_invalid(self):
         current_time = django.utils.timezone.now()
@@ -1472,7 +1463,7 @@ class Test_Customer_Update():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['status'] == Statuses.id_notexist['status_code']
+        assert response['status'] == Statuses.id_not_exist['status_code']
 
     def test_no_customer_id_parameter(self):
         current_time = django.utils.timezone.now()
@@ -1511,7 +1502,7 @@ class Test_Customer_Update():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['status'] == Statuses.customer_id['status_code']
+        assert response['status'] == Statuses.customer_id_not_exist['status_code']
 
     def test_no_customer_parameter(self):
         data = {
@@ -1532,7 +1523,7 @@ class Test_Customer_Update():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['status'] == Statuses.customer_id['status_code']
+        assert response['status'] == Statuses.customer_id_not_exist['status_code']
 
     def test_dob_format(self):
         current_time = django.utils.timezone.now()
@@ -1565,7 +1556,7 @@ class Test_Customer_Update():
         data = {
             "customer": {
                 "customer_id": create_customer.id,
-                "first_name": "Abcdd",
+                "first_name": "Abc dd",
                 "date_of_birth": "05-11-1995"
             }
         }
@@ -1606,7 +1597,7 @@ class Test_Customer_Update():
         data = {
             "customer": {
                 "customer_id": create_customer.id,
-                "first_name": "Abcdd",
+                "first_name": "Abc dd",
                 "date_of_birth": "1995-05-11",
                 "relation_with_applicant": "FATHER",
             }
@@ -1648,7 +1639,7 @@ class Test_Customer_Update():
         data = {
             "customer": {
                 "customer_id": create_customer.id,
-                "first_name": "Abcdd",
+                "first_name": "Abc dd",
                 "date_of_birth": "1995-05-11",
                 "relation_with_applicant": "random123",
             }
@@ -1690,7 +1681,7 @@ class Test_Customer_Update():
         data = {
             "customer": {
                 "customer_id": create_customer.id,
-                "first_name": "Abcdd",
+                "first_name": "Abc dd",
                 "date_of_birth": "1995-05-11",
                 "no_of_family_members": "67gg",
             }
@@ -1732,7 +1723,7 @@ class Test_Customer_Update():
         data = {
             "customer": {
                 "customer_id": create_customer.id,
-                "first_name": "Abcdd",
+                "first_name": "Abc dd",
                 "date_of_birth": "1995-05-11",
                 "household_income_monthly": "67gg",
             }
@@ -1774,7 +1765,7 @@ class Test_Customer_Update():
         data = {
             "customer": {
                 "customer_id": create_customer.id,
-                "first_name": "Abcdd",
+                "first_name": "Abc dd",
                 "no_of_family_members": 5.5
             }
         }
@@ -1815,7 +1806,7 @@ class Test_Customer_Update():
         data = {
             "customer": {
                 "customer_id": create_customer.id,
-                "first_name": "Abcdd",
+                "first_name": "Abc dd",
                 "household_income_monthly": 5.5
             }
         }
@@ -1823,7 +1814,7 @@ class Test_Customer_Update():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['status'] == Statuses.check_numeric_family['status_code']
+        assert response['status'] == Statuses.check_numeric_income['status_code']
 
     def test_customer_update_service_success(self):
         current_time = django.utils.timezone.now()

@@ -30,14 +30,14 @@ def contact_service(req_data):
                 if customer_id:
                     if type(customer_id) == int:
                         if not Customer.objects.filter(id=customer_id).exists():
-                            response_obj = get_response("id_notexist")
+                            response_obj = get_response("customer_id_not_exist")
                             return response_obj
                         customer_id = customer_id
                     else:
                         response_obj = get_response("check_numeric")
                         return response_obj
                 else:
-                    response_obj = get_response("customer_id")
+                    response_obj = get_response("customer_id_not_exist")
                     return response_obj
 
                 if contact:
@@ -142,7 +142,7 @@ def contact_update(req_data):
                         response_obj = get_response("check_numeric")
                         return response_obj
                 else:
-                    response_obj = get_response("customer_id")
+                    response_obj = get_response("customer_id_not_exist")
                     return response_obj
                 get_contact = Contact.objects.filter(id=contact_id)
                 if contact:
