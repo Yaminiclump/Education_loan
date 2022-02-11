@@ -27,7 +27,8 @@ class Customer(models.Model):
     spouse_last_name = models.TextField(null=True)
     no_of_family_members = models.PositiveSmallIntegerField(validators=[MinValueValidator(0),
                                                                         MaxValueValidator(99)], null=True)
-    household_income_monthly = models.IntegerField(max_length=20, null=True)
+    household_income_monthly = models.IntegerField(validators=[MinValueValidator(0),
+                                                               MaxValueValidator(9999999999)], null=True)
     status = models.PositiveSmallIntegerField(validators=[MinValueValidator(0),
                                                           MaxValueValidator(9)], null=True)
     creation_date = models.DateTimeField(null=False)

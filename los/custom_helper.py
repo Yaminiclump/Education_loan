@@ -37,7 +37,10 @@ def get_value(obj, param):
 
 def clean_string(str_val):
     if str_val:
-        sanitized = str_val.strip()
+        if type(str_val) == int:
+            sanitized = str_val
+        else:
+            sanitized = str_val.strip()
         sanitized = sanitized if sanitized else None
         return sanitized
     else:
@@ -46,7 +49,10 @@ def clean_string(str_val):
 
 def lower_case_string(str_val):
     if str_val:
-        sanitized = str_val.lower()
+        if type(str_val) == int:
+            sanitized = str_val
+        else:
+            sanitized = str_val.lower()
         return sanitized
     else:
         return None
