@@ -1,3 +1,4 @@
+from los.models.empty_class import EmptyClass
 from los.services.customer_service import create_service, update_customer
 from los.models.customer_model import Customer
 import django.utils.timezone
@@ -564,6 +565,14 @@ class TestCustomerCreate:
         logger.info("response: %s", response)
         assert response['status'] == Statuses.generic_error_1['status_code']
 
+    def test_data_null(self):
+        data = None
+        data = json.dumps(data)
+        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
+        response = create_service(data)
+        logger.info("response: %s", response)
+        assert response['status'] == Statuses.generic_error_1['status_code']
+
     def test_no_data_in_customer_object(self):
         data = {
             "customer": {
@@ -710,6 +719,13 @@ class TestCustomerCreate:
         response = create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
+
+    def test_exception(self):
+        logger.info("Test for checking if the program throws an exception when db access is denied")
+        data = EmptyClass()
+        logger.info("reponse_data: %s", data)
+        response = create_service(None)
+        assert response["status"] == Statuses.generic_error_2["status_code"]
 
 
 @pytest.mark.django_db
@@ -1502,7 +1518,7 @@ class TestCustomerUpdate:
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['status'] == Statuses.generic_error_2['status_code']
+        assert response['status'] == Statuses.customer_id_not_exist['status_code']
 
     def test_no_customer_parameter(self):
         data = {
@@ -1523,7 +1539,15 @@ class TestCustomerUpdate:
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = update_customer(data)
         logger.info("response: %s", response)
-        assert response['status'] == Statuses.generic_error_2['status_code']
+        assert response['status'] == Statuses.customer_id_not_exist['status_code']
+
+    def test_no_data(self):
+        data = None
+        data = json.dumps(data)
+        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
+        response = update_customer(data)
+        logger.info("response: %s", response)
+        assert response['status'] == Statuses.generic_error_1['status_code']
 
     def test_dob_format(self):
         current_time = django.utils.timezone.now()
@@ -1874,3 +1898,11 @@ class TestCustomerUpdate:
         response = update_customer(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
+
+    def test_exception(self, django_db_blocker):
+        logger.info("Test for checking if the program throws an exception when db access is denied")
+        data = EmptyClass()
+        data.customer_id = 0
+        with django_db_blocker.block():
+            response_obj = update_customer(data)
+        assert response_obj["status"] == Statuses.generic_error_2["status_code"]

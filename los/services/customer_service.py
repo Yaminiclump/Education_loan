@@ -118,36 +118,33 @@ def create_service(req_data):
                 customer.save()
                 logger.info("inserted in customer table")
 
-                if customer.id:
-                    customer_audit = Customerauditlog(
-                        salutation=salutation_val,
-                        first_name=first_name,
-                        middle_name=middle_name,
-                        last_name=last_name,
-                        gender=gender_val,
-                        date_of_birth=date_of_birth,
-                        relation_with_applicant=relation_with_applicant_val,
-                        marital_status=marital_status_val,
-                        father_first_name=father_first_name,
-                        father_middle_name=father_middle_name,
-                        father_last_name=father_last_name,
-                        mother_first_name=mother_first_name,
-                        mother_middle_name=mother_middle_name,
-                        mother_last_name=mother_last_name,
-                        spouse_first_name=spouse_first_name,
-                        spouse_middle_name=spouse_middle_name,
-                        spouse_last_name=spouse_last_name,
-                        no_of_family_members=no_of_family_members,
-                        household_income_monthly=household_income_monthly,
-                        status=1,
-                        creation_date=current_time,
-                        creation_by="System",
-                        customer_id=customer.id)
-                    customer_audit.save()
-                    logger.info("inserted in customer audit table")
-                else:
-                    response_obj = get_response("customer_id")
-                    return response_obj
+                customer_audit = Customerauditlog(
+                    salutation=salutation_val,
+                    first_name=first_name,
+                    middle_name=middle_name,
+                    last_name=last_name,
+                    gender=gender_val,
+                    date_of_birth=date_of_birth,
+                    relation_with_applicant=relation_with_applicant_val,
+                    marital_status=marital_status_val,
+                    father_first_name=father_first_name,
+                    father_middle_name=father_middle_name,
+                    father_last_name=father_last_name,
+                    mother_first_name=mother_first_name,
+                    mother_middle_name=mother_middle_name,
+                    mother_last_name=mother_last_name,
+                    spouse_first_name=spouse_first_name,
+                    spouse_middle_name=spouse_middle_name,
+                    spouse_last_name=spouse_last_name,
+                    no_of_family_members=no_of_family_members,
+                    household_income_monthly=household_income_monthly,
+                    status=1,
+                    creation_date=current_time,
+                    creation_by="System",
+                    customer_id=customer.id)
+                customer_audit.save()
+                logger.info("inserted in customer audit table")
+
                 response_obj = get_response("success")
             else:
                 response_obj = get_response("generic_error_1")
@@ -216,7 +213,7 @@ def update_customer(req_data):
                         response_obj = get_response("customer_id_not_exist")
                         return response_obj
                 else:
-                    response_obj = get_response("customer_id")
+                    response_obj = get_response("customer_id_not_exist")
                     return response_obj
 
                 logger.debug("customer_db: %s", customer_db)
