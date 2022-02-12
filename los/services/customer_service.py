@@ -6,7 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from los.custom_helper import get_string_lower, get_value, validate_numeric, validate_dict, validate_date, \
     set_db_attr_request
 from los.los_dict import LosDictionary
-from los.models.customer_auditlog_model import CustomerLog
+from los.models.customer_log_model import CustomerLog
 from los.models.customer_model import Customer
 from los.models.empty_class import EmptyClass
 from los.status_code import get_response

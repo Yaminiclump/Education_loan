@@ -36,5 +36,5 @@ class CustomerLog(models.Model):
     creation_by = models.TextField(null=False)
 
     class Meta:
-        db_table = "customer_log"
+        db_table = "los_customer_log"
 
