@@ -720,11 +720,35 @@ class TestCustomerCreate:
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
-    def test_exception(self):
+    def test_exception(self,django_db_blocker):
         logger.info("Test for checking if the program throws an exception when db access is denied")
-        data = EmptyClass()
-        logger.info("reponse_data: %s", data)
-        response = create_service(None)
+        data={
+            "customer": {
+                "salutation": "mr",
+                "first_name": "abc",
+                "middle_name": "abc",
+                "last_name": "abc",
+                "gender": "male",
+                "date_of_birth": "2019-10-25",
+                "relation_with_applicant": "father",
+                "marital_status": "married",
+                "father_first_name": "abc",
+                "father_middle_name": "abc",
+                "father_last_name": "abc",
+                "mother_first_name": "abc",
+                "mother_middle_name": "abc",
+                "mother_last_name": "abc",
+                "spouse_first_name": "abc",
+                "spouse_middle_name": "abc",
+                "spouse_last_name": "abc",
+                "no_of_family_members": 4,
+                "household_income_monthly": 5000
+            }
+        }
+        data = json.dumps(data)
+        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
+        with django_db_blocker.block():
+            response = create_service(data)
         assert response["status"] == Statuses.generic_error_2["status_code"]
 
 
@@ -1901,8 +1925,32 @@ class TestCustomerUpdate:
 
     def test_exception(self, django_db_blocker):
         logger.info("Test for checking if the program throws an exception when db access is denied")
-        data = EmptyClass()
-        data.customer_id = 0
+        data = {
+            "customer": {
+                "customer_id": 2,
+                "salutation": "mr",
+                "first_name": "abc",
+                "middle_name": "abc",
+                "last_name": "abc",
+                "gender": "male",
+                "date_of_birth": "2019-10-25",
+                "relation_with_applicant": 0,
+                "marital_status": "married",
+                "father_first_name": "abc",
+                "father_middle_name": "abc",
+                "father_last_name": "abc",
+                "mother_first_name": "abc",
+                "mother_middle_name": "abc",
+                "mother_last_name": "abc",
+                "spouse_first_name": "abc",
+                "spouse_middle_name": "abc",
+                "spouse_last_name": "abc",
+                "no_of_family_members": 4,
+                "household_income_monthly": 5000
+            }
+        }
+        data = json.dumps(data)
+        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         with django_db_blocker.block():
             response_obj = update_customer(data)
         assert response_obj["status"] == Statuses.generic_error_2["status_code"]
