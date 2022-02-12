@@ -7,8 +7,8 @@ from django.conf import settings
 from los.services.customer_contact_service import contact_service
 from los.services.customer_contact_service import contact_update
 
-from los.models.customer_contact_model import Contact
-from los.models.customer_contact_model import ContactLog
+from los.models.customer_contact_model import CustomerContact
+from los.models.customer_contact_model import CustomerContactLog
 from los.models.customer_model import Customer
 import django.utils.timezone
 from los.los_dict import LosDictionary

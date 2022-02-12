@@ -1,7 +1,8 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
-class Contact(models.Model):
+
+class CustomerContact(models.Model):
     id = models.BigAutoField(primary_key=True)
     customer = models.ForeignKey('Customer', on_delete=models.SET_NULL, null=True)
     type = models.PositiveSmallIntegerField(validators=[MinValueValidator(0),
@@ -18,10 +19,10 @@ class Contact(models.Model):
     updation_by = models.TextField(null=True)
 
     class Meta:
-        db_table = "customer_contact"
+        db_table = "los_customer_contact"
 
 
-class ContactLog(models.Model):
+class CustomerContactLog(models.Model):
     id = models.BigAutoField(primary_key=True)
     customer = models.ForeignKey('Customer', on_delete=models.SET_NULL, null=True)
     type = models.PositiveSmallIntegerField(validators=[MinValueValidator(0),
@@ -36,4 +37,4 @@ class ContactLog(models.Model):
     creation_by = models.TextField(null=False)
 
     class Meta:
-        db_table = "customer_contact_log"
+        db_table = "los_customer_contact_log"

@@ -3,16 +3,14 @@ from io import BytesIO
 import django.utils.timezone
 from django.core.files.storage import default_storage
 from los.status_code import get_response
-from los.models.customer_contact_model import Contact
+from los.models.customer_contact_model import CustomerContact
 from los.los_dict import LosDictionary
 from django.http import JsonResponse,HttpResponse
 import datetime
 from datetime import datetime,date
 from los.custom_helper import get_string_lower, clean_string, get_value, validate_numeric,validate_dict,fetch_value,validate_email,validate_mob
 from los.models.customer_model import Customer
-from los.models.customer_contact_model import Contact, ContactLog
-from django.db import transaction
-
+from los.models.customer_contact_model import CustomerContact, CustomerContactLog
 logger = logging.getLogger("django")
 
 
@@ -83,8 +81,17 @@ def contact_service(req_data):
                         logger.info("dict_type: %s", type_val)
                         current_time = django.utils.timezone.now()
                         logger.debug("current_time india: %s", current_time)
-                        with transaction.atomic():
-                            contact = Contact(
+                        contact = CustomerContact(
+                            type=type_val,
+                            value=value,
+                            value_extra_1=value_extra_1,
+                            country_code=country_code,
+                            status=1,
+                            creation_date=current_time,
+                            creation_by="System",
+                            customer_id=customer_id)
+                        contact.save()
+                        contact_log = CustomerContactLog(
                                 type=type_val,
                                 value=value,
                                 value_extra_1=value_extra_1,
@@ -93,17 +100,7 @@ def contact_service(req_data):
                                 creation_date=current_time,
                                 creation_by="System",
                                 customer_id=customer_id)
-                            contact.save()
-                            contact_log = ContactLog(
-                                    type=type_val,
-                                    value=value,
-                                    value_extra_1=value_extra_1,
-                                    country_code=country_code,
-                                    status=1,
-                                    creation_date=current_time,
-                                    creation_by="System",
-                                    customer_id=customer_id)
-                            contact_log.save()
+                        contact_log.save()
                         logger.info("inserted in contact audit table")
                         response_obj = get_response("success")
                 else:
@@ -137,7 +134,7 @@ def contact_update(req_data):
 
                 if contact_id and customer_id:
                     if type(contact_id) == int and type(customer_id) == int:
-                        if not Contact.objects.filter(id=contact_id, customer_id=customer_id).exists():
+                        if not CustomerContact.objects.filter(id=contact_id, customer_id=customer_id).exists():
                             response_obj = get_response("id_error")
                             return response_obj
                         contact_id = contact_id
@@ -147,7 +144,7 @@ def contact_update(req_data):
                 else:
                     response_obj = get_response("customer_id_not_exist")
                     return response_obj
-                get_contact = Contact.objects.filter(id=contact_id)
+                get_contact = CustomerContact.objects.filter(id=contact_id)
                 if contact:
                     for i in contact:
                         type_val = get_value(i, "type")
@@ -195,7 +192,7 @@ def contact_update(req_data):
                         logger.debug("current_time india: %s", current_time)
 
                         # update
-                        contact = Contact.objects.get(pk=contact_id)
+                        contact = CustomerContact.objects.get(pk=contact_id)
                         contact.type = type_val
                         contact.value = value
                         contact.value_extra_1 = value_extra_1
@@ -204,7 +201,7 @@ def contact_update(req_data):
                         contact.updation_by = "System"
                         contact.customer_id = customer_id
                         contact.save()
-                        contact_log = ContactLog(
+                        contact_log = CustomerContactLog(
                             type=type_val,
                             value=value,
                             value_extra_1=value_extra_1,

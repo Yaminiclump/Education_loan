@@ -1,0 +1,11 @@
+[run]
+source = .
+branch = False
+timid = True
+[report]
+show_missing = False
+include = loan_origination_service/*
+          los/*
+
+[html]
+title = Code Coverage

@@ -2,7 +2,7 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 
-class Customerauditlog(models.Model):
+class CustomerLog(models.Model):
     id = models.BigAutoField(primary_key=True)
     customer = models.ForeignKey('Customer', on_delete=models.SET_NULL, null=True)
     salutation = models.PositiveSmallIntegerField(validators=[MinValueValidator(0),
@@ -36,5 +36,5 @@ class Customerauditlog(models.Model):
     creation_by = models.TextField(null=False)
 
     class Meta:
-        db_table = "customer_log"
+        db_table = "los_customer_log"
 
