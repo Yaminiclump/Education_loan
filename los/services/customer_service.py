@@ -6,7 +6,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from los.custom_helper import get_string_lower, get_value, validate_numeric, validate_dict, validate_date, \
     set_db_attr_request
 from los.los_dict import LosDictionary
-from los.models.customer_auditlog_model import Customerauditlog
+from los.models.customer_auditlog_model import CustomerLog
 from los.models.customer_model import Customer
 from los.models.empty_class import EmptyClass
 from los.status_code import get_response
@@ -54,7 +54,6 @@ def create_service(req_data):
                 marital_status_val = validate_dict(marital_status, LosDictionary.marital_status)
                 relation_with_applicant_val = validate_dict(relation_with_applicant, LosDictionary.relation_with_applicant)
 
-                #
                 no_of_family_members = validate_numeric(no_of_family_members)
                 household_income_monthly = validate_numeric(household_income_monthly)
 
@@ -118,7 +117,7 @@ def create_service(req_data):
                 customer.save()
                 logger.info("inserted in customer table")
 
-                customer_audit = Customerauditlog(
+                customer_log = CustomerLog(
                     salutation=salutation_val,
                     first_name=first_name,
                     middle_name=middle_name,
@@ -142,7 +141,7 @@ def create_service(req_data):
                     creation_date=current_time,
                     creation_by="System",
                     customer_id=customer.id)
-                customer_audit.save()
+                customer_log.save()
                 logger.info("inserted in customer audit table")
 
                 response_obj = get_response("success")
@@ -261,11 +260,13 @@ def update_customer(req_data):
                 customer_db.save()
                 logger.info("updated id: %s", variables.customer_id)
 
-                customer_audit = Customerauditlog()
-                customer_audit.__dict__ = customer_db.__dict__.copy()
-                customer_audit.id = None
-                customer_audit.customer = customer_db
-                customer_audit.save()
+                customer_log = CustomerLog()
+                customer_log.__dict__ = customer_db.__dict__.copy()
+                customer_log.id = None
+                customer_log.customer = customer_db
+                customer_log.creation_date = current_time
+                customer_log.creation_by = "System"
+                customer_log.save()
 
                 logger.info("inserted in customer audit table")
                 response_obj = get_response("success")
