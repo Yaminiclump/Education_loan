@@ -11,6 +11,8 @@ from datetime import datetime,date
 from los.custom_helper import get_string_lower, clean_string, get_value, validate_numeric,validate_dict,fetch_value,validate_email,validate_mob
 from los.models.customer_model import Customer
 from los.models.customer_contact_model import CustomerContact, CustomerContactLog
+from django.db import transaction
+
 logger = logging.getLogger("django")
 
 
@@ -81,17 +83,8 @@ def contact_service(req_data):
                         logger.info("dict_type: %s", type_val)
                         current_time = django.utils.timezone.now()
                         logger.debug("current_time india: %s", current_time)
-                        contact = CustomerContact(
-                            type=type_val,
-                            value=value,
-                            value_extra_1=value_extra_1,
-                            country_code=country_code,
-                            status=1,
-                            creation_date=current_time,
-                            creation_by="System",
-                            customer_id=customer_id)
-                        contact.save()
-                        contact_log = CustomerContactLog(
+                        with transaction.atomic():
+                            contact = CustomerContact(
                                 type=type_val,
                                 value=value,
                                 value_extra_1=value_extra_1,
@@ -100,7 +93,17 @@ def contact_service(req_data):
                                 creation_date=current_time,
                                 creation_by="System",
                                 customer_id=customer_id)
-                        contact_log.save()
+                            contact.save()
+                            contact_log = CustomerContactLog(
+                                    type=type_val,
+                                    value=value,
+                                    value_extra_1=value_extra_1,
+                                    country_code=country_code,
+                                    status=1,
+                                    creation_date=current_time,
+                                    creation_by="System",
+                                    customer_id=customer_id)
+                            contact_log.save()
                         logger.info("inserted in contact audit table")
                         response_obj = get_response("success")
                 else:
