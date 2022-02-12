@@ -19,23 +19,19 @@ class Statuses:
     relation_with_applicant = {'status_code': 200115, 'message': "Please select a valid relationship with the applicant"}
     check_numeric_family = {'status_code': 200116, 'message': "Please enter a valid number of family members"}
     check_numeric_income = {'status_code': 200117, 'message': "Please enter a valid income"}
-    # mother_name = {'status_code': 200116, 'message': "Please provide a valid mother name"}
-    # spouse_name = {'status_code': 200117, 'message': "Please provide a valid spouse name"}
-    # father_name = {'status_code': 200113, 'message': "Please provide a valid father name"}
-    # customer_id = {'status_code': 200115, 'message': "customer id parameters might be missing"}
-
     test_get = {'status_code': 405}
     test_post = {'status_code': 200}
-
-    # string_blank = {'status_code': 200015, 'message': "value is not valid"}
-    # check_parameter = {'status_code': 200017, 'message': "Some parameters might be missing or are in wrong format"}
-
     check_country_code = {'status_code': 200210, 'message': "country code parameters might be missing"}
     type = {'status_code': 200211, 'message': "type not implemented"}
     email_validate = {'status_code': 200212, 'message': "Invalid Email"}
     mob_validate = {'status_code': 200213, 'message': "Invalid mobile number."}
     id_error = {'status_code': 200214, 'message': "contact id and customer id are not exist."}
     id_param = {'status_code': 200215, 'message': "contact id and customer id might be missing"}
+    type_param = {'status_code': 200216, 'message': "type parameters might be missing"}
+    value_param = {'status_code': 200217, 'message': "value parameters might be missing"}
+    contact_param = {'status_code': 200217, 'message': "contact parameters might be missing"}
+
+
 
 
 def get_response(error_type, data=None):

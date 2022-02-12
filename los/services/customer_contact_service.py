@@ -51,11 +51,11 @@ def contact_service(req_data):
                         logger.info("type_val: %s", type_val)
 
                         if type_val is None:
-                            response_obj = get_response("check_parameter")
+                            response_obj = get_response("type_param")
                             return response_obj
 
                         if value is None:
-                            response_obj = get_response("check_parameter")
+                            response_obj = get_response("value_param")
                             return response_obj
 
                         # validation
@@ -107,7 +107,7 @@ def contact_service(req_data):
                         logger.info("inserted in contact audit table")
                         response_obj = get_response("success")
                 else:
-                    response_obj = get_response("check_parameter")
+                    response_obj = get_response("contact_param")
                     return response_obj
             else:
                 response_obj = get_response("check_parameter")
@@ -214,7 +214,7 @@ def contact_update(req_data):
                             creation_by="System",
                             customer_id=customer_id)
                         contact_log.save()
-                        logger.info("inserted in contact audit table")
+                        logger.info("finished contact update service")
                         response_obj = get_response("success")
                 else:
                     response_obj = get_response("check_parameter")
