@@ -57,10 +57,6 @@ def customer_contact(request):
     logger.info("response: %s", response_obj)
     return JsonResponse(response_obj, safe=False)
 
-
-
-
-
 @csrf_exempt
 @swagger_auto_schema(
     method="post",
