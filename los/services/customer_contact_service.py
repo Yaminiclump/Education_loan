@@ -40,7 +40,7 @@ def contact_service(req_data):
                 else:
                     response_obj = get_response("invalid_id")
                     return response_obj
-
+                count = 0
                 if contact_list:
                     for contact in contact_list:
                         type_val = get_string_lower(contact, "type")
@@ -93,7 +93,7 @@ def contact_service(req_data):
                         current_time = django.utils.timezone.now()
                         logger.debug("current_time india: %s", current_time)
                         with transaction.atomic():
-                            contact = CustomerContact(
+                            cust_contact = CustomerContact(
                                 type=type_val,
                                 value=value,
                                 value_extra_1=value_extra_1,
@@ -102,7 +102,8 @@ def contact_service(req_data):
                                 creation_date=current_time,
                                 creation_by=CREATION_BY,
                                 customer_id=customer_id)
-                            contact.save()
+                            cust_contact.save()
+
                             cust_contact_log = CustomerContactLog(
                                 type=type_val,
                                 value=value,
@@ -112,10 +113,11 @@ def contact_service(req_data):
                                 creation_date=current_time,
                                 creation_by=CREATION_BY,
                                 customer_id=customer_id,
-                                customercontact_id=contact.id)
+                                customercontact_id=cust_contact.id)
                             cust_contact_log.save()
                         logger.info("finished contact create service")
-                        response_obj = get_response("success")
+                        logger.debug("contact_id: %s", cust_contact.id)
+                        response_obj = get_response("success", {"contact_id": cust_contact.id})
 
                 else:
                     response_obj = get_response("contact_param")

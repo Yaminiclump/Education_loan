@@ -1,4 +1,5 @@
 import json
+from string import Template
 
 
 class Statuses:
@@ -23,7 +24,7 @@ class Statuses:
     test_post = {'status_code': 200}
     check_country_code = {'status_code': 200210, 'message': "country code parameters might be missing"}
     type = {'status_code': 200211, 'message': "type not implemented"}
-    email_validate = {'status_code': 200212, 'message': "Invalid Email"}
+    email_validate = {'status_code': 200212, 'message': "Invalid Email in sequence $no"}
     mob_validate = {'status_code': 200213, 'message': "Invalid mobile number."}
     id_error = {'status_code': 200214, 'message': "contact id and customer id are not exist."}
     id_param = {'status_code': 200215, 'message': "contact id and customer id might be missing"}
