@@ -201,7 +201,7 @@ def contact_update(req_data):
                         cus_contact_log.creation_date = current_time
                         cus_contact_log.creation_by = CREATION_BY
                         cus_contact_log.save()
-                        # logger.info("finished contact update service")
+                        logger.info("finished contact update service")
                         response_obj = get_response("success")
                 else:
                     response_obj = get_response("check_parameter")
