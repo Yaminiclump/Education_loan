@@ -206,7 +206,6 @@ def contact_update(req_data):
 
                             if variables.country_code is not None:
                                 response_obj = get_response("country_code")
-                                transaction.set_rollback(True)
                                 return response_obj
 
                         set_db_attr_request(customer_contact_db, contact, variables)
