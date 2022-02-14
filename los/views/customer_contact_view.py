@@ -47,12 +47,9 @@ def customer_contact(request):
 
         if request.method == 'POST':
             logger.debug("post_data: %s", request.body)
-
             data = json.loads(request.body.decode("utf-8"), object_hook=lambda d: SimpleNamespace(**d))
-            logger.debug("post_after: %s", data.customer.customer_id)
-
             response_obj = contact_service(data)
-            logger.debug("inserted contact and contact log table")
+            logger.debug("finished create contact")
         else:
             response_obj = {"status_code": Statuses.invalid_request["status_code"], "message": Statuses.invalid_request["message"]}
 
@@ -101,12 +98,9 @@ def update_contact(request):
 
         if request.method == 'POST':
             logger.debug("post_data: %s", request.body)
-
             data = json.loads(request.body.decode("utf-8"), object_hook=lambda d: SimpleNamespace(**d))
-            # logger.debug("post_after: %s", data.customer.customer_id)
-
             response_obj = contact_update(data)
-            logger.debug("updated in contact table")
+            logger.debug("finished contact update")
         else:
             response_obj = {"status_code": Statuses.invalid_request["status_code"], "message": Statuses.invalid_request["message"]}
 
