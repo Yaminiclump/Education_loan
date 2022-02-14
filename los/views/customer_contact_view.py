@@ -76,7 +76,7 @@ def customer_contact(request):
             type=openapi.TYPE_OBJECT,
             required=["contact_id", "customer_id", "contacts"],
             properties={"contact_id": openapi.Schema(type=openapi.TYPE_INTEGER, description="contact id"),
-                        "customer_id": openapi.Schema(type=openapi.TYPE_INTEGER, description="customer id"),
+                        # "customer_id": openapi.Schema(type=openapi.TYPE_INTEGER, description="customer id"),
                         "contacts": openapi.Items(
                             type=openapi.TYPE_ARRAY,
                             items=openapi.Items(
@@ -103,7 +103,7 @@ def update_contact(request):
             logger.debug("post_data: %s", request.body)
 
             data = json.loads(request.body.decode("utf-8"), object_hook=lambda d: SimpleNamespace(**d))
-            logger.debug("post_after: %s", data.customer.customer_id)
+            # logger.debug("post_after: %s", data.customer.customer_id)
 
             response_obj = contact_update(data)
             logger.debug("updated in contact table")
