@@ -86,9 +86,9 @@ def contact_service(req_data):
                                 value=value,
                                 value_extra_1=value_extra_1,
                                 country_code=country_code,
-                                status=1,
+                                status=STATUS_ACTIVE,
                                 creation_date=current_time,
-                                creation_by="System",
+                                creation_by=CREATION_BY,
                                 customer_id=customer_id)
                             contact.save()
                             contact_log = CustomerContactLog(
@@ -96,9 +96,9 @@ def contact_service(req_data):
                                 value=value,
                                 value_extra_1=value_extra_1,
                                 country_code=country_code,
-                                status=1,
+                                status=STATUS_ACTIVE,
                                 creation_date=current_time,
-                                creation_by="System",
+                                creation_by=CREATION_BY,
                                 customer_id=customer_id)
                             contact_log.save()
                         logger.info("inserted in contact audit table")
@@ -145,17 +145,6 @@ def contact_update(req_data):
                     response_obj = get_response("invalid_id")
                     return response_obj
 
-                # if variables.contact_id:
-                #     try:
-                #         contact_db = CustomerContact.objects.get(pk=variables.contact_id)
-                #     except ObjectDoesNotExist as e:
-                #         response_obj = get_response("customer_id_not_exist")
-                #         return response_obj
-                # else:
-                #     response_obj = get_response("customer_id_not_exist")
-                #     return response_obj
-                # logger.debug("customer_db: %s", contact_db)
-
                 if contact_list:
                     for contact in contact_list:
                         variables = EmptyClass()
@@ -183,7 +172,7 @@ def contact_update(req_data):
                             response_obj = get_response("type")
                             return response_obj
 
-                        if variables.type == 10:
+                        if variables.type == LosDictionary.contact_type['mob']:
                             check_mob = validate_mob(variables.value)
                             if check_mob == str():
                                 response_obj = get_response("mob_validate")
@@ -192,7 +181,7 @@ def contact_update(req_data):
                                 response_obj = get_response("check_country_code")
                                 return response_obj
 
-                        if variables.type == 11:
+                        if variables.type == LosDictionary.contact_type['email']:
                             check_email = validate_email(variables.value)
                             if check_email == str():
                                 response_obj = get_response("email_validate")
@@ -202,7 +191,7 @@ def contact_update(req_data):
                         current_time = django.utils.timezone.now()
                         logger.debug("current_time india: %s", current_time)
                         customer_contact_db.updation_date = current_time
-                        customer_contact_db.updation_by = "System"
+                        customer_contact_db.updation_by = UPDATION_BY
                         customer_contact_db.save()
 
                         # contact_log = CustomerContactLog()
