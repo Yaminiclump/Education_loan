@@ -108,7 +108,7 @@ def contact_service(req_data):
                                 customer_id=customer_id,
                                 contact_id=contact.id)
                             contact_log.save()
-                        logger.info("inserted in contact audit table")
+                        logger.info("finished contact create service")
                         response_obj = get_response("success")
 
                 else:
