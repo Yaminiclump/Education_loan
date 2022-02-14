@@ -2,7 +2,7 @@ import logging
 import django.utils.timezone
 from los.status_code import get_response
 from los.los_dict import LosDictionary
-from los.custom_helper import get_string_lower, clean_string, get_value, validate_numeric,validate_dict,fetch_value,validate_email,validate_mob, set_db_attr_request,get_attributes
+from los.custom_helper import get_string_lower, clean_string, get_value, validate_numeric,validate_dict,fetch_value,validate_email,validate_mob, set_db_attr_request, get_attributes
 from los.models.customer_model import Customer
 from los.models.customer_contact_model import CustomerContact, CustomerContactLog
 from django.db import transaction
@@ -51,32 +51,38 @@ def contact_service(req_data):
 
                         if type_val is None:
                             response_obj = get_response("type_param")
+                            transaction.set_rollback(True)
                             return response_obj
 
                         if value is None:
                             response_obj = get_response("value_param")
+                            transaction.set_rollback(True)
                             return response_obj
 
                         # validation
                         type_val = validate_dict(type_val, LosDictionary.contact_type)
                         if type_val == dict():
                             response_obj = get_response("type")
+                            transaction.set_rollback(True)
                             return response_obj
 
                         if type_val == LosDictionary.contact_type['mob']:
                             check_mob = validate_mob(value)
                             if check_mob == str():
                                 response_obj = get_response("mob_validate")
+                                transaction.set_rollback(True)
                                 return response_obj
 
                             if country_code is None:
                                 response_obj = get_response("check_country_code")
+                                transaction.set_rollback(True)
                                 return response_obj
 
                         if type_val == LosDictionary.contact_type['email']:
                             check_email = validate_email(value)
                             if check_email == str():
                                 response_obj = get_response("email_validate")
+                                transaction.set_rollback(True)
                                 return response_obj
                         current_time = django.utils.timezone.now()
                         logger.debug("current_time india: %s", current_time)
@@ -99,7 +105,8 @@ def contact_service(req_data):
                                 status=STATUS_ACTIVE,
                                 creation_date=current_time,
                                 creation_by=CREATION_BY,
-                                customer_id=customer_id)
+                                customer_id=customer_id,
+                                contact_id=contact.id)
                             contact_log.save()
                         logger.info("inserted in contact audit table")
                         response_obj = get_response("success")

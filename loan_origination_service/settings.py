@@ -85,6 +85,7 @@ DATABASES = {
         'PASSWORD': 'Kuhoo_LOS',
         'HOST': 'ktspl-pgsql.cqpxwrpkjq4i.ap-south-1.rds.amazonaws.com',
         'PORT': '5432',
+        'ATOMIC_REQUESTS': True,
     }
 
 }
