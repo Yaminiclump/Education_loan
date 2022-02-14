@@ -8,6 +8,7 @@ from los.models.customer_contact_model import CustomerContact, CustomerContactLo
 from django.db import transaction
 from los.models.empty_class import EmptyClass
 from django.core.exceptions import ObjectDoesNotExist
+from los.constants import STATUS_ACTIVE, CREATION_BY, UPDATION_BY
 
 
 
@@ -25,27 +26,27 @@ def contact_service(req_data):
                 customer = req_data.customer
                 logger.info("customer_get: %s",req_data.customer)
                 customer_id = get_value(customer, 'customer_id')
-                contact = get_value(customer, 'contacts')
+                contact_list = get_value(customer, 'contacts')
 
                 if customer_id:
                     if type(customer_id) == int:
                         if not Customer.objects.filter(id=customer_id).exists():
-                            response_obj = get_response("customer_id_not_exist")
+                            response_obj = get_response("invalid_id")
                             return response_obj
                         customer_id = customer_id
                     else:
-                        response_obj = get_response("check_numeric")
+                        response_obj = get_response("invalid_id")
                         return response_obj
                 else:
-                    response_obj = get_response("customer_id_not_exist")
+                    response_obj = get_response("invalid_id")
                     return response_obj
 
-                if contact:
-                    for i in contact:
-                        type_val = get_value(i, "type")
-                        value = get_value(i, "value")
-                        value_extra_1 = get_value(i, "value_extra_1")
-                        country_code = get_value(i, "country_code")
+                if contact_list:
+                    for contact in contact_list:
+                        type_val = get_string_lower(contact, "type")
+                        value = get_string_lower(contact, "value")
+                        value_extra_1 = get_string_lower(contact, "value_extra_1")
+                        country_code = get_value(contact, "country_code")
                         logger.info("type_val: %s", type_val)
 
                         if type_val is None:
@@ -57,12 +58,12 @@ def contact_service(req_data):
                             return response_obj
 
                         # validation
-                        type_val = validate_dict(type_val, LosDictionary.type)
+                        type_val = validate_dict(type_val, LosDictionary.contact_type)
                         if type_val == dict():
                             response_obj = get_response("type")
                             return response_obj
 
-                        if type_val == 10:
+                        if type_val == LosDictionary.contact_type['mob']:
                             check_mob = validate_mob(value)
                             if check_mob == str():
                                 response_obj = get_response("mob_validate")
@@ -72,39 +73,41 @@ def contact_service(req_data):
                                 response_obj = get_response("check_country_code")
                                 return response_obj
 
-                        if type_val == 11:
+                        if type_val == LosDictionary.contact_type['email']:
                             check_email = validate_email(value)
                             if check_email == str():
                                 response_obj = get_response("email_validate")
                                 return response_obj
+                        current_time = django.utils.timezone.now()
+                        logger.debug("current_time india: %s", current_time)
+                        with transaction.atomic():
+                            contact = CustomerContact(
+                                type=type_val,
+                                value=value,
+                                value_extra_1=value_extra_1,
+                                country_code=country_code,
+                                status=1,
+                                creation_date=current_time,
+                                creation_by="System",
+                                customer_id=customer_id)
+                            contact.save()
+                            contact_log = CustomerContactLog(
+                                type=type_val,
+                                value=value,
+                                value_extra_1=value_extra_1,
+                                country_code=country_code,
+                                status=1,
+                                creation_date=current_time,
+                                creation_by="System",
+                                customer_id=customer_id)
+                            contact_log.save()
+                        logger.info("inserted in contact audit table")
+                        response_obj = get_response("success")
+
                 else:
                     response_obj = get_response("contact_param")
                     return response_obj
-                current_time = django.utils.timezone.now()
-                logger.debug("current_time india: %s", current_time)
-                with transaction.atomic():
-                    contact = CustomerContact(
-                        type=type_val,
-                        value=value,
-                        value_extra_1=value_extra_1,
-                        country_code=country_code,
-                        status=1,
-                        creation_date=current_time,
-                        creation_by="System",
-                        customer_id=customer_id)
-                    contact.save()
-                    contact_log = CustomerContactLog(
-                        type=type_val,
-                        value=value,
-                        value_extra_1=value_extra_1,
-                        country_code=country_code,
-                        status=1,
-                        creation_date=current_time,
-                        creation_by="System",
-                        customer_id=customer_id)
-                    contact_log.save()
-                logger.info("inserted in contact audit table")
-                response_obj = get_response("success")
+
             else:
                 response_obj = get_response("check_parameter")
         else:
@@ -126,73 +129,91 @@ def contact_update(req_data):
             customer = None
             if hasattr(req_data, 'customer'):
                 customer = req_data.customer
-                variables = EmptyClass()
-                variables.contact_id = get_value(customer, 'contact_id')
-                # variables.customer_id = get_value(customer, 'customer_id')
-                variables.contact = get_value(customer, 'contacts')
+                customer_id = get_value(customer, 'customer_id')
+                contact_list = get_value(customer, 'contacts')
 
-                contact_db = None
-                if variables.contact_id:
-                    try:
-                        contact_db = CustomerContact.objects.get(pk=variables.contact_id)
-                    except ObjectDoesNotExist as e:
-                        response_obj = get_response("customer_id_not_exist")
+                if customer_id:
+                    if type(customer_id) == int:
+                        if not Customer.objects.filter(id=customer_id).exists():
+                            response_obj = get_response("invalid_id")
+                            return response_obj
+                        customer_id = customer_id
+                    else:
+                        response_obj = get_response("invalid_id")
                         return response_obj
                 else:
-                    response_obj = get_response("customer_id_not_exist")
+                    response_obj = get_response("invalid_id")
                     return response_obj
-                logger.debug("customer_db: %s", contact_db)
 
-                if variables.contact:
-                    counter = 0
-                    for i in variables.contact:
-                        logger.info("contact_val: %s",variables.contact)
-                        type_val = get_value(i, "type")
-                        value = get_value(i, "value")
-                        value_extra_1 = get_value(i, "value_extra_1")
-                        country_code = get_value(i, "country_code")
+                # if variables.contact_id:
+                #     try:
+                #         contact_db = CustomerContact.objects.get(pk=variables.contact_id)
+                #     except ObjectDoesNotExist as e:
+                #         response_obj = get_response("customer_id_not_exist")
+                #         return response_obj
+                # else:
+                #     response_obj = get_response("customer_id_not_exist")
+                #     return response_obj
+                # logger.debug("customer_db: %s", contact_db)
 
+                if contact_list:
+                    for contact in contact_list:
+                        variables = EmptyClass()
+                        variables.contact_id = get_value(contact, "contact_id")
+                        variables.type = get_value(contact, "type")
+                        variables.value = get_value(contact, "value")
+                        variables.value_extra_1 = get_value(contact, "value_extra_1")
+                        variables.country_code = get_value(contact, "country_code") # lower_string
+
+                        customer_contact_db = None
+                        if variables.contact_id:
+                            try:
+                                customer_contact_db = CustomerContact.objects.get(pk=variables.contact_id, customer_id=customer_id, status=1)
+                            except ObjectDoesNotExist as e:
+                                response_obj = get_response("customer_id_not_exist")
+                                return response_obj
+                        else:
+                            response_obj = get_response("customer_id_not_exist")
+                            return response_obj
 
                         # validation
-                        type_val = validate_dict(type_val, LosDictionary.type)
-                        logger.info("type_val: %s", type_val)
-                        if type_val == dict():
+                        variables.type = validate_dict(variables.type, LosDictionary.contact_type)
+                        logger.info("type: %s", variables.type)
+                        if variables.type == dict():
                             response_obj = get_response("type")
                             return response_obj
 
-                        if type_val == 10:
-                            check_mob = validate_mob(value)
+                        if variables.type == 10:
+                            check_mob = validate_mob(variables.value)
                             if check_mob == str():
                                 response_obj = get_response("mob_validate")
                                 return response_obj
-                            if country_code is None:
+                            if variables.country_code is None:
                                 response_obj = get_response("check_country_code")
                                 return response_obj
 
-                        if type_val == 11:
-                            check_email = validate_email(value)
+                        if variables.type == 11:
+                            check_email = validate_email(variables.value)
                             if check_email == str():
                                 response_obj = get_response("email_validate")
                                 return response_obj
 
-                        set_db_attr_request(contact_db, customer.contacts[counter], variables.contact[counter])
-                        logger.debug("get_db_object: %s", get_attributes(contact_db))
+                        set_db_attr_request(customer_contact_db, contact, variables)
                         current_time = django.utils.timezone.now()
                         logger.debug("current_time india: %s", current_time)
-                        contact_db.updation_date = current_time
-                        contact_db.updation_by = "System"
-                        contact_db.save()
+                        customer_contact_db.updation_date = current_time
+                        customer_contact_db.updation_by = "System"
+                        customer_contact_db.save()
 
-                        contact_log = CustomerContactLog()
-                        contact_log.__dict__ = contact_db.__dict__.copy()
-                        contact_log.id = None
-                        contact_log.customer = contact_db
-                        contact_log.creation_date = current_time
-                        contact_log.creation_by = "System"
-                        contact_log.save()
-                        logger.info("finished contact update service")
+                        # contact_log = CustomerContactLog()
+                        # contact_log.__dict__ = customer_contact_db.__dict__.copy()
+                        # contact_log.id = None
+                        # contact_log.customer = customer_contact_db
+                        # contact_log.creation_date = current_time
+                        # contact_log.creation_by = "System"
+                        # contact_log.save()
+                        # logger.info("finished contact update service")
                         response_obj = get_response("success")
-                        counter = counter+1
                 else:
                     response_obj = get_response("check_parameter")
                     return response_obj

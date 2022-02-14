@@ -75,13 +75,13 @@ def customer_contact(request):
         properties={"customer": openapi.Schema(
             type=openapi.TYPE_OBJECT,
             required=["contact_id", "customer_id", "contacts"],
-            properties={"contact_id": openapi.Schema(type=openapi.TYPE_INTEGER, description="contact id"),
-                        # "customer_id": openapi.Schema(type=openapi.TYPE_INTEGER, description="customer id"),
+            properties={"customer_id": openapi.Schema(type=openapi.TYPE_INTEGER, description="customer id"),
                         "contacts": openapi.Items(
                             type=openapi.TYPE_ARRAY,
                             items=openapi.Items(
                                 type=openapi.TYPE_OBJECT,
                                 properties={
+                                    "contact_id": openapi.Schema(type=openapi.TYPE_INTEGER, description="contact id"),
                                     "type": openapi.Schema(type=openapi.TYPE_STRING, description="mob:10, email:11"),
                                     "value": openapi.Schema(type=openapi.TYPE_STRING, description="value"),
                                     "value_extra_1": openapi.Schema(type=openapi.TYPE_STRING, description="value"),

@@ -26,7 +26,7 @@ class LosDictionary():
         "brother": 12,
         "sister": 13,
     }
-    type = {
+    contact_type = {
         "mob": 10,
         "email": 11,
     }

@@ -29,7 +29,8 @@ class Statuses:
     id_param = {'status_code': 200215, 'message': "contact id and customer id might be missing"}
     type_param = {'status_code': 200216, 'message': "type parameters might be missing"}
     value_param = {'status_code': 200217, 'message': "value parameters might be missing"}
-    contact_param = {'status_code': 200217, 'message': "contact parameters might be missing"}
+    contact_param = {'status_code': 200218, 'message': "contact parameters might be missing"}
+    invalid_id = {'status_code': 200219, 'message': "customer id does not exist"}
 
 
 
