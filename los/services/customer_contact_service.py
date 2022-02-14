@@ -1,6 +1,6 @@
 import logging
 import django.utils.timezone
-from los.status_code import get_response
+from los.status_code import get_response,prepare_response
 from los.los_dict import LosDictionary
 from los.custom_helper import get_string_lower, clean_string, get_value, validate_numeric,validate_dict,fetch_value,validate_email,validate_mob, set_db_attr_request, get_attributes
 from los.models.customer_model import Customer
@@ -9,7 +9,6 @@ from django.db import transaction
 from los.models.empty_class import EmptyClass
 from django.core.exceptions import ObjectDoesNotExist
 from los.constants import STATUS_ACTIVE, CREATION_BY, UPDATION_BY
-
 
 
 logger = logging.getLogger("django")
@@ -40,7 +39,8 @@ def contact_service(req_data):
                 else:
                     response_obj = get_response("invalid_id")
                     return response_obj
-                count = 0
+                contact_insert_ids = []
+                counter = 1
                 if contact_list:
                     for contact in contact_list:
                         type_val = get_string_lower(contact, "type")
@@ -62,31 +62,31 @@ def contact_service(req_data):
                         # validation
                         type_val = validate_dict(type_val, LosDictionary.contact_type)
                         if type_val == dict():
-                            response_obj = get_response("type")
+                            response_obj = prepare_response("type", "no", counter)
                             transaction.set_rollback(True)
                             return response_obj
 
                         if type_val == LosDictionary.contact_type['mob']:
                             check_mob = validate_mob(value)
                             if check_mob == str():
-                                response_obj = get_response("mob_validate")
+                                response_obj = prepare_response("mob_validate", "no", counter)
                                 transaction.set_rollback(True)
                                 return response_obj
 
                             if country_code is None:
-                                response_obj = get_response("check_country_code")
+                                response_obj = prepare_response("check_country_code", "no", counter)
                                 transaction.set_rollback(True)
                                 return response_obj
 
                         if type_val == LosDictionary.contact_type['email']:
                             check_email = validate_email(value)
                             if check_email == str():
-                                response_obj = get_response("email_validate")
+                                response_obj = prepare_response("email_validate", "no", counter)
                                 transaction.set_rollback(True)
                                 return response_obj
 
                             if country_code is not None:
-                                response_obj = get_response("country_code")
+                                response_obj = prepare_response("country_code", "no", counter)
                                 transaction.set_rollback(True)
                                 return response_obj
 
@@ -117,8 +117,9 @@ def contact_service(req_data):
                             cust_contact_log.save()
                         logger.info("finished contact create service")
                         logger.debug("contact_id: %s", cust_contact.id)
-                        response_obj = get_response("success", {"contact_id": cust_contact.id})
-
+                        contact_insert_ids.append(cust_contact.id)
+                        counter = counter+1
+                    response_obj = get_response("success", {"contact_id": contact_insert_ids})
                 else:
                     response_obj = get_response("contact_param")
                     return response_obj
@@ -159,7 +160,7 @@ def contact_update(req_data):
                 else:
                     response_obj = get_response("invalid_id")
                     return response_obj
-
+                counter = 1
                 if contact_list:
                     for contact in contact_list:
                         variables = EmptyClass()
@@ -184,7 +185,7 @@ def contact_update(req_data):
                         variables.type = validate_dict(variables.type, LosDictionary.contact_type)
                         logger.info("type: %s", variables.type)
                         if variables.type == dict():
-                            response_obj = get_response("type")
+                            response_obj = prepare_response("type", "no", counter)
                             return response_obj
 
                         if variables.type is None:
@@ -193,21 +194,21 @@ def contact_update(req_data):
                         if variables.type == LosDictionary.contact_type['mob']:
                             check_mob = validate_mob(variables.value)
                             if check_mob == str():
-                                response_obj = get_response("mob_validate")
+                                response_obj = prepare_response("mob_validate", "no", counter)
                                 return response_obj
 
                             if variables.country_code is None:
-                                response_obj = get_response("check_country_code")
+                                response_obj = prepare_response("check_country_code", "no", counter)
                                 return response_obj
 
                         if variables.type == LosDictionary.contact_type['email']:
                             check_email = validate_email(variables.value)
                             if check_email == str():
-                                response_obj = get_response("email_validate")
+                                response_obj = prepare_response("email_validate", "no", counter)
                                 return response_obj
 
                             if variables.country_code is not None:
-                                response_obj = get_response("country_code")
+                                response_obj = prepare_response("country_code", "no", counter)
                                 return response_obj
 
                         set_db_attr_request(customer_contact_db, contact, variables)
@@ -226,6 +227,7 @@ def contact_update(req_data):
                         cust_contact_log.save()
                         logger.info("finished contact update service")
                         response_obj = get_response("success")
+                        counter = counter + 1
                 else:
                     response_obj = get_response("contact_param")
                     return response_obj

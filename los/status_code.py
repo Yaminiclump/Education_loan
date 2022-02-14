@@ -22,17 +22,18 @@ class Statuses:
     check_numeric_income = {'status_code': 200117, 'message': "Please enter a valid income"}
     test_get = {'status_code': 405}
     test_post = {'status_code': 200}
-    check_country_code = {'status_code': 200210, 'message': "country code parameters might be missing"}
-    type = {'status_code': 200211, 'message': "type not implemented"}
+    check_country_code = {'status_code': 200210, 'message': "country code parameters might be missing in sequence $no"}
+    type = {'status_code': 200211, 'message': "type not implemented in sequence $no"}
     email_validate = {'status_code': 200212, 'message': "Invalid Email in sequence $no"}
-    mob_validate = {'status_code': 200213, 'message': "Invalid mobile number."}
+    mob_validate = {'status_code': 200213, 'message': "Invalid mobile number in sequence $no"}
     id_error = {'status_code': 200214, 'message': "contact id and customer id are not exist."}
     id_param = {'status_code': 200215, 'message': "contact id and customer id might be missing"}
     type_param = {'status_code': 200216, 'message': "type parameters might be missing"}
     value_param = {'status_code': 200217, 'message': "value parameters might be missing"}
     contact_param = {'status_code': 200218, 'message': "contact parameters might be missing"}
     invalid_id = {'status_code': 200219, 'message': "customer id does not exist"}
-    country_code = {'status_code': 200220, 'message': "country code does not required"}
+    country_code = {'status_code': 200220, 'message': "country code does not required in sequence $no"}
+
 
 
 def get_response(error_type, data=None):
@@ -41,3 +42,9 @@ def get_response(error_type, data=None):
         return {'status': status['status_code'], 'message': status['message']}
     else:
         return {'status': status['status_code'], 'message': status['message'], 'data': json.dumps(data)}
+
+def prepare_response(status_key, key, value):
+    status = getattr(Statuses, status_key)
+    message = Template(status["message"])
+    message = message.substitute({key: value})
+    return {'status': status['status_code'], 'message': message}
