@@ -148,21 +148,21 @@ def contact_update(req_data):
                 if contact_list:
                     for contact in contact_list:
                         variables = EmptyClass()
-                        variables.contact_id = get_value(contact, "contact_id")
-                        variables.type = get_value(contact, "type")
-                        variables.value = get_value(contact, "value")
-                        variables.value_extra_1 = get_value(contact, "value_extra_1")
-                        variables.country_code = get_value(contact, "country_code") # lower_string
+                        variables.contact_id = get_string_lower(contact, "contact_id")
+                        variables.type = get_string_lower(contact, "type")
+                        variables.value = get_string_lower(contact, "value")
+                        variables.value_extra_1 = get_string_lower(contact, "value_extra_1")
+                        variables.country_code = get_value(contact, "country_code")
 
                         customer_contact_db = None
                         if variables.contact_id:
                             try:
                                 customer_contact_db = CustomerContact.objects.get(pk=variables.contact_id, customer_id=customer_id, status=1)
                             except ObjectDoesNotExist as e:
-                                response_obj = get_response("customer_id_not_exist")
+                                response_obj = get_response("invalid_id")
                                 return response_obj
                         else:
-                            response_obj = get_response("customer_id_not_exist")
+                            response_obj = get_response("invalid_id")
                             return response_obj
 
                         # validation
@@ -194,13 +194,13 @@ def contact_update(req_data):
                         customer_contact_db.updation_by = UPDATION_BY
                         customer_contact_db.save()
 
-                        # contact_log = CustomerContactLog()
-                        # contact_log.__dict__ = customer_contact_db.__dict__.copy()
-                        # contact_log.id = None
-                        # contact_log.customer = customer_contact_db
-                        # contact_log.creation_date = current_time
-                        # contact_log.creation_by = "System"
-                        # contact_log.save()
+                        cus_contact_log = CustomerContactLog()
+                        cus_contact_log.__dict__ = customer_contact_db.__dict__.copy()
+                        cus_contact_log.id = None
+                        cus_contact_log.contact = customer_contact_db
+                        cus_contact_log.creation_date = current_time
+                        cus_contact_log.creation_by = CREATION_BY
+                        cus_contact_log.save()
                         # logger.info("finished contact update service")
                         response_obj = get_response("success")
                 else:
