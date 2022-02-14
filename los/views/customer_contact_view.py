@@ -46,13 +46,11 @@ def customer_contact(request):
         logger.info("request: %s", request.body)
 
         if request.method == 'POST':
-            logger.debug("post_data: %s", request.body)
             data = json.loads(request.body.decode("utf-8"), object_hook=lambda d: SimpleNamespace(**d))
             response_obj = contact_service(data)
             logger.debug("finished create contact")
         else:
             response_obj = {"status_code": Statuses.invalid_request["status_code"], "message": Statuses.invalid_request["message"]}
-
     except Exception:
         logger.exception("Exception: ")
         response_obj = {"status_code": Statuses.generic_error_2["status_code"], "message": Statuses.generic_error_2["message"]}
@@ -97,13 +95,11 @@ def update_contact(request):
         logger.info("request: %s", request.body)
 
         if request.method == 'POST':
-            logger.debug("post_data: %s", request.body)
             data = json.loads(request.body.decode("utf-8"), object_hook=lambda d: SimpleNamespace(**d))
             response_obj = contact_update(data)
             logger.debug("finished contact update")
         else:
             response_obj = {"status_code": Statuses.invalid_request["status_code"], "message": Statuses.invalid_request["message"]}
-
     except Exception:
         logger.exception("Exception: ")
         response_obj = {"status_code": Statuses.generic_error_2["status_code"], "message": Statuses.generic_error_2["message"]}
