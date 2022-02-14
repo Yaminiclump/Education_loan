@@ -204,7 +204,7 @@ def contact_update(req_data):
                         logger.info("finished contact update service")
                         response_obj = get_response("success")
                 else:
-                    response_obj = get_response("check_parameter")
+                    response_obj = get_response("contact_param")
                     return response_obj
             else:
                 response_obj = get_response("check_parameter")
