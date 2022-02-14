@@ -25,7 +25,7 @@ class CustomerContact(models.Model):
 class CustomerContactLog(models.Model):
     id = models.BigAutoField(primary_key=True)
     customer = models.ForeignKey('Customer', on_delete=models.RESTRICT, null=False)
-    contact = models.ForeignKey('CustomerContact', on_delete=models.RESTRICT, null=False)
+    customercontact = models.ForeignKey('CustomerContact', on_delete=models.RESTRICT, null=False)
     type = models.PositiveSmallIntegerField(validators=[MinValueValidator(0),
                                                         MaxValueValidator(9)], null=False)
     value = models.TextField(null=False)

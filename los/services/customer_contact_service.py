@@ -30,7 +30,7 @@ def contact_service(req_data):
 
                 if customer_id:
                     if type(customer_id) == int:
-                        if not Customer.objects.filter(id=customer_id).exists():
+                        if not Customer.objects.filter(id=customer_id,status=1).exists():
                             response_obj = get_response("invalid_id")
                             return response_obj
                         customer_id = customer_id
@@ -84,6 +84,12 @@ def contact_service(req_data):
                                 response_obj = get_response("email_validate")
                                 transaction.set_rollback(True)
                                 return response_obj
+
+                            if country_code is not None:
+                                response_obj = get_response("country_code")
+                                transaction.set_rollback(True)
+                                return response_obj
+
                         current_time = django.utils.timezone.now()
                         logger.debug("current_time india: %s", current_time)
                         with transaction.atomic():
@@ -97,7 +103,7 @@ def contact_service(req_data):
                                 creation_by=CREATION_BY,
                                 customer_id=customer_id)
                             contact.save()
-                            contact_log = CustomerContactLog(
+                            cust_contact_log = CustomerContactLog(
                                 type=type_val,
                                 value=value,
                                 value_extra_1=value_extra_1,
@@ -106,8 +112,8 @@ def contact_service(req_data):
                                 creation_date=current_time,
                                 creation_by=CREATION_BY,
                                 customer_id=customer_id,
-                                contact_id=contact.id)
-                            contact_log.save()
+                                customercontact_id=contact.id)
+                            cust_contact_log.save()
                         logger.info("finished contact create service")
                         response_obj = get_response("success")
 
@@ -141,7 +147,7 @@ def contact_update(req_data):
 
                 if customer_id:
                     if type(customer_id) == int:
-                        if not Customer.objects.filter(id=customer_id).exists():
+                        if not Customer.objects.filter(id=customer_id,status=1).exists():
                             response_obj = get_response("invalid_id")
                             return response_obj
                         customer_id = customer_id
@@ -179,11 +185,15 @@ def contact_update(req_data):
                             response_obj = get_response("type")
                             return response_obj
 
+                        if variables.type is None:
+                            variables.type = customer_contact_db.type
+
                         if variables.type == LosDictionary.contact_type['mob']:
                             check_mob = validate_mob(variables.value)
                             if check_mob == str():
                                 response_obj = get_response("mob_validate")
                                 return response_obj
+
                             if variables.country_code is None:
                                 response_obj = get_response("check_country_code")
                                 return response_obj
@@ -194,6 +204,11 @@ def contact_update(req_data):
                                 response_obj = get_response("email_validate")
                                 return response_obj
 
+                            if variables.country_code is not None:
+                                response_obj = get_response("country_code")
+                                transaction.set_rollback(True)
+                                return response_obj
+
                         set_db_attr_request(customer_contact_db, contact, variables)
                         current_time = django.utils.timezone.now()
                         logger.debug("current_time india: %s", current_time)
@@ -201,13 +216,13 @@ def contact_update(req_data):
                         customer_contact_db.updation_by = UPDATION_BY
                         customer_contact_db.save()
 
-                        cus_contact_log = CustomerContactLog()
-                        cus_contact_log.__dict__ = customer_contact_db.__dict__.copy()
-                        cus_contact_log.id = None
-                        cus_contact_log.contact = customer_contact_db
-                        cus_contact_log.creation_date = current_time
-                        cus_contact_log.creation_by = CREATION_BY
-                        cus_contact_log.save()
+                        cust_contact_log = CustomerContactLog()
+                        cust_contact_log.__dict__ = customer_contact_db.__dict__.copy()
+                        cust_contact_log.id = None
+                        cust_contact_log.customercontact = customer_contact_db
+                        cust_contact_log.creation_date = current_time
+                        cust_contact_log.creation_by = CREATION_BY
+                        cust_contact_log.save()
                         logger.info("finished contact update service")
                         response_obj = get_response("success")
                 else:

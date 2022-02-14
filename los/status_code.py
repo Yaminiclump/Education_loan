@@ -31,8 +31,7 @@ class Statuses:
     value_param = {'status_code': 200217, 'message': "value parameters might be missing"}
     contact_param = {'status_code': 200218, 'message': "contact parameters might be missing"}
     invalid_id = {'status_code': 200219, 'message': "customer id does not exist"}
-
-
+    country_code = {'status_code': 200220, 'message': "country code does not required"}
 
 
 def get_response(error_type, data=None):
