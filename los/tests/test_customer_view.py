@@ -1,19 +1,11 @@
-from rest_framework import status
-from rest_framework.test import APITestCase
-from http import HTTPStatus
-from django.conf import settings
-from los.services import customer_service
-from los.models.customer_model import Customer
-import django.utils.timezone
-from los.los_dict import LosDictionary
-import pytest
-from types import SimpleNamespace
 import json
-from django.test import TestCase, Client
 import logging
-from django.urls import reverse_lazy, reverse
-from types import SimpleNamespace
-import requests
+
+import django.utils.timezone
+import pytest
+from django.urls import reverse
+
+from los.models.customer_model import Customer
 from los.status_code import Statuses
 
 logger = logging.getLogger("django")

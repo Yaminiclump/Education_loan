@@ -1,12 +1,14 @@
 import json
 import logging
 from types import SimpleNamespace
-from django.http import JsonResponse,HttpResponse
+
+from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
-from rest_framework.decorators import api_view, parser_classes
-from los.services.customer_contact_service import contact_service,contact_update
+from rest_framework.decorators import api_view
+
+from los.services.customer_contact_service import contact_service, contact_update
 from los.status_code import Statuses
 
 logger = logging.getLogger("django")

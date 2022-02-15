@@ -9,7 +9,7 @@ from los.los_dict import LosDictionary
 from los.models.customer_log_model import CustomerLog
 from los.models.customer_model import Customer
 from los.models.empty_class import EmptyClass
-from los.status_code import get_response
+from los.status_code import get_response, Statuses
 
 logger = logging.getLogger("django")
 
@@ -58,36 +58,36 @@ def create_service(req_data):
                 household_income_monthly = validate_numeric(household_income_monthly)
 
                 if first_name is None:
-                    response_obj = get_response("first_name")
+                    response_obj = get_response(Statuses.first_name)
                     return response_obj
 
                 if salutation_val == dict():
-                    response_obj = get_response("salutation")
+                    response_obj = get_response(Statuses.salutation)
                     return response_obj
 
                 if gender_val == dict():
-                    response_obj = get_response("gender")
+                    response_obj = get_response(Statuses.gender)
                     return response_obj
 
                 if marital_status_val == dict():
-                    response_obj = get_response("marital_status")
+                    response_obj = get_response(Statuses.marital_status)
                     return response_obj
 
                 if relation_with_applicant_val == dict():
-                    response_obj = get_response("relation_with_applicant")
+                    response_obj = get_response(Statuses.relation_with_applicant)
                     return response_obj
 
                 date_of_birth = validate_date(date_of_birth)
                 if date_of_birth == "ERROR_DATE":
-                    response_obj = get_response("check_dob")
+                    response_obj = get_response(Statuses.check_dob)
                     return response_obj
 
                 if no_of_family_members == int():
-                    response_obj = get_response("check_numeric_family")
+                    response_obj = get_response(Statuses.check_numeric_family)
                     return response_obj
 
                 if household_income_monthly == int():
-                    response_obj = get_response("check_numeric_income")
+                    response_obj = get_response(Statuses.check_numeric_income)
                     return response_obj
 
                 current_time = django.utils.timezone.now()
@@ -144,15 +144,15 @@ def create_service(req_data):
                 customer_log.save()
                 logger.info("inserted in customer audit table")
 
-                response_obj = get_response("success")
+                response_obj = get_response(Statuses.success)
             else:
-                response_obj = get_response("generic_error_1")
+                response_obj = get_response(Statuses.generic_error_1)
         else:
-            response_obj = get_response("generic_error_1")
+            response_obj = get_response(Statuses.generic_error_1)
 
     except Exception as e:
         logger.exception("Exception: ")
-        response_obj = get_response("generic_error_2")
+        response_obj = get_response(Statuses.generic_error_2)
 
     logger.info("response: %s", response_obj)
     return response_obj
@@ -209,45 +209,45 @@ def update_customer(req_data):
                     try:
                         customer_db = Customer.objects.get(pk=variables.customer_id)
                     except ObjectDoesNotExist as e:
-                        response_obj = get_response("customer_id_not_exist")
+                        response_obj = get_response(Statuses.customer_id_not_exist)
                         return response_obj
                 else:
-                    response_obj = get_response("customer_id_not_exist")
+                    response_obj = get_response(Statuses.customer_id_not_exist)
                     return response_obj
 
                 logger.debug("customer_db: %s", customer_db)
 
                 if variables.first_name is None:
-                    response_obj = get_response("first_name")
+                    response_obj = get_response(Statuses.first_name)
                     return response_obj
 
                 if variables.salutation == dict():
-                    response_obj = get_response("salutation")
+                    response_obj = get_response(Statuses.salutation)
                     return response_obj
 
                 if variables.gender == dict():
-                    response_obj = get_response("gender")
+                    response_obj = get_response(Statuses.gender)
                     return response_obj
 
                 if variables.marital_status == dict():
-                    response_obj = get_response("marital_status")
+                    response_obj = get_response(Statuses.marital_status)
                     return response_obj
 
                 if variables.relation_with_applicant == dict():
-                    response_obj = get_response("relation_with_applicant")
+                    response_obj = get_response(Statuses.relation_with_applicant)
                     return response_obj
 
                 variables.date_of_birth = validate_date(variables.date_of_birth)
                 if variables.date_of_birth == "ERROR_DATE":
-                    response_obj = get_response("check_dob")
+                    response_obj = get_response(Statuses.check_dob)
                     return response_obj
 
                 if variables.no_of_family_members == int():
-                    response_obj = get_response("check_numeric_family")
+                    response_obj = get_response(Statuses.check_numeric_family)
                     return response_obj
 
                 if variables.household_income_monthly == int():
-                    response_obj = get_response("check_numeric_income")
+                    response_obj = get_response(Statuses.check_numeric_income)
                     return response_obj
 
                 set_db_attr_request(customer_db, customer, variables)
@@ -269,13 +269,13 @@ def update_customer(req_data):
                 customer_log.save()
 
                 logger.info("inserted in customer audit table")
-                response_obj = get_response("success")
+                response_obj = get_response(Statuses.success)
             else:
-                response_obj = get_response("generic_error_1")
+                response_obj = get_response(Statuses.generic_error_1)
         else:
-            response_obj = get_response("generic_error_1")
+            response_obj = get_response(Statuses.generic_error_1)
     except Exception as e:
         logger.exception("Exception: ")
-        response_obj = get_response("generic_error_2")
+        response_obj = get_response(Statuses.generic_error_2)
         logger.info("response: %s", response_obj)
     return response_obj

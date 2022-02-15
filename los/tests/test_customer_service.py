@@ -1,13 +1,14 @@
-from los.models.empty_class import EmptyClass
-from los.services.customer_service import create_service, update_customer
-from los.models.customer_model import Customer
-import django.utils.timezone
-import pytest
-from types import SimpleNamespace
 import json
 import logging
-from los.status_code import Statuses
+from types import SimpleNamespace
+
 import django.utils.timezone
+import django.utils.timezone
+import pytest
+
+from los.models.customer_model import Customer
+from los.services.customer_service import create_service, update_customer
+from los.status_code import Statuses
 
 logger = logging.getLogger("django")
 

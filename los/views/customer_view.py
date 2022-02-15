@@ -1,14 +1,15 @@
 import json
 import logging
 from types import SimpleNamespace
+
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from drf_yasg import openapi
-from drf_yasg.inspectors import SwaggerAutoSchema
 from drf_yasg.utils import swagger_auto_schema
-from rest_framework.decorators import api_view, parser_classes
-from los.services.customer_service import create_service,update_customer
-from los.status_code import Statuses
+from rest_framework.decorators import api_view
+
+from los.services.customer_service import create_service, update_customer
+from los.status_code import Statuses, get_response
 
 logger = logging.getLogger("django")
 
@@ -60,11 +61,10 @@ def customer_create(request):
             response_obj = create_service(data)
             logger.debug("finished create_service method")
         else:
-            response_obj = {"status_code": Statuses.invalid_request["status_code"], "message": Statuses.invalid_request["message"]}
-
+            response_obj = get_response(Statuses.invalid_request)
     except Exception:
         logger.exception("Exception: ")
-        response_obj = {"status_code": Statuses.generic_error_2["status_code"], "message": Statuses.generic_error_2["message"]}
+        response_obj = get_response(Statuses.generic_error_2)
 
     logger.info("response: %s", response_obj)
     return JsonResponse(response_obj, safe=False)
@@ -120,11 +120,11 @@ def customer_update(request):
             response_obj = update_customer(data)
             logger.debug("finished update_customer method")
         else:
-            response_obj = {"status_code": Statuses.invalid_request["status_code"], "message": Statuses.invalid_request["message"]}
+            response_obj = get_response(Statuses.invalid_request)
 
     except Exception:
         logger.exception("Exception: ")
-        response_obj = {"status_code": Statuses.generic_error_2["status_code"], "message": Statuses.generic_error_2["message"]}
+        response_obj = get_response(Statuses.generic_error_2)
 
     logger.info("response: %s", response_obj)
     return JsonResponse(response_obj, safe=False)

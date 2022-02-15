@@ -1,17 +1,11 @@
 import logging
-from io import BytesIO
 
 import django.utils.timezone
 import django.utils.timezone
-from django.core.files.storage import default_storage
 
-from los.status_code import get_response
-from los.models.customer_education_model import Education
-from los.los_dict import LosDictionary
-from django.http import JsonResponse,HttpResponse
-import datetime
-from datetime import datetime,date
 from los.custom_helper import get_value
+from los.status_code import get_response
+
 logger = logging.getLogger("django")
 
 

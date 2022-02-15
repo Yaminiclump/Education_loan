@@ -1,12 +1,16 @@
-from los.los_dict import LosDictionary
 import datetime
-from datetime import datetime,date
-import logging
-from los.status_code import get_response
+from datetime import datetime
 import inspect
+import logging
 import re
+from datetime import datetime
+
 logger = logging.getLogger("django")
 
+
+class InvalidInputException(Exception):
+    """Raised when the input is not valid"""
+    pass
 
 def get_attributes(obj):
     attribute_list = []
@@ -63,6 +67,16 @@ def get_string_lower(obj, param):
     trim_string = clean_string(str_val)
     lower_string = lower_case_string(trim_string)
     return lower_string
+
+
+def set_obj_attr_request(req_obj, var_obj):
+    attribute_list = get_attributes(req_obj)
+    logger.debug("attribute_list: %s", attribute_list)
+    for attr in attribute_list:
+        logger.debug("attributes, name: %s, value: %s", attr[0], attr[1])
+        attribute_value = get_string_lower(req_obj, attr[0])
+        logger.debug("attribute_value_final: %s", attribute_value)
+        setattr(var_obj, attr[0], attribute_value)
 
 
 def validate_numeric(num_val):

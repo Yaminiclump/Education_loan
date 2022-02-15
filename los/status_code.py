@@ -10,8 +10,16 @@ class Statuses:
     invalid_request = {'status_code': 200012, 'message': "Invalid request method (only POST method is allowed)"}
     generic_error_3 = {'status_code': 200013, 'message': "There was some error while processing the request"}
 
-    customer_id_not_exist = {'status_code': 200020, 'message': "Please provide a valid Customer ID"}
+    customer_id_not_exist = {'status_code': 200020, 'message': "Please provide a valid Customer Id"}
+    customer_id_not_provided = {'status_code': 200021, 'message': "Please provide a valid Customer Id"}
+    customer_id_invalid_format = {'status_code': 200022, 'message': "Please provide a valid Customer Id"}
 
+    customer_contact_id_not_exist = {'status_code': 200020, 'message': "Please provide a valid Customer Contact Id"}
+    customer_contact_id_not_provided = {'status_code': 200021, 'message': "Please provide a valid Customer Contact Id"}
+    customer_contact_id_invalid_format = {'status_code': 200022, 'message': "Please provide a valid Customer Contact Id"}
+
+
+    # customer related...
     first_name = {'status_code': 200110, 'message': "Please enter a valid First Name"}
     salutation = {'status_code': 200111, 'message': "Please select a valid Salutation"}
     marital_status = {'status_code': 200112, 'message': "Please select a valid Marital Status"}
@@ -22,29 +30,32 @@ class Statuses:
     check_numeric_income = {'status_code': 200117, 'message': "Please enter a valid income"}
     test_get = {'status_code': 405}
     test_post = {'status_code': 200}
-    check_country_code = {'status_code': 200210, 'message': "country code parameters might be missing in sequence $no"}
-    type = {'status_code': 200211, 'message': "type not implemented in sequence $no"}
-    email_validate = {'status_code': 200212, 'message': "Invalid Email in sequence $no"}
-    mob_validate = {'status_code': 200213, 'message': "Invalid mobile number in sequence $no"}
-    id_error = {'status_code': 200214, 'message': "contact id and customer id are not exist."}
-    id_param = {'status_code': 200215, 'message': "contact id and customer id might be missing"}
-    type_param = {'status_code': 200216, 'message': "type parameters might be missing"}
-    value_param = {'status_code': 200217, 'message': "value parameters might be missing"}
-    contact_param = {'status_code': 200218, 'message': "contact parameters might be missing"}
-    invalid_id = {'status_code': 200219, 'message': "customer id does not exist"}
-    country_code = {'status_code': 200220, 'message': "country code does not required in sequence $no"}
+
+    # customer contact related...
+    contact_type = {'status_code': 200211, 'message': "Please enter a valid contact type at sequence no. $sequence"}
+    contact_value = {'status_code': 200212, 'message': "Please enter a valid value for contact at sequence no. $sequence"}
+    contact_value_extra_1 = {'status_code': 200213, 'message': "Please enter a valid extra value for contact at sequence no. $sequence"}
+    contact_country_code = {'status_code': 200214, 'message': "Please enter a valid country code at sequence no. $sequence"}
+    email_address = {'status_code': 200215, 'message': "Please enter a valid email address at sequence no. $sequence"}
+    mobile_number = {'status_code': 200216, 'message': "Please enter a valid mobile number at sequence no. $sequence"}
 
 
-
-def get_response(error_type, data=None):
-    status = getattr(Statuses, error_type)
+def get_response(status_attribute, data=None):
     if data is None:
-        return {'status': status['status_code'], 'message': status['message']}
+        return {'status': status_attribute['status_code'], 'message': status_attribute['message']}
     else:
-        return {'status': status['status_code'], 'message': status['message'], 'data': json.dumps(data)}
+        return {'status': status_attribute['status_code'], 'message': status_attribute['message'], 'data': json.dumps(data)}
 
-def prepare_response(status_key, key, value):
-    status = getattr(Statuses, status_key)
-    message = Template(status["message"])
-    message = message.substitute({key: value})
-    return {'status': status['status_code'], 'message': message}
+
+def get_response_1(status_attribute, data=None):
+    if data is None:
+        return {'status': status_attribute['status_code'], 'message': status_attribute['message']}
+    else:
+        return {'status': status_attribute['status_code'], 'message': status_attribute['message'], 'data': data}
+
+
+def get_response_resp_var(status_attribute, variables):
+
+        message_template_obj = Template(status_attribute["message"])
+        message_content = message_template_obj.substitute(variables)
+        return {'status': status_attribute['status_code'], 'message': message_content}
