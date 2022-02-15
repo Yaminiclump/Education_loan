@@ -78,6 +78,17 @@ def set_obj_attr_request(req_obj, var_obj):
         logger.debug("attribute_value_final: %s", attribute_value)
         setattr(var_obj, attr[0], attribute_value)
 
+def get_integer_value(obj,param):
+    int_val = get_value(obj, param)
+    if int_val:
+        if type(int_val) == int:
+            int_val = int_val
+            return int_val
+        else:
+            int_val = int()
+            return int_val
+    else:
+        return None
 
 def validate_numeric(num_val):
     if num_val:

@@ -39,6 +39,17 @@ class Statuses:
     email_address = {'status_code': 200215, 'message': "Please enter a valid email address at sequence no. $sequence"}
     mobile_number = {'status_code': 200216, 'message': "Please enter a valid mobile number at sequence no. $sequence"}
 
+    # customer employmeny related...
+    employment_not_provided = {'status_code': 200311, 'message': "Please provide a valid employment"}
+    employment_type = {'status_code': 200312, 'message': "Please enter a valid employment type"}
+    employer_id = {'status_code': 200313, 'message': "Please enter a valid employment id"}
+    address_id = {'status_code': 200314, 'message': "Please enter a valid address id"}
+    designation_id = {'status_code': 200315, 'message': "Please enter a valid designation id"}
+    retirement_age_years = {'status_code': 200316, 'message': "Please enter a valid retirement age years"}
+    current_employer_months = {'status_code': 200317, 'message': "Please enter a valid current employer months"}
+    gross_income_monthly = {'status_code': 200318, 'message': "Please enter a valid gross income"}
+    net_income_monthly = {'status_code': 200319, 'message': "Please enter a valid net income"}
+
 
 def get_response(status_attribute, data=None):
     if data is None:

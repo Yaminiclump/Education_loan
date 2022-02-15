@@ -24,12 +24,12 @@ logger = logging.getLogger("django")
                         "employment": openapi.Schema(
                             type=openapi.TYPE_OBJECT,
                             required=["gross_income_monthly", "net_income_monthly"],
-                            properties={"type": openapi.Schema(type=openapi.TYPE_INTEGER, description="11:salaried, 12:self_employed,13:professional, 14:retired, 15:others"),
+                            properties={"type": openapi.Schema(type=openapi.TYPE_STRING, description="11:salaried, 12:self_employed,13:professional, 14:retired, 15:others"),
                                         "employer_id": openapi.Schema(type=openapi.TYPE_INTEGER, description="employer id"),
-                                        "employer_name": openapi.Schema(type=openapi.TYPE_INTEGER, description="employer name"),
+                                        "employer_name": openapi.Schema(type=openapi.TYPE_STRING, description="employer name"),
                                         "address_id": openapi.Schema(type=openapi.TYPE_INTEGER, description="address id"),
                                         "designation_id": openapi.Schema(type=openapi.TYPE_INTEGER, description="designation id"),
-                                        "designation_name": openapi.Schema(type=openapi.TYPE_INTEGER, description="designation name"),
+                                        "designation_name": openapi.Schema(type=openapi.TYPE_STRING, description="designation name"),
                                         "retirement_age_years": openapi.Schema(type=openapi.TYPE_INTEGER, description="retirement age years"),
                                         "current_employer_months": openapi.Schema(type=openapi.TYPE_INTEGER, description="current employer months"),
                                         "gross_income_monthly": openapi.Schema(type=openapi.TYPE_INTEGER, description="gross income monthly"),
@@ -52,7 +52,7 @@ def create_empolyment(request):
         if request.method == 'POST':
             data = json.loads(request.body.decode("utf-8"), object_hook=lambda d: SimpleNamespace(**d))
             response_obj = employment_create(data)
-            logger.debug("finished create contact")
+            logger.debug("finished create employment")
         else:
             response_obj = {"status_code": Statuses.invalid_request["status_code"], "message": Statuses.invalid_request["message"]}
     except Exception:
