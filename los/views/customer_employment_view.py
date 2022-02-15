@@ -16,27 +16,30 @@ logger = logging.getLogger("django")
     method="post",
     request_body=openapi.Schema(
         type=openapi.TYPE_OBJECT,
-        required=["message", "receiver"],
-        properties={"message": openapi.Schema(
+        required=["customer"],
+        properties={"customer": openapi.Schema(
             type=openapi.TYPE_OBJECT,
-            required=["type", "template_id", "variables"],
-            properties={"type": openapi.Schema(type=openapi.TYPE_INTEGER, description="notification type: sms=10, email=11, push notificationL: 12"),
-                        "template_id": openapi.Schema(type=openapi.TYPE_INTEGER, description="template id"),
-                        "variables": openapi.Schema(
+            required=["customer_id", "employment"],
+            properties={"customer_id": openapi.Schema(type=openapi.TYPE_INTEGER, description="customer id"),
+                        "employment": openapi.Schema(
                             type=openapi.TYPE_OBJECT,
-                            required=["variable_1", "variable_2"],
-                            properties={"variable_1": openapi.Schema(type=openapi.TYPE_STRING, description="name & value of variables"),
-                                        "variable_2": openapi.Schema(type=openapi.TYPE_STRING, description="name & value of variables")
+                            required=["gross_income_monthly", "net_income_monthly"],
+                            properties={"type": openapi.Schema(type=openapi.TYPE_INTEGER, description="11:salaried, 12:self_employed,13:professional, 14:retired, 15:others"),
+                                        "employer_id": openapi.Schema(type=openapi.TYPE_INTEGER, description="employer id"),
+                                        "employer_name": openapi.Schema(type=openapi.TYPE_INTEGER, description="employer name"),
+                                        "address_id": openapi.Schema(type=openapi.TYPE_INTEGER, description="address id"),
+                                        "designation_id": openapi.Schema(type=openapi.TYPE_INTEGER, description="designation id"),
+                                        "designation_name": openapi.Schema(type=openapi.TYPE_INTEGER, description="designation name"),
+                                        "retirement_age_years": openapi.Schema(type=openapi.TYPE_INTEGER, description="retirement age years"),
+                                        "current_employer_months": openapi.Schema(type=openapi.TYPE_INTEGER, description="current employer months"),
+                                        "gross_income_monthly": openapi.Schema(type=openapi.TYPE_INTEGER, description="gross income monthly"),
+                                        "net_income_monthly": openapi.Schema(type=openapi.TYPE_INTEGER, description="net income monthly"),
+                                        "other_income_monthly": openapi.Schema(type=openapi.TYPE_INTEGER, description="other income monthly"),
+                                        "work_experience_month": openapi.Schema(type=openapi.TYPE_INTEGER, description="work experience month"),
                                         },
                             description="define all the variable, put their name and values"),
                         }, description="message body"),
-                    "receiver": openapi.Schema(
-                            type=openapi.TYPE_OBJECT,
-                            required=["receiver_info_1", "receiver_info_2"],
-                            properties={"receiver_info_1": openapi.Schema(type=openapi.TYPE_STRING, description="email=email id, sms=mobile number, push notification=device id"),
-                                        "receiver_info_2": openapi.Schema(type=openapi.TYPE_STRING, description="for future use")
-                                        },
-                            description="receiver details"),},
+        },
     ),
     operation_id="payload",
 )

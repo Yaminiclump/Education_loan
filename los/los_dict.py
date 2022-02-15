@@ -44,3 +44,11 @@ class LosDictionary():
         "active": 1,
         "deleted": 0
     }
+
+    employment_type = {
+        "salaried": 11,
+        "self_employed": 12,
+        "professional": 13,
+        "retired": 14,
+        "others": 15,
+    }
