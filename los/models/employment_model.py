@@ -1,7 +1,7 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
-class CustomerEmployment(models.Model):
+class Employment(models.Model):
     id = models.BigAutoField(primary_key=True)
     customer = models.ForeignKey('Customer', on_delete=models.RESTRICT, null=False)
     type = models.PositiveSmallIntegerField(validators=[MinValueValidator(0),
@@ -29,12 +29,12 @@ class CustomerEmployment(models.Model):
     updation_by = models.TextField(null=True)
 
     class Meta:
-        db_table = "los_customer_empolyment"
+        db_table = "los_empolyment"
 
-class CustomerEmploymentLog(models.Model):
+class EmploymentLog(models.Model):
     id = models.BigAutoField(primary_key=True)
     customer = models.ForeignKey('Customer', on_delete=models.RESTRICT, null=False)
-    customeremployment = models.ForeignKey('CustomerEmployment', on_delete=models.RESTRICT, null=False)
+    employment = models.ForeignKey('Employment', on_delete=models.RESTRICT, null=False)
     type = models.PositiveSmallIntegerField(validators=[MinValueValidator(0),
                                                         MaxValueValidator(99)], null=True)
     employer_id = models.BigIntegerField(null=True)
@@ -58,4 +58,4 @@ class CustomerEmploymentLog(models.Model):
     creation_by = models.TextField(null=False)
 
     class Meta:
-        db_table = "los_customer_empolyment_log"
+        db_table = "los_empolyment_log"
