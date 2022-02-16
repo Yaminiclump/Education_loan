@@ -4,7 +4,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
 from los.constants import STATUS_ACTIVE, CREATION_BY, UPDATION_BY
 from los.custom_helper import get_string_lower, get_value, validate_dict, validate_email, validate_mob, \
-    set_db_attr_request, InvalidInputException,validate_numeric,get_integer_value
+    set_db_attr_request, InvalidInputException,validate_numeric,get_integer_value,get_income_value
 from los.los_dict import LosDictionary
 from los.models.employment_model import Employment, EmploymentLog
 from los.models.customer_model import Customer
@@ -34,8 +34,8 @@ def employment_create(req_data):
                 designation_name = get_string_lower(employment, 'designation_name')
                 retirement_age_years = get_integer_value(employment, 'retirement_age_years')
                 current_employer_months = get_integer_value(employment, 'current_employer_months')
-                gross_income_monthly = get_integer_value(employment, 'gross_income_monthly')
-                net_income_monthly = get_integer_value(employment, 'net_income_monthly')
+                gross_income_monthly = get_income_value(employment, 'gross_income_monthly')
+                net_income_monthly = get_income_value(employment, 'net_income_monthly')
                 other_income_monthly = get_integer_value(employment, 'other_income_monthly')
                 work_experience_month = get_integer_value(employment, 'work_experience_month')
 
@@ -79,11 +79,11 @@ def employment_create(req_data):
                     response_obj = get_response(Statuses.current_employer_months)
                     return response_obj
 
-                if gross_income_monthly == int() or gross_income_monthly is None:
+                if gross_income_monthly is None:
                     response_obj = get_response(Statuses.gross_income_monthly)
                     return response_obj
 
-                if net_income_monthly == int() or net_income_monthly is None:
+                if net_income_monthly is None:
                     response_obj = get_response(Statuses.net_income_monthly)
                     return response_obj
 

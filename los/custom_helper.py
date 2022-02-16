@@ -90,6 +90,15 @@ def get_integer_value(obj,param):
     else:
         return None
 
+def get_income_value(obj,param):
+    rupee_val = get_value(obj, param)
+    if rupee_val:
+        paisa_val = rupee_val*100
+        return paisa_val
+    else:
+        return None
+
+
 def validate_numeric(num_val):
     if num_val:
         if type(num_val) == int:
