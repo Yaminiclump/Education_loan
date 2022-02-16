@@ -43,7 +43,7 @@ def employment_create(req_data):
 
                 # validation
                 if customer_id:
-                    if not Customer.objects.filter(id=customer_id,status=1).exists():
+                    if not Customer.objects.filter(id=customer_id,status=STATUS_ACTIVE).exists():
                         response_obj = get_response(Statuses.customer_id_not_exist)
                         return response_obj
                     customer_id = customer_id
