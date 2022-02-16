@@ -114,7 +114,7 @@ def contact_service(req_data):
                             response_obj = get_response_1(Statuses.success, {"contacts": contact_insert_ids})
                     except InvalidInputException as e:
                         logger.debug("Exception...")
-                        response_obj = str(e)
+                        response_obj = eval(str(e))
                 else:
                     response_obj = get_response(Statuses.generic_error_1)
             else:
@@ -166,10 +166,10 @@ def contact_update(req_data):
 
                                 customer_contact_db = None
                                 if variables.contact_id:
-                                    try:
-                                        customer_contact_db = CustomerContact.objects.get(pk=variables.contact_id, customer_id=customer_id, status=1)
-                                    except ObjectDoesNotExist as e:
-                                        raise InvalidInputException(get_response(Statuses.customer_contact_id_not_exist))
+                                        try:
+                                            customer_contact_db = CustomerContact.objects.get(pk=variables.contact_id, customer_id=customer_id, status=1)
+                                        except ObjectDoesNotExist as e:
+                                            raise InvalidInputException(get_response(Statuses.customer_contact_id_not_exist))
                                 else:
                                     raise InvalidInputException(get_response(Statuses.customer_contact_id_not_provided))
 
@@ -218,7 +218,7 @@ def contact_update(req_data):
 
                     except InvalidInputException as e:
                         logger.debug("Exception...")
-                        response_obj = str(e)
+                        response_obj = eval(str(e))
                 else:
                     response_obj = get_response(Statuses.generic_error_1)
                     return response_obj
