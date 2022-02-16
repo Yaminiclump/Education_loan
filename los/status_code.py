@@ -17,6 +17,8 @@ class Statuses:
     customer_contact_id_not_exist = {'status_code': 200020, 'message': "Please provide a valid Customer Contact Id"}
     customer_contact_id_not_provided = {'status_code': 200021, 'message': "Please provide a valid Customer Contact Id"}
     customer_contact_id_invalid_format = {'status_code': 200022, 'message': "Please provide a valid Customer Contact Id"}
+    employment_id_not_exist = {'status_code': 200023, 'message': "Please enter a valid employment Id"}
+    employment_id_not_provided = {'status_code': 200024, 'message': "Please enter a valid employment Id"}
 
 
     # customer related...
@@ -39,7 +41,7 @@ class Statuses:
     email_address = {'status_code': 200215, 'message': "Please enter a valid email address at sequence no. $sequence"}
     mobile_number = {'status_code': 200216, 'message': "Please enter a valid mobile number at sequence no. $sequence"}
 
-    # customer employmeny related...
+    # customer employment related...
     employment_not_provided = {'status_code': 200311, 'message': "Please provide a valid employment"}
     employment_type = {'status_code': 200312, 'message': "Please enter a valid employment type"}
     employer_id = {'status_code': 200313, 'message': "Please enter a valid employment id"}
@@ -49,6 +51,7 @@ class Statuses:
     current_employer_months = {'status_code': 200317, 'message': "Please enter a valid current employer months"}
     gross_income_monthly = {'status_code': 200318, 'message': "Please enter a valid gross income"}
     net_income_monthly = {'status_code': 200319, 'message': "Please enter a valid net income"}
+
 
 
 def get_response(status_attribute, data=None):
@@ -66,7 +69,6 @@ def get_response_1(status_attribute, data=None):
 
 
 def get_response_resp_var(status_attribute, variables):
-
-        message_template_obj = Template(status_attribute["message"])
-        message_content = message_template_obj.substitute(variables)
-        return {'status': status_attribute['status_code'], 'message': message_content}
+    message_template_obj = Template(status_attribute["message"])
+    message_content = message_template_obj.substitute(variables)
+    return {'status': status_attribute['status_code'], 'message': message_content}

@@ -123,5 +123,101 @@ def employment_create(req_data):
 
 
 def employment_update(req_data):
+    response_obj = None
+    logger.info("service_request: %s", req_data)
+    try:
+        logger.info("request_service: %s", req_data)
+        if req_data:
+            customer = None
+            if hasattr(req_data, 'customer'):
+                customer = req_data.customer
+                logger.info("customer_get: %s", req_data.customer)
+                customer_id = get_value(customer, 'customer_id')
+                employment = get_value(customer, 'employment')
+                variables = EmptyClass()
+                variables.employment_id = get_value(employment, 'employment_id')
+                variables.type = get_string_lower(employment, 'type')
+                variables.employer_id = get_integer_value(employment, 'employer_id')
+                variables.employer_name = get_string_lower(employment, 'employer_name')
+                variables.address_id = get_integer_value(employment, 'address_id')
+                variables.designation_id = get_integer_value(employment, 'designation_id')
+                variables.designation_name = get_string_lower(employment, 'designation_name')
+                variables.retirement_age_years = get_integer_value(employment, 'retirement_age_years')
+                variables.current_employer_months = get_integer_value(employment, 'current_employer_months')
+                variables.gross_income_monthly = get_income_value(employment, 'gross_income_monthly')
+                variables.net_income_monthly = get_income_value(employment, 'net_income_monthly')
+                variables.other_income_monthly = get_integer_value(employment, 'other_income_monthly')
+                variables.work_experience_month = get_integer_value(employment, 'work_experience_month')
 
-    return "abcd"
+                variables.type = validate_dict(variables.type, LosDictionary.employment_type)
+
+                # validation
+                if customer_id:
+                    if not Customer.objects.filter(id=customer_id, status=1).exists():
+                        response_obj = get_response(Statuses.customer_id_not_exist)
+                        return response_obj
+                    customer_id = customer_id
+                else:
+                    response_obj = get_response(Statuses.customer_id_not_provided)
+                    return response_obj
+
+                if employment is None:
+                    response_obj = get_response(Statuses.employment_not_provided)
+                    return response_obj
+
+                employment_db = None
+                if variables.employment_id:
+                    try:
+                        employment_db = Employment.objects.get(pk=variables.employment_id, customer_id=customer_id, status=1)
+                    except ObjectDoesNotExist as e:
+                        response_obj = get_response(Statuses.employment_id_not_exist)
+                        return response_obj
+                else:
+                    response_obj = get_response(Statuses.employment_id_not_provided)
+                    return response_obj
+
+                if variables.type == dict():
+                    response_obj = get_response(Statuses.employment_type)
+                    return response_obj
+
+                if variables.employer_id == int():
+                    response_obj = get_response(Statuses.employer_id)
+                    return response_obj
+
+                if variables.address_id == int():
+                    response_obj = get_response(Statuses.address_id)
+                    return response_obj
+
+                if variables.designation_id == int():
+                    response_obj = get_response(Statuses.designation_id)
+                    return response_obj
+
+                if variables.retirement_age_years == int():
+                    response_obj = get_response(Statuses.retirement_age_years)
+                    return response_obj
+
+                if variables.current_employer_months == int():
+                    response_obj = get_response(Statuses.current_employer_months)
+                    return response_obj
+
+                set_db_attr_request(employment_db,employment,variables)
+                current_time = django.utils.timezone.now()
+                logger.debug("current_time india: %s", current_time)
+                employment_db.updation_date = current_time
+                employment_db.updation_by = UPDATION_BY
+                employment_db.save()
+
+                employment_log = EmploymentLog()
+                employment_log.__dict__ = employment_db.__dict__.copy()
+                employment_log.id = None
+                employment_log.employment = employment_db
+                employment_log.creation_date = current_time
+                employment_log.creation_by = CREATION_BY
+                employment_log.save()
+                logger.info("finished employment update service")
+                response_obj = get_response(Statuses.success)
+    except Exception as e:
+        logger.exception("Exception: ")
+        response_obj = get_response(Statuses.generic_error_2)
+        logger.info("response: %s", response_obj)
+    return response_obj
