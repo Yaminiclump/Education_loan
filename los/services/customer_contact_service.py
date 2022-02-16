@@ -174,13 +174,18 @@ def contact_update(req_data):
                                     raise InvalidInputException(get_response(Statuses.customer_contact_id_not_provided))
 
                                 # validation
+                                if variables.type is None:
+                                    logger.debug("type_val is None...")
+                                    raise InvalidInputException(get_response_resp_var(Statuses.contact_type, {"sequence": counter}))
+
+                                if variables.value is None:
+                                    logger.debug("value is None...")
+                                    raise InvalidInputException(get_response_resp_var(Statuses.contact_value, {"sequence": counter}))
+
                                 variables.type = validate_dict(variables.type, LosDictionary.contact_type)
                                 logger.info("type: %s", variables.type)
                                 if variables.type == dict():
                                     raise InvalidInputException(get_response(Statuses.contact_type, {"sequence": counter}))
-
-                                if variables.type is None:
-                                    variables.type = customer_contact_db.type
 
                                 if variables.type == LosDictionary.contact_type['mob']:
                                     check_mob = validate_mob(variables.value)

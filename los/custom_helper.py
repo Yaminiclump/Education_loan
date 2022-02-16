@@ -158,7 +158,7 @@ def validate_email(email_val):
 
 
 def validate_mob(mob_val):
-    regex = r'^(\+91[\-\s]?)?[0]?(91)?[789]\d{9}$'
+    regex = r'^[123456789]\d{9}$'
     if mob_val:
         mob_val = clean_string(mob_val)
         if mob_val is not None:
