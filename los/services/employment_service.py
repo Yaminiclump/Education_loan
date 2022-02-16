@@ -114,7 +114,7 @@ def employment_create(req_data):
                 employment_log.employment = employment
                 employment_log.save()
                 logger.info("finished employment create service")
-                response_obj = get_response(Statuses.success)
+                response_obj = get_response_1(Statuses.success, {"employment_id": employment.id})
     except Exception as e:
         logger.exception("Exception: ")
         response_obj = get_response(Statuses.generic_error_2)
