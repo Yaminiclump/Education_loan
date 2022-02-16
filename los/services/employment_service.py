@@ -120,3 +120,8 @@ def employment_create(req_data):
         response_obj = get_response(Statuses.generic_error_2)
         logger.info("response: %s", response_obj)
     return response_obj
+
+
+def employment_update(req_data):
+
+    return "abcd"
