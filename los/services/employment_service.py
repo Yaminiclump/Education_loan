@@ -79,11 +79,11 @@ def employment_create(req_data):
                     response_obj = get_response(Statuses.current_employer_months)
                     return response_obj
 
-                if gross_income_monthly is None:
+                if gross_income_monthly == "ERROR_INCOME" or gross_income_monthly is None:
                     response_obj = get_response(Statuses.gross_income_monthly)
                     return response_obj
 
-                if net_income_monthly is None:
+                if net_income_monthly == "ERROR_INCOME" or net_income_monthly is None:
                     response_obj = get_response(Statuses.net_income_monthly)
                     return response_obj
 
@@ -153,7 +153,7 @@ def employment_update(req_data):
 
                 # validation
                 if customer_id:
-                    if not Customer.objects.filter(id=customer_id, status=1).exists():
+                    if not Customer.objects.filter(id=customer_id, status=STATUS_ACTIVE).exists():
                         response_obj = get_response(Statuses.customer_id_not_exist)
                         return response_obj
                     customer_id = customer_id
@@ -168,7 +168,7 @@ def employment_update(req_data):
                 employment_db = None
                 if variables.employment_id:
                     try:
-                        employment_db = Employment.objects.get(pk=variables.employment_id, customer_id=customer_id, status=1)
+                        employment_db = Employment.objects.get(pk=variables.employment_id, customer_id=customer_id, status=STATUS_ACTIVE)
                     except ObjectDoesNotExist as e:
                         response_obj = get_response(Statuses.employment_id_not_exist)
                         return response_obj
