@@ -117,7 +117,7 @@ class TestEmploymentCreate():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = employment_create(data)
         logger.info("response: %s", response)
-        assert response['status'] == Statuses.customer_id_not_exist['status_code']
+        assert response['status'] == Statuses.customer_contact_id_not_provided['status_code']
 
     def test_no_employment_parameter(self):
         current_time = django.utils.timezone.now()
@@ -388,6 +388,53 @@ class TestEmploymentCreate():
         logger.info("response: %s", response)
         assert response['status'] == Statuses.designation_id['status_code']
 
+    def test_current_employer_months_not_int(self):
+        current_time = django.utils.timezone.now()
+        logger.debug("current_time india: %s", current_time)
+        create_customer = Customer(
+            salutation=1,
+            first_name="abc",
+            middle_name="",
+            last_name="",
+            gender=1,
+            date_of_birth="2019-10-25",
+            relation_with_applicant=0,
+            marital_status=1,
+            father_first_name="abc",
+            father_middle_name="abc",
+            father_last_name="",
+            mother_first_name="",
+            mother_middle_name="",
+            mother_last_name="",
+            spouse_first_name="",
+            spouse_middle_name="",
+            spouse_last_name="",
+            no_of_family_members=4,
+            household_income_monthly=5000,
+            status=1,
+            creation_date=current_time,
+            creation_by="System"
+        )
+        create_customer.save()
+        data = {
+            "customer": {
+                "customer_id": create_customer.id,
+                "employment": {
+                    "type": "salaried",
+                    "current_employer_months": "abcd",
+                    "gross_income_monthly": 9987.98,
+                    "net_income_monthly": 9876.56,
+                    "other_income_monthly": 0,
+                    "work_experience_month": 0
+                }
+            }
+        }
+        data = json.dumps(data)
+        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
+        response = employment_create(data)
+        logger.info("response: %s", response)
+        assert response['status'] == Statuses.current_employer_months['status_code']
+
     def test_retirement_age_years_not_int(self):
         current_time = django.utils.timezone.now()
         logger.debug("current_time india: %s", current_time)
@@ -571,8 +618,7 @@ class TestEmploymentCreate():
         logger.info("response: %s", response)
         assert response['status'] == Statuses.gross_income_monthly['status_code']
 
-
-    def test_gross_income_monthly_invalid(self):
+    def test_net_income_monthly_invalid(self):
         current_time = django.utils.timezone.now()
         logger.debug("current_time india: %s", current_time)
         create_customer = Customer(
@@ -709,3 +755,91 @@ class TestEmploymentCreate():
         response = employment_create(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.work_experience_month['status_code']
+
+    def test_employment_success(self):
+        current_time = django.utils.timezone.now()
+        logger.debug("current_time india: %s", current_time)
+        create_customer = Customer(
+            salutation=1,
+            first_name="abc",
+            middle_name="",
+            last_name="",
+            gender=1,
+            date_of_birth="2019-10-25",
+            relation_with_applicant=0,
+            marital_status=1,
+            father_first_name="abc",
+            father_middle_name="abc",
+            father_last_name="",
+            mother_first_name="",
+            mother_middle_name="",
+            mother_last_name="",
+            spouse_first_name="",
+            spouse_middle_name="",
+            spouse_last_name="",
+            no_of_family_members=4,
+            household_income_monthly=5000,
+            status=1,
+            creation_date=current_time,
+            creation_by="System"
+        )
+        create_customer.save()
+        data = {
+            "customer": {
+                "customer_id": create_customer.id,
+                "employment": {
+                    "type": "salaried",
+                    "gross_income_monthly": 9987.98,
+                    "net_income_monthly": 9876.56,
+                }
+            }
+        }
+        data = json.dumps(data)
+        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
+        response = employment_create(data)
+        logger.info("response: %s", response)
+        assert response['status'] == Statuses.success['status_code']
+
+    def test_exception(self, django_db_blocker):
+        current_time = django.utils.timezone.now()
+        logger.info("Test for checking if the program throws an exception when db access is denied")
+        create_customer = Customer(
+            salutation=1,
+            first_name="abc",
+            middle_name="",
+            last_name="",
+            gender=1,
+            date_of_birth="2019-10-25",
+            relation_with_applicant=0,
+            marital_status=1,
+            father_first_name="abc",
+            father_middle_name="abc",
+            father_last_name="",
+            mother_first_name="",
+            mother_middle_name="",
+            mother_last_name="",
+            spouse_first_name="",
+            spouse_middle_name="",
+            spouse_last_name="",
+            no_of_family_members=4,
+            household_income_monthly=5000,
+            status=1,
+            creation_date=current_time,
+            creation_by="System"
+        )
+        create_customer.save()
+        data = {
+            "customer": {
+                "customer_id": create_customer.id,
+                "employment": {
+                    "type": "salaried",
+                    "gross_income_monthly": 9987.98,
+                    "net_income_monthly": 9876.56,
+                }
+            }
+        }
+        data = json.dumps(data)
+        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
+        with django_db_blocker.block():
+            response_obj = employment_create(data)
+        assert response_obj["status"] == Statuses.generic_error_2["status_code"]
