@@ -200,11 +200,11 @@ def employment_update(req_data):
                     response_obj = get_response(Statuses.current_employer_months)
                     return response_obj
 
-                if variables.gross_income_monthly == int() or variables.gross_income_monthly is None:
+                if variables.gross_income_monthly == int():
                     response_obj = get_response(Statuses.gross_income_monthly)
                     return response_obj
 
-                if variables.net_income_monthly == int() or variables.net_income_monthly is None:
+                if variables.net_income_monthly == int():
                     response_obj = get_response(Statuses.net_income_monthly)
                     return response_obj
 

@@ -96,15 +96,19 @@ def get_integer_value(obj, param):
 def get_income_value(obj, param):
     rupee_val = get_value(obj, param)
     regex = r'^(?!0+(?:\.0+)?$)[0-9]+(?:\.[0-9]+)?$'
-    if rupee_val:
-        if (re.match(regex, str(rupee_val))):
-            paisa_val = rupee_val * 100
-            return paisa_val
+    if rupee_val is not None:
+        if rupee_val:
+            if (re.match(regex, str(rupee_val))):
+                paisa_val = rupee_val * 100
+                return paisa_val
+            else:
+                paisa_val = int()
+                return paisa_val
         else:
-            paisa_val = int()
-            return paisa_val
+            return int()
     else:
         return None
+
 
 
 def validate_numeric(num_val):
