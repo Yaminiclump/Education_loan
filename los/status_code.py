@@ -58,7 +58,8 @@ class Statuses:
     current_employer_months = {'status_code': 200317, 'message': "Please enter a valid current employer months"}
     gross_income_monthly = {'status_code': 200318, 'message': "Please enter a valid gross income"}
     net_income_monthly = {'status_code': 200319, 'message': "Please enter a valid net income"}
-
+    other_income_monthly = {'status_code': 2003110, 'message': "Please enter a valid other income monthly"}
+    work_experience_month = {'status_code': 2003111, 'message': "Please enter a valid work experience month"}
 
 
 def get_response(status_attribute, data=None):

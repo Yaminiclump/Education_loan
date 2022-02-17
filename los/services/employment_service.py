@@ -52,7 +52,7 @@ def employment_create(req_data):
                     return response_obj
 
                 if employment is None:
-                    response_obj = get_response(Statuses.employment_not_provided)
+                    response_obj = get_response(Statuses.employment_id_not_provided)
                     return response_obj
 
                 if type_val == dict():
@@ -85,6 +85,14 @@ def employment_create(req_data):
 
                 if net_income_monthly == int() or net_income_monthly is None:
                     response_obj = get_response(Statuses.net_income_monthly)
+                    return response_obj
+
+                if other_income_monthly == int():
+                    response_obj = get_response(Statuses.other_income_monthly)
+                    return response_obj
+
+                if work_experience_month == int():
+                    response_obj = get_response(Statuses.work_experience_month)
                     return response_obj
 
                 current_time = django.utils.timezone.now()
@@ -206,6 +214,14 @@ def employment_update(req_data):
 
                 if variables.net_income_monthly == int():
                     response_obj = get_response(Statuses.net_income_monthly)
+                    return response_obj
+
+                if variables.other_income_monthly == int():
+                    response_obj = get_response(Statuses.other_income_monthly)
+                    return response_obj
+
+                if variables.work_experience_month == int():
+                    response_obj = get_response(Statuses.work_experience_month)
                     return response_obj
 
                 set_db_attr_request(employment_db,employment,variables)
