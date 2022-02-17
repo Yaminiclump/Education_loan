@@ -79,11 +79,11 @@ def employment_create(req_data):
                     response_obj = get_response(Statuses.current_employer_months)
                     return response_obj
 
-                if gross_income_monthly == "ERROR_INCOME" or gross_income_monthly is None:
+                if gross_income_monthly == int() or gross_income_monthly is None:
                     response_obj = get_response(Statuses.gross_income_monthly)
                     return response_obj
 
-                if net_income_monthly == "ERROR_INCOME" or net_income_monthly is None:
+                if net_income_monthly == int() or net_income_monthly is None:
                     response_obj = get_response(Statuses.net_income_monthly)
                     return response_obj
 
@@ -198,6 +198,14 @@ def employment_update(req_data):
 
                 if variables.current_employer_months == int():
                     response_obj = get_response(Statuses.current_employer_months)
+                    return response_obj
+
+                if variables.gross_income_monthly == int() or variables.gross_income_monthly is None:
+                    response_obj = get_response(Statuses.gross_income_monthly)
+                    return response_obj
+
+                if variables.net_income_monthly == int() or variables.net_income_monthly is None:
+                    response_obj = get_response(Statuses.net_income_monthly)
                     return response_obj
 
                 set_db_attr_request(employment_db,employment,variables)
