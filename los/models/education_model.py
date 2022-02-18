@@ -13,24 +13,17 @@ class Education(models.Model):
     stream_name=models.TextField(null=True)
     start_month_year=models.DateField(null=True)
     end_month_year=models.DateField(null=False)
-    marks=models.PositiveSmallIntegerField(validators=[MinValueValidator(10),
-                                                              MaxValueValidator(10000)], null=False)
-    max_marks=models.PositiveSmallIntegerField(validators=[MinValueValidator(1),
-                                                              MaxValueValidator(999)], null=False)
-    marks_type=models.PositiveSmallIntegerField(validators=[MinValueValidator(10),
-                                                              MaxValueValidator(99)], null=False)
-    duration_months=models.PositiveSmallIntegerField(validators=[MinValueValidator(1),
-                                                              MaxValueValidator(99)], null=True)
-    course_type=models.PositiveSmallIntegerField(validators=[MinValueValidator(10),
-                                                              MaxValueValidator(99)], null=True)
-    status=models.PositiveSmallIntegerField(validators=[MinValueValidator(1),
-                                                              MaxValueValidator(9)], null=False)
-    
+    marks=models.PositiveSmallIntegerField(validators=[MinValueValidator(10), MaxValueValidator(10000)], null=False)
+    max_marks=models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(999)], null=False)
+    marks_type=models.PositiveSmallIntegerField(validators=[MinValueValidator(10), MaxValueValidator(99)], null=False)
+    duration_months=models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(99)], null=True)
+    course_type=models.PositiveSmallIntegerField(validators=[MinValueValidator(10), MaxValueValidator(99)], null=True)
+    status=models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(9)], null=False)
+
     creation_date = models.DateTimeField(null=False)
     creation_by = models.TextField(null=False)
     updation_date = models.DateTimeField(null=True)
     updation_by = models.TextField(null=True)
-
 
     class Meta:
         db_table = "los_education"       
@@ -47,18 +40,12 @@ class EducationLog(models.Model):
     stream_name=models.TextField(null=True)
     start_month_year=models.DateField(null=True)
     end_month_year=models.DateField(null=False)
-    marks=models.PositiveSmallIntegerField(validators=[MinValueValidator(10),
-                                                              MaxValueValidator(10000)], null=False)
-    max_marks=models.PositiveSmallIntegerField(validators=[MinValueValidator(1),
-                                                              MaxValueValidator(999)], null=False)
-    marks_type=models.PositiveSmallIntegerField(validators=[MinValueValidator(10),
-                                                              MaxValueValidator(99)], null=False)
-    duration_months=models.PositiveSmallIntegerField(validators=[MinValueValidator(1),
-                                                              MaxValueValidator(99)], null=True)
-    course_type=models.PositiveSmallIntegerField(validators=[MinValueValidator(10),
-                                                              MaxValueValidator(99)], null=True)
-    status=models.PositiveSmallIntegerField(validators=[MinValueValidator(1),
-                                                              MaxValueValidator(9)], null=False)
+    marks=models.PositiveSmallIntegerField(validators=[MinValueValidator(10), MaxValueValidator(10000)], null=False)
+    max_marks=models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(999)], null=False)
+    marks_type=models.PositiveSmallIntegerField(validators=[MinValueValidator(10), MaxValueValidator(99)], null=False)
+    duration_months=models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(99)], null=True)
+    course_type=models.PositiveSmallIntegerField(validators=[MinValueValidator(10), MaxValueValidator(99)], null=True)
+    status=models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(9)], null=False)
     
     creation_date = models.DateTimeField(null=False)
     creation_by = models.TextField(null=False)
