@@ -17,8 +17,11 @@ class Statuses:
     customer_contact_id_not_exist = {'status_code': 200020, 'message': "Please provide a valid Customer Contact Id"}
     customer_contact_id_not_provided = {'status_code': 200021, 'message': "Please provide a valid Customer Contact Id"}
     customer_contact_id_invalid_format = {'status_code': 200022, 'message': "Please provide a valid Customer Contact Id"}
-    employment_id_not_exist = {'status_code': 200023, 'message': "Please enter a valid employment Id"}
+
+    employment_id_not_exists = {'status_code': 200023, 'message': "Please enter a valid employment Id"}
     employment_id_not_provided = {'status_code': 200024, 'message': "Please enter a valid employment Id"}
+    employment_id_invalid_format = {'status_code': 200025, 'message': "Please enter a valid employment Id"}
+    employment_details_not_provided = {'status_code': 200026, 'message': "Please provide valid employment details"}
 
 
 

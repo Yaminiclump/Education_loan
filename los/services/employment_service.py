@@ -14,7 +14,7 @@ from los.status_code import get_response, get_response_1, get_response_resp_var,
 logger = logging.getLogger("django")
 
 
-def employment_create(req_data):
+def employment_create_service(req_data):
     response_obj = None
     logger.info("service_request: %s", req_data)
     try:
@@ -26,7 +26,11 @@ def employment_create(req_data):
                 logger.info("customer_get: %s", req_data.customer)
                 customer_id = get_value(customer, 'customer_id')
                 employment = get_value(customer, 'employment')
-                type = get_string_lower(employment,'type')
+                if employment is None:
+                    response_obj = get_response(Statuses.employment_details_not_provided)
+                    return response_obj
+
+                type = get_string_lower(employment, 'type')
                 employer_id = get_integer_value(employment, 'employer_id')
                 employer_name = get_string_lower(employment, 'employer_name')
                 address_id = get_integer_value(employment, 'address_id')
@@ -43,16 +47,12 @@ def employment_create(req_data):
 
                 # validation
                 if customer_id:
-                    if not Customer.objects.filter(id=customer_id,status=STATUS_ACTIVE).exists():
+                    if not Customer.objects.filter(id=customer_id, status=STATUS_ACTIVE).exists():
                         response_obj = get_response(Statuses.customer_id_not_exist)
                         return response_obj
                     customer_id = customer_id
                 else:
                     response_obj = get_response(Statuses.customer_id_not_provided)
-                    return response_obj
-
-                if employment is None:
-                    response_obj = get_response(Statuses.employment_id_not_provided)
                     return response_obj
 
                 if type_val == dict():
@@ -132,7 +132,7 @@ def employment_create(req_data):
     return response_obj
 
 
-def employment_update(req_data):
+def employment_update_service(req_data):
     response_obj = None
     logger.info("service_request: %s", req_data)
     try:
@@ -144,6 +144,10 @@ def employment_update(req_data):
                 logger.info("customer_get: %s", req_data.customer)
                 customer_id = get_value(customer, 'customer_id')
                 employment = get_value(customer, 'employment')
+                if employment is None:
+                    response_obj = get_response(Statuses.employment_details_not_provided)
+                    return response_obj
+
                 variables = EmptyClass()
                 variables.employment_id = get_value(employment, 'employment_id')
                 variables.type = get_string_lower(employment, 'type')
@@ -171,16 +175,12 @@ def employment_update(req_data):
                     response_obj = get_response(Statuses.customer_id_not_provided)
                     return response_obj
 
-                if employment is None:
-                    response_obj = get_response(Statuses.employment_not_provided)
-                    return response_obj
-
                 employment_db = None
                 if variables.employment_id:
                     try:
                         employment_db = Employment.objects.get(pk=variables.employment_id, customer_id=customer_id, status=STATUS_ACTIVE)
                     except ObjectDoesNotExist as e:
-                        response_obj = get_response(Statuses.employment_id_not_exist)
+                        response_obj = get_response(Statuses.employment_id_not_exists)
                         return response_obj
                 else:
                     response_obj = get_response(Statuses.employment_id_not_provided)
@@ -226,7 +226,7 @@ def employment_update(req_data):
                     response_obj = get_response(Statuses.work_experience_month)
                     return response_obj
 
-                set_db_attr_request(employment_db,employment,variables)
+                set_db_attr_request(employment_db, employment, variables)
                 current_time = django.utils.timezone.now()
                 logger.debug("current_time india: %s", current_time)
                 employment_db.updation_date = current_time

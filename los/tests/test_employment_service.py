@@ -5,7 +5,7 @@ import django.utils.timezone
 import pytest
 from los.models.customer_model import Customer
 from los.models.employment_model import EmploymentLog, Employment
-from los.services.employment_service import employment_create, employment_update
+from los.services.employment_service import employment_create_service, employment_update_service
 from los.status_code import Statuses
 from los.constants import STATUS_ACTIVE, CREATION_BY, UPDATION_BY
 
@@ -63,7 +63,7 @@ class TestEmploymentCreate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_create(data)
+        response = employment_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.customer_id_not_exist['status_code']
 
@@ -116,7 +116,7 @@ class TestEmploymentCreate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_create(data)
+        response = employment_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.customer_contact_id_not_provided['status_code']
 
@@ -155,7 +155,7 @@ class TestEmploymentCreate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_create(data)
+        response = employment_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.employment_id_not_provided['status_code']
 
@@ -197,7 +197,7 @@ class TestEmploymentCreate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_create(data)
+        response = employment_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.gross_income_monthly['status_code']
 
@@ -244,7 +244,7 @@ class TestEmploymentCreate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_create(data)
+        response = employment_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.employment_type['status_code']
 
@@ -291,7 +291,7 @@ class TestEmploymentCreate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_create(data)
+        response = employment_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.employer_id['status_code']
 
@@ -338,7 +338,7 @@ class TestEmploymentCreate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_create(data)
+        response = employment_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.address_id['status_code']
 
@@ -385,7 +385,7 @@ class TestEmploymentCreate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_create(data)
+        response = employment_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.designation_id['status_code']
 
@@ -432,7 +432,7 @@ class TestEmploymentCreate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_create(data)
+        response = employment_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.current_employer_months['status_code']
 
@@ -479,7 +479,7 @@ class TestEmploymentCreate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_create(data)
+        response = employment_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.retirement_age_years['status_code']
 
@@ -524,7 +524,7 @@ class TestEmploymentCreate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_create(data)
+        response = employment_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.gross_income_monthly['status_code']
 
@@ -569,7 +569,7 @@ class TestEmploymentCreate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_create(data)
+        response = employment_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.net_income_monthly['status_code']
 
@@ -615,7 +615,7 @@ class TestEmploymentCreate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_create(data)
+        response = employment_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.gross_income_monthly['status_code']
 
@@ -661,7 +661,7 @@ class TestEmploymentCreate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_create(data)
+        response = employment_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.net_income_monthly['status_code']
 
@@ -707,7 +707,7 @@ class TestEmploymentCreate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_create(data)
+        response = employment_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.other_income_monthly['status_code']
 
@@ -753,7 +753,7 @@ class TestEmploymentCreate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_create(data)
+        response = employment_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.work_experience_month['status_code']
 
@@ -797,7 +797,7 @@ class TestEmploymentCreate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_create(data)
+        response = employment_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
@@ -842,7 +842,7 @@ class TestEmploymentCreate():
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         with django_db_blocker.block():
-            response_obj = employment_create(data)
+            response_obj = employment_create_service(data)
         assert response_obj["status"] == Statuses.generic_error_2["status_code"]
 
     def test_no_param(self):
@@ -876,7 +876,7 @@ class TestEmploymentCreate():
         data = {}
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_create(data)
+        response = employment_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.generic_error_1['status_code']
 
@@ -954,7 +954,7 @@ class TestEmploymentUpdate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_update(data)
+        response = employment_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.customer_id_not_exist['status_code']
 
@@ -1014,7 +1014,7 @@ class TestEmploymentUpdate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_update(data)
+        response = employment_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.employment_not_provided['status_code']
 
@@ -1089,7 +1089,7 @@ class TestEmploymentUpdate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_update(data)
+        response = employment_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.employment_id_not_exist['status_code']
 
@@ -1162,7 +1162,7 @@ class TestEmploymentUpdate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_update(data)
+        response = employment_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.customer_contact_id_not_provided['status_code']
 
@@ -1235,7 +1235,7 @@ class TestEmploymentUpdate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_update(data)
+        response = employment_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.employment_id_not_provided['status_code']
 
@@ -1297,7 +1297,7 @@ class TestEmploymentUpdate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_update(data)
+        response = employment_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.employment_id_not_provided['status_code']
 
@@ -1364,7 +1364,7 @@ class TestEmploymentUpdate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_update(data)
+        response = employment_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.employment_type['status_code']
 
@@ -1432,7 +1432,7 @@ class TestEmploymentUpdate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_update(data)
+        response = employment_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.employer_id['status_code']
 
@@ -1499,7 +1499,7 @@ class TestEmploymentUpdate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_update(data)
+        response = employment_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.address_id['status_code']
 
@@ -1566,7 +1566,7 @@ class TestEmploymentUpdate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_update(data)
+        response = employment_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.designation_id['status_code']
 
@@ -1633,7 +1633,7 @@ class TestEmploymentUpdate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_update(data)
+        response = employment_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.current_employer_months['status_code']
 
@@ -1700,7 +1700,7 @@ class TestEmploymentUpdate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_update(data)
+        response = employment_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.retirement_age_years['status_code']
 
@@ -1765,7 +1765,7 @@ class TestEmploymentUpdate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_update(data)
+        response = employment_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
@@ -1830,7 +1830,7 @@ class TestEmploymentUpdate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_update(data)
+        response = employment_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
@@ -1896,7 +1896,7 @@ class TestEmploymentUpdate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_update(data)
+        response = employment_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.gross_income_monthly['status_code']
 
@@ -1962,7 +1962,7 @@ class TestEmploymentUpdate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_update(data)
+        response = employment_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.net_income_monthly['status_code']
 
@@ -2028,7 +2028,7 @@ class TestEmploymentUpdate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_update(data)
+        response = employment_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.other_income_monthly['status_code']
 
@@ -2094,7 +2094,7 @@ class TestEmploymentUpdate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_update(data)
+        response = employment_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.work_experience_month['status_code']
 
@@ -2157,7 +2157,7 @@ class TestEmploymentUpdate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_update(data)
+        response = employment_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
@@ -2222,7 +2222,7 @@ class TestEmploymentUpdate():
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         with django_db_blocker.block():
-            response_obj = employment_update(data)
+            response_obj = employment_update_service(data)
         assert response_obj["status"] == Statuses.generic_error_2["status_code"]
 
     def test_no_param(self):
@@ -2275,6 +2275,6 @@ class TestEmploymentUpdate():
         data = {}
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_update(data)
+        response = employment_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.generic_error_1['status_code']

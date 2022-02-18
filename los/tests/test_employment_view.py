@@ -7,7 +7,7 @@ import json
 import logging
 from django.test import TestCase, Client
 from django.urls import reverse
-from los.services.employment_service import employment_create,employment_update
+from los.services.employment_service import employment_create_service,employment_update_service
 from los.constants import STATUS_ACTIVE, CREATION_BY, UPDATION_BY
 import django.utils.timezone
 

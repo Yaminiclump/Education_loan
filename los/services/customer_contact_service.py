@@ -16,7 +16,7 @@ from los.status_code import get_response, get_response_1, get_response_resp_var,
 logger = logging.getLogger("django")
 
 
-def contact_service(req_data):
+def customer_contact_create_service(req_data):
     response_obj = None
     logger.info("service_request: %s", req_data)
     try:
@@ -128,7 +128,7 @@ def contact_service(req_data):
     return response_obj
 
 
-def contact_update(req_data):
+def customer_contact_update_service(req_data):
     response_obj = None
     try:
         logger.info("request_service: %s", req_data)
