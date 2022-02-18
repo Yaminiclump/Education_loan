@@ -125,8 +125,6 @@ def employment_create(req_data):
                 response_obj = get_response_1(Statuses.success, {"employment_id": employment.id})
             else:
                 response_obj = get_response(Statuses.generic_error_1)
-        else:
-            response_obj = get_response(Statuses.generic_error_1)
     except Exception as e:
         logger.exception("Exception: ")
         response_obj = get_response(Statuses.generic_error_2)
@@ -246,8 +244,6 @@ def employment_update(req_data):
                 response_obj = get_response(Statuses.success)
             else:
                 response_obj = get_response(Statuses.generic_error_1)
-        else:
-            response_obj = get_response(Statuses.generic_error_1)
     except Exception as e:
         logger.exception("Exception: ")
         response_obj = get_response(Statuses.generic_error_2)

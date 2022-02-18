@@ -60,6 +60,7 @@ class Statuses:
     net_income_monthly = {'status_code': 200319, 'message': "Please enter a valid net income"}
     other_income_monthly = {'status_code': 2003110, 'message': "Please enter a valid other income monthly"}
     work_experience_month = {'status_code': 2003111, 'message': "Please enter a valid work experience month"}
+    customer_param = {'status_code': 2003112, 'message': "Please enter a valid customer"}
 
 
 def get_response(status_attribute, data=None):

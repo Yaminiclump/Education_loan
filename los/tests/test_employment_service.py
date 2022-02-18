@@ -872,62 +872,11 @@ class TestEmploymentCreate():
             creation_by="System"
         )
         create_customer.save()
-        data = {
-
-        }
+        data = {}
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = employment_create(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.generic_error_1['status_code']
 
-    def test_no_customer_param(self):
-        current_time = django.utils.timezone.now()
-        logger.debug("current_time india: %s", current_time)
-        create_customer = Customer(
-            salutation=1,
-            first_name="abc",
-            middle_name="",
-            last_name="",
-            gender=1,
-            date_of_birth="2019-10-25",
-            relation_with_applicant=0,
-            marital_status=1,
-            father_first_name="abc",
-            father_middle_name="abc",
-            father_last_name="",
-            mother_first_name="",
-            mother_middle_name="",
-            mother_last_name="",
-            spouse_first_name="",
-            spouse_middle_name="",
-            spouse_last_name="",
-            no_of_family_members=4,
-            household_income_monthly=5000,
-            status=1,
-            creation_date=current_time,
-            creation_by="System"
-        )
-        create_customer.save()
-        data = {
-            "customer_id": 0,
-            "employment": {
-                "type": "string",
-                "employer_id": 0,
-                "employer_name": "string",
-                "address_id": 0,
-                "designation_id": 0,
-                "designation_name": "string",
-                "retirement_age_years": 0,
-                "current_employer_months": 0,
-                "gross_income_monthly": 0,
-                "net_income_monthly": 0,
-                "other_income_monthly": 0,
-                "work_experience_month": 0
-            }
-        }
-        data = json.dumps(data)
-        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = employment_create(data)
-        logger.info("response: %s", response)
-        assert response['status'] == Statuses.generic_error_1['status_code']
+
