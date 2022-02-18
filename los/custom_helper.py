@@ -12,6 +12,7 @@ class InvalidInputException(Exception):
     """Raised when the input is not valid"""
     pass
 
+
 def get_attributes(obj):
     attribute_list = []
     for i in inspect.getmembers(obj):
@@ -36,7 +37,7 @@ def set_db_attr_request(db_obj, req_obj, var_obj):
 
 
 def get_value(obj, param):
-    return getattr(obj,param) if hasattr(obj,param) else None
+    return getattr(obj, param) if hasattr(obj, param) else None
 
 
 def clean_string(str_val):
@@ -78,7 +79,8 @@ def set_obj_attr_request(req_obj, var_obj):
         logger.debug("attribute_value_final: %s", attribute_value)
         setattr(var_obj, attr[0], attribute_value)
 
-def get_integer_value(obj,param):
+
+def get_integer_value(obj, param):
     int_val = get_value(obj, param)
     if int_val:
         if type(int_val) == int:
@@ -90,13 +92,23 @@ def get_integer_value(obj,param):
     else:
         return None
 
-def get_income_value(obj,param):
+
+def get_income_value(obj, param):
     rupee_val = get_value(obj, param)
-    if rupee_val:
-        paisa_val = rupee_val*100
-        return paisa_val
+    regex = r'^(?!0+(?:\.0+)?$)[0-9]+(?:\.[0-9]+)?$'
+    if rupee_val is not None:
+        if rupee_val:
+            if (re.match(regex, str(rupee_val))):
+                paisa_val = rupee_val * 100
+                return paisa_val
+            else:
+                paisa_val = int()
+                return paisa_val
+        else:
+            return int()
     else:
         return None
+
 
 
 def validate_numeric(num_val):
@@ -155,7 +167,7 @@ def validate_email(email_val):
 
 
 def validate_mob(mob_val):
-    regex = r'^(\+91[\-\s]?)?[0]?(91)?[789]\d{9}$'
+    regex = r'^[123456789]\d{9}$'
     if mob_val:
         mob_val = clean_string(mob_val)
         if mob_val is not None:
@@ -169,4 +181,3 @@ def validate_mob(mob_val):
             return mob_val
     else:
         return None
-

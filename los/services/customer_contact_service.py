@@ -114,7 +114,7 @@ def contact_service(req_data):
                             response_obj = get_response_1(Statuses.success, {"contacts": contact_insert_ids})
                     except InvalidInputException as e:
                         logger.debug("Exception...")
-                        response_obj = str(e)
+                        response_obj = eval(str(e))
                 else:
                     response_obj = get_response(Statuses.generic_error_1)
             else:
@@ -166,21 +166,26 @@ def contact_update(req_data):
 
                                 customer_contact_db = None
                                 if variables.contact_id:
-                                    try:
-                                        customer_contact_db = CustomerContact.objects.get(pk=variables.contact_id, customer_id=customer_id, status=1)
-                                    except ObjectDoesNotExist as e:
-                                        raise InvalidInputException(get_response(Statuses.customer_contact_id_not_exist))
+                                        try:
+                                            customer_contact_db = CustomerContact.objects.get(pk=variables.contact_id, customer_id=customer_id, status=1)
+                                        except ObjectDoesNotExist as e:
+                                            raise InvalidInputException(get_response(Statuses.customer_contact_id_not_exist))
                                 else:
                                     raise InvalidInputException(get_response(Statuses.customer_contact_id_not_provided))
 
                                 # validation
+                                if variables.type is None:
+                                    logger.debug("type_val is None...")
+                                    raise InvalidInputException(get_response_resp_var(Statuses.contact_type, {"sequence": counter}))
+
+                                if variables.value is None:
+                                    logger.debug("value is None...")
+                                    raise InvalidInputException(get_response_resp_var(Statuses.contact_value, {"sequence": counter}))
+
                                 variables.type = validate_dict(variables.type, LosDictionary.contact_type)
                                 logger.info("type: %s", variables.type)
                                 if variables.type == dict():
                                     raise InvalidInputException(get_response(Statuses.contact_type, {"sequence": counter}))
-
-                                if variables.type is None:
-                                    variables.type = customer_contact_db.type
 
                                 if variables.type == LosDictionary.contact_type['mob']:
                                     check_mob = validate_mob(variables.value)
@@ -218,7 +223,7 @@ def contact_update(req_data):
 
                     except InvalidInputException as e:
                         logger.debug("Exception...")
-                        response_obj = str(e)
+                        response_obj = eval(str(e))
                 else:
                     response_obj = get_response(Statuses.generic_error_1)
                     return response_obj
