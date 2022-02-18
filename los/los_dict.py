@@ -31,8 +31,9 @@ class LosDictionary():
         "email": 11,
     }
     marks_type = {
-        "percent": 10,
-        "CGPA": 11
+        "percentage": 10,
+        "cgpa": 11,
+        "percantile": 12
     }
 
     course_type = {
