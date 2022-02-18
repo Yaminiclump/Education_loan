@@ -62,6 +62,15 @@ class Statuses:
     work_experience_month = {'status_code': 2003111, 'message': "Please enter a valid work experience month"}
     customer_param = {'status_code': 2003112, 'message': "Please enter a valid customer"}
 
+    #customer eduacation related...
+    invalid_institute_id = {'status_code': 200411, 'message': "Please enter a valid value for institute id at sequence no. $sequence"}
+    invalid_institute_name = {'status_code': 200411, 'message': "Please enter a valid value for institute name at sequence no. $sequence"}
+    invalid_start_month_year = {'status_code': 200411, 'message': "Please enter a valid value for start month & year at sequence no. $sequence"}
+    invalid_end_month_year = {'status_code': 200411, 'message': "Please enter a valid value for end month & year at sequence no. $sequence"}
+    invalid_marks_type = {'status_code': 200411, 'message': "Please enter a valid value for marks type at sequence no. $sequence"}
+    invalid_marks = {'status_code': 200411, 'message': "Please enter a valid value for marks at sequence no. $sequence"}
+    invalid_max_marks = {'status_code': 200411, 'message': "Please enter a valid value for max marks at sequence no. $sequence"}
+
 
 def get_response(status_attribute, data=None):
     if data is None:

@@ -10,8 +10,6 @@ class LosDictionary():
         "female": 2,
         "trans": 3,
         "will_hide": 0,
-
-
     }
     marital_status = {
         "married": 1,
@@ -19,7 +17,6 @@ class LosDictionary():
         "separated": 3,
         "will_hide":0,
     }
-
     relation_with_applicant = {
         "father": 10,
         "mother": 11,
@@ -31,8 +28,9 @@ class LosDictionary():
         "email": 11,
     }
     marks_type = {
-        "percent": 10,
-        "CGPA": 11
+        "percentage": 10,
+        "cgpa": 11,
+        "percentile": 12
     }
 
     course_type = {
