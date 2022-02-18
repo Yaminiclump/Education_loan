@@ -12,31 +12,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.CreateModel(
-            name='Education',
-            fields=[
-                ('id', models.BigAutoField(primary_key=True, serialize=False)),
-                ('customer_id', models.BigIntegerField()),
-                ('institute_id', models.BigIntegerField()),
-                ('institute_name', models.TextField(null=True)),
-                ('course_id', models.BigIntegerField()),
-                ('course_name', models.TextField(null=True)),
-                ('stream_id', models.BigIntegerField()),
-                ('stream_name', models.TextField(null=True)),
-                ('start_month_year', models.DateField(null=True)),
-                ('end_month_year', models.DateField()),
-                ('marks', models.IntegerField()),
-                ('max_marks', models.PositiveSmallIntegerField(validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(999)])),
-                ('marks_type', models.PositiveSmallIntegerField(validators=[django.core.validators.MinValueValidator(10), django.core.validators.MaxValueValidator(99)])),
-                ('duration_months', models.PositiveSmallIntegerField(null=True, validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(99)])),
-                ('course_type', models.PositiveSmallIntegerField(null=True, validators=[django.core.validators.MinValueValidator(10), django.core.validators.MaxValueValidator(99)])),
-                ('status', models.PositiveSmallIntegerField(validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(9)])),
-                ('creation_date', models.DateTimeField()),
-                ('creation_by', models.TextField()),
-                ('updation_date', models.DateTimeField(null=True)),
-                ('updation_by', models.TextField(null=True)),
-            ],
-        ),
+
         migrations.AlterField(
             model_name='contact',
             name='country_code',
