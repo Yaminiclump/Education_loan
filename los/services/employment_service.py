@@ -210,6 +210,14 @@ def employment_update_service(req_data):
                 if variables.employer_id == int():
                     response_obj = get_response(Statuses.employer_id)
                     return response_obj
+                if variables.employer_id != None:
+                    if variables.employer_name:
+                        response_obj = get_response(Statuses.employer_name)
+                        return response_obj
+                else:
+                    if not variables.employer_name:
+                        response_obj = get_response(Statuses.employer_name)
+                        return response_obj
 
                 if variables.address_id == int():
                     response_obj = get_response(Statuses.address_id)
@@ -218,6 +226,14 @@ def employment_update_service(req_data):
                 if variables.designation_id == int():
                     response_obj = get_response(Statuses.designation_id)
                     return response_obj
+                if variables.designation_id != None:
+                    if variables.designation_name:
+                        response_obj = get_response(Statuses.designation_name)
+                        return response_obj
+                else:
+                    if not variables.designation_name:
+                        response_obj = get_response(Statuses.designation_name)
+                        return response_obj
 
                 if variables.retirement_age_years == int():
                     response_obj = get_response(Statuses.retirement_age_years)

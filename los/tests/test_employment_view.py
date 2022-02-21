@@ -84,6 +84,8 @@ class TestCreateEmploymentyView(TestCase):
                 "customer_id": create_customer.id,
                 "employment": {
                     "type": "salaried",
+                    "employer_id": 1,
+                    "designation_id": 2,
                     "gross_income_monthly": 9987.98,
                     "net_income_monthly": 9876.56,
                 }
@@ -189,6 +191,8 @@ class TestUpdateEmploymentyView(TestCase):
                 "employment": {
                     "employment_id": create_employment.id,
                     "type": "salaried",
+                    "employer_id": 1,
+                    "designation_id": 2,
                     "gross_income_monthly": 9987.98,
                     "net_income_monthly": 9876.56,
                 }
