@@ -44,8 +44,7 @@ def employment_create_service(req_data):
                 work_experience_month = get_integer_value(employment, 'work_experience_month')
 
                 type_val = validate_dict(type, LosDictionary.employment_type)
-                logger.info("employer_idddd: %s", employer_id)
-                logger.info("employer_name: %s", employer_name)
+
                 # validation
                 if customer_id:
                     if not Customer.objects.filter(id=customer_id, status=STATUS_ACTIVE).exists():
