@@ -2519,3 +2519,277 @@ class TestEmploymentUpdate():
         response = employment_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.generic_error_1['status_code']
+
+    def test_employer_id_is_zero(self):
+        current_time = django.utils.timezone.now()
+        logger.debug("current_time india: %s", current_time)
+        create_customer = Customer(
+            salutation=1,
+            first_name="abc",
+            middle_name="",
+            last_name="",
+            gender=1,
+            date_of_birth="2019-10-25",
+            relation_with_applicant=0,
+            marital_status=1,
+            father_first_name="abc",
+            father_middle_name="abc",
+            father_last_name="",
+            mother_first_name="",
+            mother_middle_name="",
+            mother_last_name="",
+            spouse_first_name="",
+            spouse_middle_name="",
+            spouse_last_name="",
+            no_of_family_members=4,
+            household_income_monthly=5000,
+            status=STATUS_ACTIVE,
+            creation_date=current_time,
+            creation_by=CREATION_BY
+        )
+        create_customer.save()
+        create_employment = Employment(
+            type=11,
+            employer_id=1,
+            employer_name="abc",
+            address_id=0,
+            designation_id=0,
+            designation_name="string",
+            retirement_age_years=0,
+            current_employer_months=0,
+            gross_income_monthly=9876.98,
+            net_income_monthly=123.98,
+            other_income_monthly=0,
+            work_experience_month=0,
+            status=STATUS_ACTIVE,
+            creation_date=current_time,
+            creation_by=CREATION_BY,
+            customer_id=create_customer.id,
+        )
+        create_employment.save()
+        data = {
+            "customer": {
+                "customer_id": create_customer.id,
+                "employment": {
+                    "employment_id": create_employment.id,
+                    "type": "salaried",
+                    "employer_id": 0,  # If employer id is zero then employer name should not be None
+                    "employer_name": "",
+                    "gross_income_monthly": 9987.98,
+                    "net_income_monthly": 9876.56,
+                    "other_income_monthly": 0,
+                    "work_experience_month": 0
+                }
+            }
+        }
+        data = json.dumps(data)
+        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
+        response = employment_update_service(data)
+        logger.info("response: %s", response)
+        assert response['status'] == Statuses.employer_name['status_code']
+
+    def test_employer_id_is_non_zero(self):
+        current_time = django.utils.timezone.now()
+        logger.debug("current_time india: %s", current_time)
+        create_customer = Customer(
+            salutation=1,
+            first_name="abc",
+            middle_name="",
+            last_name="",
+            gender=1,
+            date_of_birth="2019-10-25",
+            relation_with_applicant=0,
+            marital_status=1,
+            father_first_name="abc",
+            father_middle_name="abc",
+            father_last_name="",
+            mother_first_name="",
+            mother_middle_name="",
+            mother_last_name="",
+            spouse_first_name="",
+            spouse_middle_name="",
+            spouse_last_name="",
+            no_of_family_members=4,
+            household_income_monthly=5000,
+            status=STATUS_ACTIVE,
+            creation_date=current_time,
+            creation_by=CREATION_BY
+        )
+        create_customer.save()
+        create_employment = Employment(
+            type=11,
+            employer_id=1,
+            employer_name="abc",
+            address_id=0,
+            designation_id=0,
+            designation_name="string",
+            retirement_age_years=0,
+            current_employer_months=0,
+            gross_income_monthly=9876.98,
+            net_income_monthly=123.98,
+            other_income_monthly=0,
+            work_experience_month=0,
+            status=STATUS_ACTIVE,
+            creation_date=current_time,
+            creation_by=CREATION_BY,
+            customer_id=create_customer.id,
+        )
+        create_employment.save()
+        data = {
+            "customer": {
+                "customer_id": create_customer.id,
+                "employment": {
+                    "employment_id": create_employment.id,
+                    "type": "salaried",
+                    "employer_id": 12, # If employer id is non zero then employer name should be None
+                    "employer_name": "abcd",
+                    "gross_income_monthly": 9987.98,
+                    "net_income_monthly": 9876.56,
+                    "other_income_monthly": 0,
+                    "work_experience_month": 0
+                }
+            }
+        }
+        data = json.dumps(data)
+        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
+        response = employment_update_service(data)
+        logger.info("response: %s", response)
+        assert response['status'] == Statuses.employer_name['status_code']
+
+    def test_designation_id_is_zero(self):
+        current_time = django.utils.timezone.now()
+        logger.debug("current_time india: %s", current_time)
+        create_customer = Customer(
+            salutation=1,
+            first_name="abc",
+            middle_name="",
+            last_name="",
+            gender=1,
+            date_of_birth="2019-10-25",
+            relation_with_applicant=0,
+            marital_status=1,
+            father_first_name="abc",
+            father_middle_name="abc",
+            father_last_name="",
+            mother_first_name="",
+            mother_middle_name="",
+            mother_last_name="",
+            spouse_first_name="",
+            spouse_middle_name="",
+            spouse_last_name="",
+            no_of_family_members=4,
+            household_income_monthly=5000,
+            status=STATUS_ACTIVE,
+            creation_date=current_time,
+            creation_by=CREATION_BY
+        )
+        create_customer.save()
+        create_employment = Employment(
+            type=11,
+            employer_id=1,
+            employer_name="abc",
+            address_id=0,
+            designation_id=0,
+            designation_name="string",
+            retirement_age_years=0,
+            current_employer_months=0,
+            gross_income_monthly=9876.98,
+            net_income_monthly=123.98,
+            other_income_monthly=0,
+            work_experience_month=0,
+            status=STATUS_ACTIVE,
+            creation_date=current_time,
+            creation_by=CREATION_BY,
+            customer_id=create_customer.id,
+        )
+        create_employment.save()
+        data = {
+            "customer": {
+                "customer_id": create_customer.id,
+                "employment": {
+                    "employment_id": create_employment.id,
+                    "type": "salaried",
+                    "employer_id": 12,
+                    "designation_id": 0, # If designation id is zero then designation name should not be None
+                    "designation_name": "",
+                    "gross_income_monthly": 9987.98,
+                    "net_income_monthly": 9876.56,
+                    "other_income_monthly": 0,
+                    "work_experience_month": 0
+                }
+            }
+        }
+        data = json.dumps(data)
+        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
+        response = employment_update_service(data)
+        logger.info("response: %s", response)
+        assert response['status'] == Statuses.designation_name['status_code']
+
+    def test_designation_id_is_non_zero(self):
+        current_time = django.utils.timezone.now()
+        logger.debug("current_time india: %s", current_time)
+        create_customer = Customer(
+            salutation=1,
+            first_name="abc",
+            middle_name="",
+            last_name="",
+            gender=1,
+            date_of_birth="2019-10-25",
+            relation_with_applicant=0,
+            marital_status=1,
+            father_first_name="abc",
+            father_middle_name="abc",
+            father_last_name="",
+            mother_first_name="",
+            mother_middle_name="",
+            mother_last_name="",
+            spouse_first_name="",
+            spouse_middle_name="",
+            spouse_last_name="",
+            no_of_family_members=4,
+            household_income_monthly=5000,
+            status=STATUS_ACTIVE,
+            creation_date=current_time,
+            creation_by=CREATION_BY
+        )
+        create_customer.save()
+        create_employment = Employment(
+            type=11,
+            employer_id=1,
+            employer_name="abc",
+            address_id=0,
+            designation_id=0,
+            designation_name="string",
+            retirement_age_years=0,
+            current_employer_months=0,
+            gross_income_monthly=9876.98,
+            net_income_monthly=123.98,
+            other_income_monthly=0,
+            work_experience_month=0,
+            status=STATUS_ACTIVE,
+            creation_date=current_time,
+            creation_by=CREATION_BY,
+            customer_id=create_customer.id,
+        )
+        create_employment.save()
+        data = {
+            "customer": {
+                "customer_id": create_customer.id,
+                "employment": {
+                    "employment_id": create_employment.id,
+                    "type": "salaried",
+                    "employer_id": 12, # If employer id is non zero then employer name should be None
+                    "designation_id": 97,
+                    "designation_name": "abcd",
+                    "gross_income_monthly": 9987.98,
+                    "net_income_monthly": 9876.56,
+                    "other_income_monthly": 0,
+                    "work_experience_month": 0
+                }
+            }
+        }
+        data = json.dumps(data)
+        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
+        response = employment_update_service(data)
+        logger.info("response: %s", response)
+        assert response['status'] == Statuses.designation_name['status_code']
