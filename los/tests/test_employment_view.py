@@ -16,7 +16,7 @@ logger = logging.getLogger("django")
 class TestCreateEmploymentyView(TestCase):
     def setUp(self):
         self.client = Client()
-        self.url = reverse('create_empolyment')
+        self.url = reverse('employment_create')
 
     def postreq(self, payload):
         return self.client.post(self.url, json.dumps(payload), content_type="application/json")
@@ -102,7 +102,7 @@ class TestCreateEmploymentyView(TestCase):
 class TestUpdateEmploymentyView(TestCase):
     def setUp(self):
         self.client = Client()
-        self.url = reverse('update_empolyment')
+        self.url = reverse('employment_update')
 
     def postreq(self, payload):
         return self.client.post(self.url, json.dumps(payload), content_type="application/json")

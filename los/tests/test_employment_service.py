@@ -157,7 +157,7 @@ class TestEmploymentCreate():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = employment_create_service(data)
         logger.info("response: %s", response)
-        assert response['status'] == Statuses.employment_id_not_provided['status_code']
+        assert response['status'] == Statuses.employment_details_not_provided['status_code']
 
     def test_employment_parameter_blank(self):
         current_time = django.utils.timezone.now()
@@ -1016,7 +1016,7 @@ class TestEmploymentUpdate():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = employment_update_service(data)
         logger.info("response: %s", response)
-        assert response['status'] == Statuses.employment_not_provided['status_code']
+        assert response['status'] == Statuses.employment_details_not_provided['status_code']
 
     def test_employment_id_not_exist(self):
         current_time = django.utils.timezone.now()
@@ -1091,7 +1091,7 @@ class TestEmploymentUpdate():
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         response = employment_update_service(data)
         logger.info("response: %s", response)
-        assert response['status'] == Statuses.employment_id_not_exist['status_code']
+        assert response['status'] == Statuses.employment_id_not_exists['status_code']
 
     def test_customer_id_not_provided(self):
         current_time = django.utils.timezone.now()

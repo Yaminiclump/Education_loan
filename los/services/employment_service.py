@@ -44,7 +44,8 @@ def employment_create_service(req_data):
                 work_experience_month = get_integer_value(employment, 'work_experience_month')
 
                 type_val = validate_dict(type, LosDictionary.employment_type)
-
+                logger.info("employer_idddd: %s", employer_id)
+                logger.info("employer_name: %s", employer_name)
                 # validation
                 if customer_id:
                     if not Customer.objects.filter(id=customer_id, status=STATUS_ACTIVE).exists():
@@ -62,6 +63,14 @@ def employment_create_service(req_data):
                 if employer_id == int():
                     response_obj = get_response(Statuses.employer_id)
                     return response_obj
+                if employer_id != None:
+                    if employer_name:
+                        response_obj = get_response(Statuses.employer_name)
+                        return response_obj
+                else:
+                    if not employer_name:
+                        response_obj = get_response(Statuses.employer_name)
+                        return response_obj
 
                 if address_id == int():
                     response_obj = get_response(Statuses.address_id)
@@ -70,6 +79,15 @@ def employment_create_service(req_data):
                 if designation_id == int():
                     response_obj = get_response(Statuses.designation_id)
                     return response_obj
+
+                if designation_id != None:
+                    if designation_name:
+                        response_obj = get_response(Statuses.designation_name)
+                        return response_obj
+                else:
+                    if not designation_name:
+                        response_obj = get_response(Statuses.designation_name)
+                        return response_obj
 
                 if retirement_age_years == int():
                     response_obj = get_response(Statuses.retirement_age_years)
