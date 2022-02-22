@@ -17,9 +17,12 @@ class Statuses:
     customer_contact_id_not_exist = {'status_code': 200020, 'message': "Please provide a valid Customer Contact Id"}
     customer_contact_id_not_provided = {'status_code': 200021, 'message': "Please provide a valid Customer Contact Id"}
     customer_contact_id_invalid_format = {'status_code': 200022, 'message': "Please provide a valid Customer Contact Id"}
+
     employment_id_not_exist = {'status_code': 200023, 'message': "Please enter a valid employment Id"}
     employment_id_not_provided = {'status_code': 200024, 'message': "Please enter a valid employment Id"}
 
+    education_id_not_exist = {'status_code': 200025, 'message': "Please provide a valid Education Id"}
+    education_id_not_provided = {'status_code': 200026, 'message': "Please provide a valid Education Id"}
 
 
     # customer related...
@@ -64,13 +67,18 @@ class Statuses:
 
     #customer eduacation related...
     invalid_institute_id = {'status_code': 200411, 'message': "Please enter a valid value for institute id at sequence no. $sequence"}
-    invalid_institute_name = {'status_code': 200411, 'message': "Please enter a valid value for institute name at sequence no. $sequence"}
-    invalid_start_month_year = {'status_code': 200411, 'message': "Please enter a valid value for start month & year at sequence no. $sequence"}
-    invalid_end_month_year = {'status_code': 200411, 'message': "Please enter a valid value for end month & year at sequence no. $sequence"}
-    invalid_marks_type = {'status_code': 200411, 'message': "Please enter a valid value for marks type at sequence no. $sequence"}
-    invalid_marks = {'status_code': 200411, 'message': "Please enter a valid value for marks at sequence no. $sequence"}
-    invalid_max_marks = {'status_code': 200411, 'message': "Please enter a valid value for max marks at sequence no. $sequence"}
-
+    invalid_institute_name = {'status_code': 200412, 'message': "Please enter a valid value for institute name at sequence no. $sequence"}
+    invalid_course_id = {'status_code': 200413, 'message': "Please enter a valid value for course id at sequence no. $sequence"}
+    invalid_course_name = {'status_code': 200414, 'message': "Please enter a valid value for course name at sequence no. $sequence"}
+    invalid_stream_id = {'status_code': 200415, 'message': "Please enter a valid value for stream id at sequence no. $sequence"}
+    invalid_stream_name = {'status_code': 200416, 'message': "Please enter a valid value for stream name at sequence no. $sequence"}
+    invalid_start_month_year = {'status_code': 200417, 'message': "Please enter a valid value for start month & year at sequence no. $sequence"}
+    invalid_end_month_year = {'status_code': 200418, 'message': "Please enter a valid value for end month & year at sequence no. $sequence"}
+    invalid_marks_type = {'status_code': 200419, 'message': "Please enter a valid value for marks type at sequence no. $sequence"}
+    invalid_marks = {'status_code': 2004110, 'message': "Please enter a valid value for marks at sequence no. $sequence"}
+    invalid_max_marks = {'status_code': 2004111, 'message': "Please enter a valid value for max marks at sequence no. $sequence"}
+    invalid_duration_months = {'status_code': 2004112, 'message': "Please enter a valid value for duration months at sequence no. $sequence"}
+    invalid_course_type = {'status_code': 2004113, 'message': "Please enter a valid value for course type at sequence no. $sequence"}
 
 def get_response(status_attribute, data=None):
     if data is None:
