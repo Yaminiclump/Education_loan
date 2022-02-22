@@ -51,8 +51,6 @@ class Statuses:
                             'message': "Please enter a valid country code at sequence no. $sequence"}
     email_address = {'status_code': 200215, 'message': "Please enter a valid email address at sequence no. $sequence"}
     mobile_number = {'status_code': 200216, 'message': "Please enter a valid mobile number at sequence no. $sequence"}
-    same_contact_id = {'status_code': 200218, 'message': "Multiple customer ids"}
-    # TODO: add check for same id
 
     # customer employment related...
     employment_not_provided = {'status_code': 200311, 'message': "Please provide a valid employment"}

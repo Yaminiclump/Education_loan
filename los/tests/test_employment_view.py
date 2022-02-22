@@ -1,24 +1,24 @@
 import json
-import pytest
+import logging
+
+import django.utils.timezone
+from django.test import TestCase, Client
+from django.urls import reverse
+
+from los.constants import STATUS_ACTIVE, CREATION_BY
 from los.models.customer_model import Customer
 from los.models.employment_model import Employment
 from los.status_code import Statuses
-import json
-import logging
-from django.test import TestCase, Client
-from django.urls import reverse
-from los.services.employment_service import employment_create_service,employment_update_service
-from los.constants import STATUS_ACTIVE, CREATION_BY, UPDATION_BY
-import django.utils.timezone
 
 logger = logging.getLogger("django")
 
-class TestCreateEmploymentyView(TestCase):
+
+class TestCreateEmploymentView(TestCase):
     def setUp(self):
         self.client = Client()
         self.url = reverse('employment_create')
 
-    def postreq(self, payload):
+    def postReq(self, payload):
         return self.client.post(self.url, json.dumps(payload), content_type="application/json")
 
     def test_invalid_request(self):
@@ -91,7 +91,7 @@ class TestCreateEmploymentyView(TestCase):
                 }
             }
         }
-        response = self.postreq(body)
+        response = self.postReq(body)
         content = json.loads(response.content)
         error_code = content['status']
         logger.info("Response %s", content['status'])
@@ -101,12 +101,13 @@ class TestCreateEmploymentyView(TestCase):
         # success = 10000 successfully found and fetched data
         self.assertEqual(error_code, Statuses.success["status_code"])
 
-class TestUpdateEmploymentyView(TestCase):
+
+class TestUpdateEmploymentView(TestCase):
     def setUp(self):
         self.client = Client()
         self.url = reverse('employment_update')
 
-    def postreq(self, payload):
+    def postReq(self, payload):
         return self.client.post(self.url, json.dumps(payload), content_type="application/json")
 
     def test_invalid_request(self):
@@ -198,7 +199,7 @@ class TestUpdateEmploymentyView(TestCase):
                 }
             }
         }
-        response = self.postreq(body)
+        response = self.postReq(body)
         content = json.loads(response.content)
         error_code = content['status']
         logger.info("Response %s", content['status'])
@@ -206,4 +207,3 @@ class TestUpdateEmploymentyView(TestCase):
         self.assertEqual(response.status_code, 200)
         # success = 10000 successfully found and fetched data
         self.assertEqual(error_code, Statuses.success["status_code"])
-

@@ -28,10 +28,14 @@ logger = logging.getLogger("django")
                 "first_name": openapi.Schema(type=openapi.TYPE_STRING, description="first name"),
                 "middle_name": openapi.Schema(type=openapi.TYPE_STRING, description="middle name"),
                 "last_name": openapi.Schema(type=openapi.TYPE_STRING, description="last name"),
-                "gender": openapi.Schema(type=openapi.TYPE_STRING, description="male:1, female:2, trans:3, will_hide:0"),
-                "date_of_birth": openapi.Schema(type=openapi.TYPE_STRING, description="date should be in YYYY-MM-DD format"),
-                "relation_with_applicant": openapi.Schema(type=openapi.TYPE_STRING, description="self:0, father:1, mother:2, brother:3"),
-                "marital_status": openapi.Schema(type=openapi.TYPE_STRING, description="married:1, single:2,separated:3, will_hide:0"),
+                "gender": openapi.Schema(type=openapi.TYPE_STRING,
+                                         description="male:1, female:2, trans:3, will_hide:0"),
+                "date_of_birth": openapi.Schema(type=openapi.TYPE_STRING,
+                                                description="date should be in YYYY-MM-DD format"),
+                "relation_with_applicant": openapi.Schema(type=openapi.TYPE_STRING,
+                                                          description="self:0, father:1, mother:2, brother:3"),
+                "marital_status": openapi.Schema(type=openapi.TYPE_STRING,
+                                                 description="married:1, single:2,separated:3, will_hide:0"),
                 "father_first_name": openapi.Schema(type=openapi.TYPE_STRING, description="father first name"),
                 "father_middle_name": openapi.Schema(type=openapi.TYPE_STRING, description="father middle name"),
                 "father_last_name": openapi.Schema(type=openapi.TYPE_STRING, description="father last name"),
@@ -42,13 +46,13 @@ logger = logging.getLogger("django")
                 "spouse_middle_name": openapi.Schema(type=openapi.TYPE_STRING, description="spouse middle name"),
                 "spouse_last_name": openapi.Schema(type=openapi.TYPE_STRING, description="spouse last name"),
                 "no_of_family_members": openapi.Schema(type=openapi.TYPE_INTEGER, description="no of family members"),
-                "household_income_monthly": openapi.Schema(type=openapi.TYPE_INTEGER, description="household income monthly"),
+                "household_income_monthly": openapi.Schema(type=openapi.TYPE_INTEGER,
+                                                           description="household income monthly"),
 
-                    })},
+            })},
     ),
     operation_id="payload",
 )
-
 @api_view(["POST"])
 def customer_create(request):
     response_obj = None
@@ -70,7 +74,6 @@ def customer_create(request):
     return JsonResponse(response_obj, safe=False)
 
 
-
 @csrf_exempt
 @swagger_auto_schema(
     method="post",
@@ -86,10 +89,14 @@ def customer_create(request):
                 "first_name": openapi.Schema(type=openapi.TYPE_STRING, description="first name"),
                 "middle_name": openapi.Schema(type=openapi.TYPE_STRING, description="middle name"),
                 "last_name": openapi.Schema(type=openapi.TYPE_STRING, description="last name"),
-                "gender": openapi.Schema(type=openapi.TYPE_STRING, description="male:1, female:2, trans:3, will_hide:0"),
-                "date_of_birth": openapi.Schema(type=openapi.TYPE_STRING, description="date should be in YYYY-MM-DD format"),
-                "relation_with_applicant": openapi.Schema(type=openapi.TYPE_STRING, description="self:0, father:1, mother:2, brother:3"),
-                "marital_status": openapi.Schema(type=openapi.TYPE_STRING, description="married:1, single:2,separated:3, will_hide:0"),
+                "gender": openapi.Schema(type=openapi.TYPE_STRING,
+                                         description="male:1, female:2, trans:3, will_hide:0"),
+                "date_of_birth": openapi.Schema(type=openapi.TYPE_STRING,
+                                                description="date should be in YYYY-MM-DD format"),
+                "relation_with_applicant": openapi.Schema(type=openapi.TYPE_STRING,
+                                                          description="self:0, father:1, mother:2, brother:3"),
+                "marital_status": openapi.Schema(type=openapi.TYPE_STRING,
+                                                 description="married:1, single:2,separated:3, will_hide:0"),
                 "father_first_name": openapi.Schema(type=openapi.TYPE_STRING, description="father first name"),
                 "father_middle_name": openapi.Schema(type=openapi.TYPE_STRING, description="father middle name"),
                 "father_last_name": openapi.Schema(type=openapi.TYPE_STRING, description="father last name"),
@@ -100,14 +107,13 @@ def customer_create(request):
                 "spouse_middle_name": openapi.Schema(type=openapi.TYPE_STRING, description="spouse middle name"),
                 "spouse_last_name": openapi.Schema(type=openapi.TYPE_STRING, description="spouse last name"),
                 "no_of_family_members": openapi.Schema(type=openapi.TYPE_INTEGER, description="no of family members"),
-                "household_income_monthly": openapi.Schema(type=openapi.TYPE_INTEGER, description="household income monthly"),
+                "household_income_monthly": openapi.Schema(type=openapi.TYPE_INTEGER,
+                                                           description="household income monthly"),
 
-                    })},
+            })},
     ),
     operation_id="payload",
 )
-
-
 @api_view(["POST"])
 def customer_update(request):
     response_obj = None
@@ -128,4 +134,3 @@ def customer_update(request):
 
     logger.info("response: %s", response_obj)
     return JsonResponse(response_obj, safe=False)
-

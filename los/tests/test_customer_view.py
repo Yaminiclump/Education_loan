@@ -12,10 +12,9 @@ logger = logging.getLogger("django")
 
 
 @pytest.mark.django_db
-class Test_Customer_Create_View():
+class TestCustomerCreateView:
 
     def test_create_customer_view_GET(self, client):
-
         url = reverse('customer_create')
         response = client.get(url)
         logger.info("response for get method : %s", response)
@@ -54,7 +53,7 @@ class Test_Customer_Create_View():
 
 
 @pytest.mark.django_db
-class Test_Customer_Update_View():
+class TestCustomerUpdateView:
 
     def test_update_customer_view_GET(self, client):
         url = reverse('customer_update')
@@ -62,7 +61,7 @@ class Test_Customer_Update_View():
         logger.info("response for get method : %s", response)
         assert response.status_code == Statuses.test_get['status_code']
 
-    def test_update_customer_view_POST(self,client):
+    def test_update_customer_view_POST(self, client):
         current_time = django.utils.timezone.now()
         logger.debug("current_time india: %s", current_time)
         create_customer = Customer(

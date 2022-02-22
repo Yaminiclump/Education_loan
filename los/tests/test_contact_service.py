@@ -15,7 +15,7 @@ logger = logging.getLogger("django")
 
 
 @pytest.mark.django_db
-class TestContactCreate():
+class TestContactCreate:
 
     def test_customer_id_not_exist(self):
         current_time = django.utils.timezone.now()
@@ -51,7 +51,7 @@ class TestContactCreate():
                 "contacts": [
                     {
                         "type": "mob",
-                        "value": "07360261469",
+                        "value": "7360261469",
                         "country_code": "91"
                     }
                 ]
@@ -98,7 +98,7 @@ class TestContactCreate():
                 "contacts": [
                     {
                         "type": "mob",
-                        "value": "07360261469",
+                        "value": "7360261469",
                         "country_code": "91"
                     }
                 ]
@@ -144,7 +144,7 @@ class TestContactCreate():
                 "contacts": [
                     {
                         "type": "mob",
-                        "value": "07360261469",
+                        "value": "7360261469",
                         "country_code": "91"
                     }
                 ]
@@ -312,7 +312,7 @@ class TestContactCreate():
                 "contact": [
                     {
                         "type": "mob",
-                        "value": "07360261469",
+                        "value": "7360261469",
                         "country_code": "91"
                     },
                     {}
@@ -356,16 +356,17 @@ class TestContactCreate():
         data = {
             "customer": {
                 "customer_id": create_customer.id,
-                "contact": [
+                "contacts": [
                     {
-                        "type": "email",
-                        "value": "abc@abc.com"
+                        "type": "mob",
+                        "value": "7360261469",
+                        "country_code": "91"
                     },
                     {
-                        "value": "07478267826",
-                        "country_code": "91"
+                        "value": "abc@abc.com"
                     }
-                ],
+                ]
+
             }
         }
         data = json.dumps(data)
@@ -407,8 +408,8 @@ class TestContactCreate():
                 "customer_id": create_customer.id,
                 "contacts": [
                     {
-                        "type": "fsfsa",
-                        "value": "07478267826",
+                        "type": "fsa",
+                        "value": "7478267826",
                         "country_code": "91"
                     }
                 ]
@@ -654,7 +655,7 @@ class TestContactCreate():
                     },
                     {
                         "type": "mob",
-                        "value": "07360261469",
+                        "value": "7360261469",
                     }
                 ]
             }
@@ -821,7 +822,7 @@ class TestContactCreate():
                 "contacts": [
                     {
                         "type": "mob",
-                        "value": "07478267826",
+                        "value": "7478267826",
                         "country_code": "91"
                     }
                 ]
@@ -867,7 +868,7 @@ class TestContactCreate():
                 "contacts": [
                     {
                         "type": "mob",
-                        "value": "06360261469",
+                        "value": "6360261469",
                         "country_code": "91"
                     }
                 ]
@@ -959,7 +960,7 @@ class TestContactCreate():
                 "contacts": [
                     {
                         "type": "mob",
-                        "value": "07360261469",
+                        "value": "7360261469",
                         "country_code": "91"
                     },
                     {
@@ -1024,7 +1025,7 @@ class TestContactCreate():
 
 
 @pytest.mark.django_db
-class TestContactUpdate():
+class TestContactUpdate:
 
     def test_customer_id_not_exist(self):
         current_time = django.utils.timezone.now()
@@ -1059,7 +1060,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact1 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -1073,7 +1074,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact2 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -1084,7 +1085,7 @@ class TestContactUpdate():
         create_contact2.save()
         data = {
             "customer": {
-                "customer_id":10000,
+                "customer_id": 10000,
                 "contacts": [
                     {
                         "contact_id": create_contact1.id,
@@ -1094,7 +1095,7 @@ class TestContactUpdate():
                     {
                         "contact_id": create_contact2.id,
                         "type": "mob",
-                        "value": "07360261469",
+                        "value": "7360261469",
                         "country_code": "+91"
                     }
                 ]
@@ -1140,7 +1141,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact1 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -1154,7 +1155,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact2 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -1175,7 +1176,7 @@ class TestContactUpdate():
                     {
                         "contact_id": create_contact2.id,
                         "type": "mob",
-                        "value": "07360261469",
+                        "value": "7360261469",
                         "country_code": "+91"
                     }
                 ]
@@ -1221,7 +1222,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact1 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -1235,7 +1236,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact2 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -1255,7 +1256,7 @@ class TestContactUpdate():
                     {
                         "contact_id": create_contact2.id,
                         "type": "mob",
-                        "value": "07360261469",
+                        "value": "7360261469",
                         "country_code": "+91"
                     }
                 ]
@@ -1301,7 +1302,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact1 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -1315,7 +1316,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact2 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -1368,7 +1369,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact1 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -1382,7 +1383,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact2 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -1437,7 +1438,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact1 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -1451,7 +1452,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact2 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -1514,7 +1515,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact1 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -1528,7 +1529,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact2 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -1593,7 +1594,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact1 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -1607,7 +1608,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact2 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -1671,7 +1672,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact1 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -1685,7 +1686,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact2 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -1705,7 +1706,7 @@ class TestContactUpdate():
                     },
                     {
                         "contact_id": create_contact2.id,
-                        "value": "07360261469",
+                        "value": "7360261469",
                         "country_code": "+91"
                     }
                 ]
@@ -1751,7 +1752,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact1 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -1765,7 +1766,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact2 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -1785,8 +1786,8 @@ class TestContactUpdate():
                     },
                     {
                         "contact_id": create_contact2.id,
-                        "type": "fdefgd",
-                        "value": "07360261469",
+                        "type": "fsa",
+                        "value": "7360261469",
                         "country_code": "+91"
                     }
                 ]
@@ -1832,7 +1833,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact1 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -1846,7 +1847,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact2 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -1912,7 +1913,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact1 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -1926,7 +1927,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact2 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -1991,7 +1992,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact1 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -2005,7 +2006,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact2 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -2072,7 +2073,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact1 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -2086,7 +2087,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact2 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -2107,7 +2108,7 @@ class TestContactUpdate():
                     {
                         "contact_id": create_contact2.id,
                         "type": "email",
-                        "value": "gadfsgeq",
+                        "value": "fsa",
                         "country_code": "+91"
                     }
                 ]
@@ -2153,7 +2154,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact1 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -2167,7 +2168,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact2 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -2188,7 +2189,7 @@ class TestContactUpdate():
                     {
                         "contact_id": create_contact2.id,
                         "type": "mob",
-                        "value": "07360261469",
+                        "value": "7360261469",
                     }
                 ]
 
@@ -2233,7 +2234,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact1 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -2247,7 +2248,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact2 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -2314,7 +2315,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact1 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -2328,7 +2329,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact2 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -2378,7 +2379,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact1 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -2392,7 +2393,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact2 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -2441,7 +2442,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact1 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -2455,7 +2456,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact2 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -2476,7 +2477,7 @@ class TestContactUpdate():
                     {
                         "contact_id": create_contact2.id,
                         "type": "mob",
-                        "value": "07360261469",
+                        "value": "7360261469",
                         "country_code": "+91"
                     }
                 ]
@@ -2488,87 +2489,6 @@ class TestContactUpdate():
         response = customer_contact_update_service(data)
         logger.info("response: %s", response)
         assert response["status"] == Statuses.success["status_code"]
-
-    def test_contact_update_same_id(self):
-        current_time = django.utils.timezone.now()
-        logger.debug("current_time india: %s", current_time)
-        create_customer = Customer(
-            salutation=1,
-            first_name="abc",
-            middle_name="",
-            last_name="",
-            gender=1,
-            date_of_birth="2019-10-25",
-            relation_with_applicant=0,
-            marital_status=1,
-            father_first_name="abc",
-            father_middle_name="abc",
-            father_last_name="",
-            mother_first_name="",
-            mother_middle_name="",
-            mother_last_name="",
-            spouse_first_name="",
-            spouse_middle_name="",
-            spouse_last_name="",
-            no_of_family_members=4,
-            household_income_monthly=5000,
-            status=1,
-            creation_date=current_time,
-            creation_by="System"
-        )
-        create_customer.save()
-
-        current_time = django.utils.timezone.now()
-        logger.debug("current_time india: %s", current_time)
-        create_contact1 = CustomerContact(
-            type=10,
-            value="07360261469",
-            value_extra_1=None,
-            country_code="+91",
-            status=1,
-            creation_date=current_time,
-            creation_by="System",
-            customer_id=create_customer.id
-        )
-        create_contact1.save()
-
-        current_time = django.utils.timezone.now()
-        logger.debug("current_time india: %s", current_time)
-        create_contact2 = CustomerContact(
-            type=10,
-            value="07360261469",
-            value_extra_1=None,
-            country_code="+91",
-            status=1,
-            creation_date=current_time,
-            creation_by="System",
-            customer_id=create_customer.id
-        )
-        create_contact2.save()
-        data = {
-            "customer": {
-                "customer_id": create_customer.id,
-                "contacts": [
-                    {
-                        "contact_id": create_contact1.id,
-                        "type": "email",
-                        "value": "abc@abc.com"
-                    },
-                    {
-                        "contact_id": create_contact1.id,
-                        "type": "mob",
-                        "value": "07360261469",
-                        "country_code": "+91"
-                    }
-                ]
-
-            }
-        }
-        data = json.dumps(data)
-        data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = customer_contact_update_service(data)
-        logger.info("response: %s", response)
-        assert response["status"] == Statuses.same_contact_id["status_code"]
 
     def test_exception(self, django_db_blocker):
         current_time = django.utils.timezone.now()
@@ -2603,7 +2523,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact1 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -2617,7 +2537,7 @@ class TestContactUpdate():
         logger.debug("current_time india: %s", current_time)
         create_contact2 = CustomerContact(
             type=10,
-            value="07360261469",
+            value="7360261469",
             value_extra_1=None,
             country_code="+91",
             status=1,
@@ -2638,7 +2558,7 @@ class TestContactUpdate():
                     {
                         "contact_id": create_contact2.id,
                         "type": "mob",
-                        "value": "07360261469",
+                        "value": "7360261469",
                         "country_code": "+91"
                     }
                 ]

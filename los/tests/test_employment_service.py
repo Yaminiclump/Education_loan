@@ -11,6 +11,7 @@ from los.constants import STATUS_ACTIVE, CREATION_BY, UPDATION_BY
 
 logger = logging.getLogger("django")
 
+
 @pytest.mark.django_db
 class TestEmploymentCreate():
     def test_customer_id_not_exist(self):
@@ -344,6 +345,7 @@ class TestEmploymentCreate():
         response = employment_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.employer_name['status_code']
+
     def test_employer_id_is_non_zero(self):
         current_time = django.utils.timezone.now()
         logger.debug("current_time india: %s", current_time)
@@ -377,7 +379,7 @@ class TestEmploymentCreate():
                 "customer_id": create_customer.id,
                 "employment": {
                     "type": "salaried",
-                    "employer_id": 12, # If employer id is non zero then employer name should be None
+                    "employer_id": 12,  # If employer id is non zero then employer name should be None
                     "employer_name": "abcd",
                     "gross_income_monthly": 9987.98,
                     "net_income_monthly": 9876.56,
@@ -426,7 +428,7 @@ class TestEmploymentCreate():
                 "employment": {
                     "type": "salaried",
                     "employer_id": 12,
-                    "designation_id": 0, # If designation id is zero then designation name should not be None
+                    "designation_id": 0,  # If designation id is zero then designation name should not be None
                     "designation_name": "",
                     "gross_income_monthly": 9987.98,
                     "net_income_monthly": 9876.56,
@@ -474,7 +476,7 @@ class TestEmploymentCreate():
                 "customer_id": create_customer.id,
                 "employment": {
                     "type": "salaried",
-                    "employer_id": 12, # If employer id is non zero then employer name should be None
+                    "employer_id": 12,  # If employer id is non zero then employer name should be None
                     "designation_id": 97,
                     "designation_name": "abcd",
                     "gross_income_monthly": 9987.98,
@@ -1097,6 +1099,7 @@ class TestEmploymentCreate():
         response = employment_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.generic_error_1['status_code']
+
 
 @pytest.mark.django_db
 class TestEmploymentUpdate():
@@ -2641,7 +2644,7 @@ class TestEmploymentUpdate():
                 "employment": {
                     "employment_id": create_employment.id,
                     "type": "salaried",
-                    "employer_id": 12, # If employer id is non zero then employer name should be None
+                    "employer_id": 12,  # If employer id is non zero then employer name should be None
                     "employer_name": "abcd",
                     "gross_income_monthly": 9987.98,
                     "net_income_monthly": 9876.56,
@@ -2710,7 +2713,7 @@ class TestEmploymentUpdate():
                     "employment_id": create_employment.id,
                     "type": "salaried",
                     "employer_id": 12,
-                    "designation_id": 0, # If designation id is zero then designation name should not be None
+                    "designation_id": 0,  # If designation id is zero then designation name should not be None
                     "designation_name": "",
                     "gross_income_monthly": 9987.98,
                     "net_income_monthly": 9876.56,
@@ -2778,7 +2781,7 @@ class TestEmploymentUpdate():
                 "employment": {
                     "employment_id": create_employment.id,
                     "type": "salaried",
-                    "employer_id": 12, # If employer id is non zero then employer name should be None
+                    "employer_id": 12,  # If employer id is non zero then employer name should be None
                     "designation_id": 97,
                     "designation_name": "abcd",
                     "gross_income_monthly": 9987.98,
