@@ -77,25 +77,19 @@ WSGI_APPLICATION = 'loan_origination_service.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'losdb',
-#         'USER': 'los',
-#         'PASSWORD': 'Kuhoo_LOS',
-#         'HOST': 'ktspl-pgsql.cqpxwrpkjq4i.ap-south-1.rds.amazonaws.com',
-#         'PORT': '5432',
-#         'ATOMIC_REQUESTS': True,
-#     }
-
-#  }
-
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'losdb',
+        'USER': 'los',
+        'PASSWORD': 'Kuhoo_LOS',
+        'HOST': 'ktspl-pgsql.cqpxwrpkjq4i.ap-south-1.rds.amazonaws.com',
+        'PORT': '5432',
+        'ATOMIC_REQUESTS': True,
     }
-}
+
+ }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
