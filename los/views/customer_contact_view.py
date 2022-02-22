@@ -8,7 +8,7 @@ from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.decorators import api_view
 
-from los.services.customer_contact_service import contact_service, contact_update
+from los.services.customer_contact_service import customer_contact_create_service, customer_contact_update_service
 from los.status_code import Statuses
 
 logger = logging.getLogger("django")
@@ -42,14 +42,14 @@ logger = logging.getLogger("django")
     operation_id="payload",
 )
 @api_view(["POST"])
-def customer_contact(request):
+def customer_contact_create(request):
     response_obj = None
     try:
         logger.info("request: %s", request.body)
 
         if request.method == 'POST':
             data = json.loads(request.body.decode("utf-8"), object_hook=lambda d: SimpleNamespace(**d))
-            response_obj = contact_service(data)
+            response_obj = customer_contact_create_service(data)
             logger.debug("finished create contact")
         else:
             response_obj = {"status_code": Statuses.invalid_request["status_code"], "message": Statuses.invalid_request["message"]}
@@ -87,14 +87,14 @@ def customer_contact(request):
     operation_id="payload",
 )
 @api_view(["POST"])
-def update_contact(request):
+def customer_contact_update(request):
     response_obj = None
     try:
         logger.info("request: %s", request.body)
 
         if request.method == 'POST':
             data = json.loads(request.body.decode("utf-8"), object_hook=lambda d: SimpleNamespace(**d))
-            response_obj = contact_update(data)
+            response_obj = customer_contact_update_service(data)
             logger.debug("finished contact update")
         else:
             response_obj = {"status_code": Statuses.invalid_request["status_code"], "message": Statuses.invalid_request["message"]}

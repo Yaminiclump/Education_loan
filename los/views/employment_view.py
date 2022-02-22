@@ -7,7 +7,7 @@ from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.decorators import api_view
 from los.status_code import Statuses
-from los.services.employment_service import employment_create,employment_update
+from los.services.employment_service import employment_create_service,employment_update_service
 logger = logging.getLogger("django")
 
 
@@ -44,14 +44,14 @@ logger = logging.getLogger("django")
     operation_id="payload",
 )
 @api_view(["POST"])
-def create_empolyment(request):
+def employment_create(request):
     response_obj = None
     try:
         logger.info("request: %s", request.body)
 
         if request.method == 'POST':
             data = json.loads(request.body.decode("utf-8"), object_hook=lambda d: SimpleNamespace(**d))
-            response_obj = employment_create(data)
+            response_obj = employment_create_service(data)
             logger.debug("finished create employment")
         else:
             response_obj = {"status_code": Statuses.invalid_request["status_code"], "message": Statuses.invalid_request["message"]}
@@ -97,14 +97,14 @@ def create_empolyment(request):
     operation_id="payload",
 )
 @api_view(["POST"])
-def update_empolyment(request):
+def employment_update(request):
     response_obj = None
     try:
         logger.info("request: %s", request.body)
 
         if request.method == 'POST':
             data = json.loads(request.body.decode("utf-8"), object_hook=lambda d: SimpleNamespace(**d))
-            response_obj = employment_update(data)
+            response_obj = employment_update_service(data)
             logger.debug("finished create employment")
         else:
             response_obj = {"status_code": Statuses.invalid_request["status_code"], "message": Statuses.invalid_request["message"]}

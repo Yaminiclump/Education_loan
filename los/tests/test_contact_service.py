@@ -8,7 +8,7 @@ import pytest
 
 from los.models.customer_model import Customer
 from los.models.customer_contact_model import CustomerContact
-from los.services.customer_contact_service import contact_service, contact_update
+from los.services.customer_contact_service import customer_contact_create_service, customer_contact_update_service
 from los.status_code import Statuses
 
 logger = logging.getLogger("django")
@@ -60,7 +60,7 @@ class TestContactCreate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_service(data)
+        response = customer_contact_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.customer_id_not_exist['status_code']
 
@@ -107,7 +107,7 @@ class TestContactCreate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_service(data)
+        response = customer_contact_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.customer_id_invalid_format['status_code']
 
@@ -153,7 +153,7 @@ class TestContactCreate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_service(data)
+        response = customer_contact_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.customer_id_not_provided['status_code']
 
@@ -192,7 +192,7 @@ class TestContactCreate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_service(data)
+        response = customer_contact_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.generic_error_1['status_code']
 
@@ -232,7 +232,7 @@ class TestContactCreate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_service(data)
+        response = customer_contact_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.generic_error_1['status_code']
 
@@ -274,7 +274,7 @@ class TestContactCreate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_service(data)
+        response = customer_contact_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.generic_error_1['status_code']
 
@@ -321,7 +321,7 @@ class TestContactCreate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_service(data)
+        response = customer_contact_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.generic_error_1['status_code']
 
@@ -370,7 +370,7 @@ class TestContactCreate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_service(data)
+        response = customer_contact_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.contact_type['status_code']
 
@@ -416,7 +416,7 @@ class TestContactCreate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_service(data)
+        response = customer_contact_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.contact_type['status_code']
 
@@ -465,7 +465,7 @@ class TestContactCreate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_service(data)
+        response = customer_contact_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.contact_value['status_code']
 
@@ -513,7 +513,7 @@ class TestContactCreate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_service(data)
+        response = customer_contact_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.contact_value['status_code']
 
@@ -563,7 +563,7 @@ class TestContactCreate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_service(data)
+        response = customer_contact_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.mobile_number['status_code']
 
@@ -612,7 +612,7 @@ class TestContactCreate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_service(data)
+        response = customer_contact_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.email_address['status_code']
 
@@ -661,7 +661,7 @@ class TestContactCreate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_service(data)
+        response = customer_contact_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.contact_country_code['status_code']
 
@@ -711,7 +711,7 @@ class TestContactCreate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_service(data)
+        response = customer_contact_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.contact_country_code['status_code']
 
@@ -748,7 +748,7 @@ class TestContactCreate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_service(data)
+        response = customer_contact_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.generic_error_1['status_code']
 
@@ -783,7 +783,7 @@ class TestContactCreate():
         data = None
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_service(data)
+        response = customer_contact_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.generic_error_1['status_code']
 
@@ -829,7 +829,7 @@ class TestContactCreate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_service(data)
+        response = customer_contact_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
@@ -875,7 +875,7 @@ class TestContactCreate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_service(data)
+        response = customer_contact_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
@@ -921,7 +921,7 @@ class TestContactCreate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_service(data)
+        response = customer_contact_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
@@ -972,7 +972,7 @@ class TestContactCreate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_service(data)
+        response = customer_contact_create_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.success['status_code']
 
@@ -1019,7 +1019,7 @@ class TestContactCreate():
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         with django_db_blocker.block():
-            response_obj = contact_service(data)
+            response_obj = customer_contact_create_service(data)
         assert response_obj["status"] == Statuses.generic_error_2["status_code"]
 
 
@@ -1103,7 +1103,7 @@ class TestContactUpdate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_update(data)
+        response = customer_contact_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.customer_id_not_exist['status_code']
 
@@ -1184,7 +1184,7 @@ class TestContactUpdate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_update(data)
+        response = customer_contact_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.customer_id_invalid_format['status_code']
 
@@ -1264,7 +1264,7 @@ class TestContactUpdate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_update(data)
+        response = customer_contact_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.customer_id_not_provided['status_code']
 
@@ -1331,7 +1331,7 @@ class TestContactUpdate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_update(data)
+        response = customer_contact_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.generic_error_1['status_code']
 
@@ -1400,7 +1400,7 @@ class TestContactUpdate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_update(data)
+        response = customer_contact_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.generic_error_1['status_code']
 
@@ -1477,7 +1477,7 @@ class TestContactUpdate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_update(data)
+        response = customer_contact_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.customer_contact_id_not_provided['status_code']
 
@@ -1556,7 +1556,7 @@ class TestContactUpdate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_update(data)
+        response = customer_contact_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.customer_contact_id_not_exist['status_code']
 
@@ -1634,7 +1634,7 @@ class TestContactUpdate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_update(data)
+        response = customer_contact_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.customer_contact_id_not_exist['status_code']
 
@@ -1714,7 +1714,7 @@ class TestContactUpdate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_update(data)
+        response = customer_contact_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.contact_type['status_code']
 
@@ -1795,7 +1795,7 @@ class TestContactUpdate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_update(data)
+        response = customer_contact_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.contact_type['status_code']
 
@@ -1875,7 +1875,7 @@ class TestContactUpdate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_update(data)
+        response = customer_contact_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.contact_value['status_code']
 
@@ -1954,7 +1954,7 @@ class TestContactUpdate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_update(data)
+        response = customer_contact_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.contact_value['status_code']
 
@@ -2035,7 +2035,7 @@ class TestContactUpdate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_update(data)
+        response = customer_contact_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.mobile_number['status_code']
 
@@ -2116,7 +2116,7 @@ class TestContactUpdate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_update(data)
+        response = customer_contact_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.email_address['status_code']
 
@@ -2196,7 +2196,7 @@ class TestContactUpdate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_update(data)
+        response = customer_contact_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.contact_country_code['status_code']
 
@@ -2277,7 +2277,7 @@ class TestContactUpdate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_update(data)
+        response = customer_contact_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.contact_country_code['status_code']
 
@@ -2341,7 +2341,7 @@ class TestContactUpdate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_update(data)
+        response = customer_contact_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.generic_error_1['status_code']
 
@@ -2404,7 +2404,7 @@ class TestContactUpdate():
         data = None
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_update(data)
+        response = customer_contact_update_service(data)
         logger.info("response: %s", response)
         assert response['status'] == Statuses.generic_error_1['status_code']
 
@@ -2485,7 +2485,7 @@ class TestContactUpdate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_update(data)
+        response = customer_contact_update_service(data)
         logger.info("response: %s", response)
         assert response["status"] == Statuses.success["status_code"]
 
@@ -2566,7 +2566,7 @@ class TestContactUpdate():
         }
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
-        response = contact_update(data)
+        response = customer_contact_update_service(data)
         logger.info("response: %s", response)
         assert response["status"] == Statuses.same_contact_id["status_code"]
 
@@ -2648,5 +2648,5 @@ class TestContactUpdate():
         data = json.dumps(data)
         data = json.loads(data, object_hook=lambda d: SimpleNamespace(**d))
         with django_db_blocker.block():
-            response_obj = contact_service(data)
+            response_obj = customer_contact_create_service(data)
         assert response_obj["status"] == Statuses.generic_error_2["status_code"]

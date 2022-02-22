@@ -19,10 +19,13 @@ class Statuses:
     customer_contact_id_invalid_format = {'status_code': 200022, 'message': "Please provide a valid Customer Contact Id"}
 
     employment_id_not_exist = {'status_code': 200023, 'message': "Please enter a valid employment Id"}
+    employment_id_not_exists = {'status_code': 200023, 'message': "Please enter a valid employment Id"}
     employment_id_not_provided = {'status_code': 200024, 'message': "Please enter a valid employment Id"}
+    employment_id_invalid_format = {'status_code': 200025, 'message': "Please enter a valid employment Id"}
+    employment_details_not_provided = {'status_code': 200026, 'message': "Please provide valid employment details"}
 
-    education_id_not_exist = {'status_code': 200025, 'message': "Please provide a valid Education Id"}
-    education_id_not_provided = {'status_code': 200026, 'message': "Please provide a valid Education Id"}
+    education_id_not_exist = {'status_code': 200027, 'message': "Please provide a valid Education Id"}
+    education_id_not_provided = {'status_code': 200028, 'message': "Please provide a valid Education Id"}
 
 
     # customer related...
@@ -64,6 +67,9 @@ class Statuses:
     other_income_monthly = {'status_code': 2003110, 'message': "Please enter a valid other income monthly"}
     work_experience_month = {'status_code': 2003111, 'message': "Please enter a valid work experience month"}
     customer_param = {'status_code': 2003112, 'message': "Please enter a valid customer"}
+    employer_name = {'status_code': 2003113, 'message': "Please enter a valid employer name"}
+    designation_name = {'status_code': 2003113, 'message': "Please enter a valid designation name"}
+
 
     #customer eduacation related...
     invalid_institute_id = {'status_code': 200411, 'message': "Please enter a valid value for institute id at sequence no. $sequence"}

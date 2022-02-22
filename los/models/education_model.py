@@ -26,7 +26,7 @@ class Education(models.Model):
     updation_by = models.TextField(null=True)
 
     class Meta:
-        db_table = "los_education"       
+        db_table = "los_education"
 
 class EducationLog(models.Model):
     id = models.BigAutoField(primary_key=True)
@@ -46,7 +46,7 @@ class EducationLog(models.Model):
     duration_months=models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(99)], null=True)
     course_type=models.PositiveSmallIntegerField(validators=[MinValueValidator(10), MaxValueValidator(99)], null=True)
     status=models.PositiveSmallIntegerField(validators=[MinValueValidator(1), MaxValueValidator(9)], null=False)
-    
+
     creation_date = models.DateTimeField(null=False)
     creation_by = models.TextField(null=False)
 

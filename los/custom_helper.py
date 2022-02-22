@@ -84,7 +84,6 @@ def get_integer_value(obj, param):
     int_val = get_value(obj, param)
     if int_val:
         if type(int_val) == int:
-            int_val = int_val
             return int_val
         else:
             int_val = int()
