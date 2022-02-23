@@ -4,6 +4,7 @@ import inspect
 import logging
 import re
 from datetime import datetime
+from los import constants
 
 logger = logging.getLogger("django")
 
@@ -92,6 +93,10 @@ def get_integer_value(obj, param):
         return None
 
 
+def fetch_value(swagger_obj, db_obj, param):
+    return None if hasattr(swagger_obj, param) else getattr(db_obj[0], param)
+
+
 def get_income_value(obj, param):
     rupee_val = get_value(obj, param)
     regex = r'^(?!0+(?:\.0+)?$)[0-9]+(?:\.[0-9]+)?$'
@@ -106,21 +111,31 @@ def get_income_value(obj, param):
         return None
 
 
+def validate_amount(rupee_val):
 
-def validate_numeric(num_val):
-    if num_val:
-        if type(num_val) == int:
-            num_val = num_val
-            return num_val
+    if rupee_val is not None:
+        regex = r'^(?!0+(?:\.0+)?$)[0-9]+(?:\.[0-9]+)?$'
+        if re.match(regex, str(rupee_val)):
+            paisa_val = rupee_val * 100
+            return paisa_val
         else:
-            num_val = int()
-            return num_val
+            paisa_val = constants.ERROR_AMOUNT
+            return paisa_val
     else:
         return None
 
 
-def fetch_value(swagger_obj, db_obj, param):
-    return None if hasattr(swagger_obj, param) else getattr(db_obj[0], param)
+def validate_numeric(num_val):
+    if num_val is not None:
+        if type(num_val) == int:
+            num_val = num_val
+            return num_val
+        else:
+            num_val = constants.ERROR_NUMERIC
+            return num_val
+    else:
+        return None
+
 
 
 def validate_dict(dict_val, obj):
@@ -141,7 +156,7 @@ def validate_date(date_val):
         try:
             formated_date = datetime.strptime(date_val, "%Y-%m-%d").date()
         except ValueError:
-            formated_date = "ERROR_DATE"
+            formated_date = constants.ERROR_DATE
     return formated_date
 
 

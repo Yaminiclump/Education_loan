@@ -3,6 +3,7 @@ import logging
 import django.utils.timezone
 from django.core.exceptions import ObjectDoesNotExist
 
+from los import constants
 from los.custom_helper import get_string_lower, get_value, validate_numeric, validate_dict, validate_date, \
     set_db_attr_request
 from los.los_dict import LosDictionary
@@ -82,11 +83,11 @@ def create_service(req_data):
                     response_obj = get_response(Statuses.check_dob)
                     return response_obj
 
-                if no_of_family_members == int():
+                if no_of_family_members == constants.ERROR_NUMERIC:
                     response_obj = get_response(Statuses.check_numeric_family)
                     return response_obj
 
-                if household_income_monthly == int():
+                if household_income_monthly == constants.ERROR_NUMERIC:
                     response_obj = get_response(Statuses.check_numeric_income)
                     return response_obj
 
@@ -242,11 +243,11 @@ def update_customer(req_data):
                     response_obj = get_response(Statuses.check_dob)
                     return response_obj
 
-                if variables.no_of_family_members == int():
+                if variables.no_of_family_members == constants.ERROR_NUMERIC:
                     response_obj = get_response(Statuses.check_numeric_family)
                     return response_obj
 
-                if variables.household_income_monthly == int():
+                if variables.household_income_monthly == constants.ERROR_NUMERIC:
                     response_obj = get_response(Statuses.check_numeric_income)
                     return response_obj
 

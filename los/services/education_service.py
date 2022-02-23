@@ -4,9 +4,10 @@ import django.utils.timezone
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import transaction
 
+from los import constants
 from los.constants import STATUS_ACTIVE, CREATION_BY, UPDATION_BY
 from los.custom_helper import get_string_lower, get_value, validate_dict, set_db_attr_request, validate_numeric, validate_date_yyyymm, \
-    InvalidInputException, get_income_value
+    validate_amount, InvalidInputException
 
 from los.los_dict import LosDictionary
 from los.models.education_model import Education, EducationLog
@@ -15,6 +16,80 @@ from los.models.empty_class import EmptyClass
 from los.status_code import get_response, get_response_1, get_response_resp_var, Statuses
 
 logger = logging.getLogger("django")
+
+
+def validate_education(variables, counter):
+
+    variables.institute_id = validate_numeric(variables.institute_id)
+    if variables.institute_id is None or variables.institute_id == constants.ERROR_NUMERIC:
+        logger.debug("institute_id is either None or invalid, institute_id: %s", variables.institute_id)
+        raise InvalidInputException(get_response_resp_var(Statuses.invalid_institute_id, {"sequence": counter}))
+
+    if variables.institute_id != 0:
+        if variables.institute_name:
+            raise InvalidInputException(get_response_resp_var(Statuses.invalid_institute_name, {"sequence": counter}))
+    else:
+        if not variables.institute_name:
+            raise InvalidInputException(get_response_resp_var(Statuses.invalid_institute_name, {"sequence": counter}))
+
+    variables.course_id = validate_numeric(variables.course_id)
+    if variables.course_id is None or variables.course_id == constants.ERROR_NUMERIC:
+        logger.debug("course_id is either None or invalid, course_id: %s", variables.course_id)
+        raise InvalidInputException(get_response_resp_var(Statuses.invalid_course_id, {"sequence": counter}))
+
+    if variables.course_id != 0:
+        if variables.course_name:
+            raise InvalidInputException(get_response_resp_var(Statuses.invalid_course_name, {"sequence": counter}))
+    else:
+        if not variables.course_name:
+            raise InvalidInputException(get_response_resp_var(Statuses.invalid_course_name, {"sequence": counter}))
+
+    variables.stream_id = validate_numeric(variables.stream_id)
+    if variables.stream_id is None or variables.stream_id == constants.ERROR_NUMERIC:
+        raise InvalidInputException(get_response_resp_var(Statuses.invalid_stream_id, {"sequence": counter}))
+        return response_obj
+
+    if variables.stream_id != 0:
+        if variables.stream_name:
+            raise InvalidInputException(get_response_resp_var(Statuses.invalid_stream_name, {"sequence": counter}))
+    else:
+        if not variables.stream_name:
+            raise InvalidInputException(get_response_resp_var(Statuses.invalid_stream_name, {"sequence": counter}))
+
+    variables.start_month_year = validate_date_yyyymm(variables.start_month_year)
+    if variables.start_month_year == "ERROR_DATE":
+        raise InvalidInputException(get_response_resp_var(Statuses.invalid_start_month_year, {"sequence": counter}))
+
+    variables.end_month_year = validate_date_yyyymm(variables.end_month_year)
+    if variables.end_month_year is None or variables.end_month_year == "ERROR_DATE":
+        raise InvalidInputException(get_response_resp_var(Statuses.invalid_end_month_year, {"sequence": counter}))
+
+    # validation
+    variables.marks_type = validate_dict(variables.marks_type, LosDictionary.marks_type)
+    if variables.marks_type is None or variables.marks_type == dict():
+        raise InvalidInputException(get_response_resp_var(Statuses.invalid_marks_type, {"sequence": counter}))
+    if variables.marks_type == LosDictionary.marks_type['percentage'] or variables.marks_type == LosDictionary.marks_type['percentile']:
+        # marks should be in percentage or percentile
+        variables.marks = validate_amount(variables.marks)
+        if variables.marks is None or variables.marks == constants.ERROR_AMOUNT:
+            raise InvalidInputException(get_response_resp_var(Statuses.invalid_marks, {"sequence": counter}))
+    else:
+        # marks should be in numeric format...
+        variables.marks = validate_numeric(variables.marks)
+        if variables.marks is None or variables.marks == constants.ERROR_NUMERIC:
+            raise InvalidInputException(get_response_resp_var(Statuses.invalid_marks, {"sequence": counter}))
+
+    variables.max_marks = validate_numeric(variables.max_marks)
+    if variables.max_marks is None or variables.max_marks == constants.ERROR_NUMERIC:
+        raise InvalidInputException(get_response_resp_var(Statuses.invalid_max_marks, {"sequence": counter}))
+
+    variables.course_type = validate_dict(variables.course_type, LosDictionary.course_type)
+    if variables.course_type is None or variables.course_type == dict():
+        raise InvalidInputException(get_response_resp_var(Statuses.invalid_course_type, {"sequence": counter}))
+
+    variables.duration_months = validate_numeric(variables.duration_months)
+    if variables.duration_months == "ERROR_DATE":
+        raise InvalidInputException(get_response_resp_var(Statuses.invalid_duration_months, {"sequence": counter}))
 
 
 def education_create_service(req_data):
@@ -49,118 +124,41 @@ def education_create_service(req_data):
                         with transaction.atomic():
 
                             for education in education_list:
-                                institute_id = get_string_lower(education, "institute_id")
-                                institute_name = get_string_lower(education, "institute_name")
-                                course_id = get_string_lower(education, "course_id")
-                                course_name = get_value(education, "course_name")
-                                stream_id = get_value(education, "stream_id")
-                                stream_name = get_value(education, "stream_name")
-                                start_month_year = get_value(education, "start_month_year")
-                                end_month_year = get_value(education, "end_month_year")
-                                marks = get_value(education, "marks")
-                                max_marks = get_value(education, "max_marks")
-                                marks_type = get_value(education, "marks_type")
-                                duration_months = get_value(education, "duration_months")
-                                course_type = get_value(education, "course_type")
-                                logger.info("marks_type: %s", marks_type)
 
-                                institute_id = validate_numeric(institute_id)
-                                if institute_id is None or institute_id == int():
-                                    raise InvalidInputException(get_response_resp_var(Statuses.invalid_institute_id, {"sequence": counter}))
+                                variables = EmptyClass()
+                                variables.institute_id = get_value(education, "institute_id")
+                                variables.institute_name = get_string_lower(education, "institute_name")
+                                variables.course_id = get_value(education, "course_id")
+                                logger.debug("variables.course_id: %s", variables.course_id)
+                                variables.course_name = get_string_lower(education, "course_name")
+                                variables.stream_id = get_value(education, "stream_id")
+                                variables.stream_name = get_string_lower(education, "stream_name")
+                                variables.start_month_year = get_string_lower(education, "start_month_year")
+                                variables.end_month_year = get_string_lower(education, "end_month_year")
+                                variables.marks = get_value(education, "marks")
+                                variables.max_marks = get_value(education, "max_marks")
+                                variables.marks_type = get_value(education, "marks_type")
+                                variables.duration_months = get_value(education, "duration_months")
+                                variables.course_type = get_string_lower(education, "course_type")
+                                logger.info("marks_type: %s", variables.marks_type)
 
-                                if institute_id != 0:
-                                    if institute_name:
-                                        raise InvalidInputException(get_response_resp_var(Statuses.invalid_institute_name, {"sequence": counter}))
-                                else:
-                                    if not institute_name:
-                                        raise InvalidInputException(get_response_resp_var(Statuses.invalid_institute_name, {"sequence": counter}))
-
-
-                                course_id = validate_numeric(course_id)
-                                if course_id is None or course_id == int():
-                                    raise InvalidInputException(get_response_resp_var(Statuses.invalid_course_id, {"sequence": counter}))
-                                    
-                                if course_id != 0:
-                                    if course_name:
-                                        raise InvalidInputException(get_response_resp_var(Statuses.invalid_course_name, {"sequence": counter}))
-                                else:
-                                    if not course_name:
-                                        raise InvalidInputException(get_response_resp_var(Statuses.invalid_course_name, {"sequence": counter}))        
-
-                                
-                                stream_id = validate_numeric(stream_id)
-                                if stream_id is None or stream_id == int():
-                                    raise InvalidInputException(get_response_resp_var(Statuses.invalid_stream_id, {"sequence": counter}))
-                                    return response_obj
-
-                                if stream_id != 0:
-                                    if stream_name:
-                                        raise InvalidInputException(get_response_resp_var(Statuses.invalid_stream_name, {"sequence": counter}))
-                                else:
-                                    if not stream_name:
-                                        raise InvalidInputException(get_response_resp_var(Statuses.invalid_stream_name, {"sequence": counter}))
-                                
-
-                                start_month_year = validate_date_yyyymm(start_month_year)
-                                if start_month_year == "ERROR_DATE":
-                                    raise InvalidInputException(get_response_resp_var(Statuses.invalid_start_month_year, {"sequence": counter}))
-
-
-                                end_month_year = validate_date_yyyymm(end_month_year)
-                                if end_month_year is None or end_month_year == "ERROR_DATE":
-                                    raise InvalidInputException(get_response_resp_var(Statuses.invalid_end_month_year, {"sequence": counter}))
-
-
-                                # validation
-                                marks_type = validate_dict(marks_type, LosDictionary.marks_type)
-                                if marks_type is None or marks_type == dict():
-                                    raise InvalidInputException(get_response_resp_var(Statuses.invalid_marks_type, {"sequence": counter}))
-                                if marks_type == LosDictionary.marks_type['percentage'] or marks_type == LosDictionary.marks_type['percentile']:
-                                    # marks should be in percentage or percentile
-                                    marks = get_income_value(marks)
-                                    if marks is None or marks == int():
-                                        raise InvalidInputException(get_response_resp_var(Statuses.invalid_marks, {"sequence": counter}))
-                                else:
-                                    # marks should be in numeric format...
-                                    marks = validate_numeric(marks)
-                                    if marks is None or marks == int():
-                                        raise InvalidInputException(get_response_resp_var(Statuses.invalid_marks, {"sequence": counter}))
-
-                                max_marks = validate_numeric(marks)
-                                if max_marks is None or max_marks == int():
-                                    raise InvalidInputException(get_response_resp_var(Statuses.invalid_max_marks, {"sequence": counter}))
-
-
-                                course_type = validate_dict(course_type, LosDictionary.course_type)
-                                if course_type is None or course_type == dict():
-                                    raise InvalidInputException(get_response_resp_var(Statuses.invalid_course_type, {"sequence": counter}))
-                                if course_type == LosDictionary.course_type['full time'] or course_type == LosDictionary.course_type['part time']:
-                                    duration_months = validate_numeric(duration_months)
-                                    # if duration_months is None or duration_months == int():
-                                    #     raise InvalidInputException(get_response_resp_var(Statuses.invalid_duration_months, {"sequence": counter}))
-                                else:
-                                    duration_months = validate_numeric(duration_months)
-                                    if duration_months == "ERROR_DATE":
-                                        raise InvalidInputException(get_response_resp_var(Statuses.invalid_duration_months, {"sequence": counter}))
-                               
-
-
+                                validate_education(variables, counter)
                                 current_time = django.utils.timezone.now()
                                 logger.debug("current_time india: %s", current_time)
                                 education = Education(
-                                    institute_id=institute_id,
-                                    institute_name=institute_name,
-                                    course_id=course_id,
-                                    course_name=course_name,
-                                    stream_id=stream_id,
-                                    stream_name=stream_name,
-                                    start_month_year=start_month_year,
-                                    end_month_year=end_month_year,
-                                    marks=marks,
-                                    max_marks=max_marks,
-                                    marks_type=marks_type,
-                                    duration_months=duration_months,
-                                    course_type=course_type,
+                                    institute_id=variables.institute_id,
+                                    institute_name=variables.institute_name,
+                                    course_id=variables.course_id,
+                                    course_name=variables.course_name,
+                                    stream_id=variables.stream_id,
+                                    stream_name=variables.stream_name,
+                                    start_month_year=variables.start_month_year,
+                                    end_month_year=variables.end_month_year,
+                                    marks=variables.marks,
+                                    max_marks=variables.max_marks,
+                                    marks_type=variables.marks_type,
+                                    duration_months=variables.duration_months,
+                                    course_type=variables.course_type,
                                     status=STATUS_ACTIVE,
                                     creation_date=current_time,
                                     creation_by=CREATION_BY,
@@ -224,117 +222,34 @@ def education_update_service(req_data):
                     try:
                         with transaction.atomic():
                             for education in education_list:
+
                                 variables = EmptyClass()
                                 # set_obj_attr_request(contact, variables)
-                                variables.education_id = get_string_lower(education, "education_id")
-                                variables.institute_id = get_string_lower(education, "institute_id")
+                                variables.education_id = get_value(education, "education_id")
+                                variables.institute_id = get_value(education, "institute_id")
                                 variables.institute_name = get_string_lower(education, "institute_name")
-                                variables.course_id = get_string_lower(education, "course_id")
-                                variables.course_name = get_value(education, "course_name")
+                                variables.course_id = get_value(education, "course_id")
+                                variables.course_name = get_string_lower(education, "course_name")
                                 variables.stream_id = get_value(education, "stream_id")
-                                variables.stream_name = get_value(education, "stream_name")
-                                variables.start_month_year = get_value(education, "start_month_year")
-                                variables.end_month_year = get_value(education, "end_month_year")
+                                variables.stream_name = get_string_lower(education, "stream_name")
+                                variables.start_month_year = get_string_lower(education, "start_month_year")
+                                variables.end_month_year = get_string_lower(education, "end_month_year")
                                 variables.marks = get_value(education, "marks")
                                 variables.max_marks = get_value(education, "max_marks")
                                 variables.marks_type = get_value(education, "marks_type")
                                 variables.duration_months = get_value(education, "duration_months")
-                                variables.course_type = get_value(education, "course_type")
-                                ducation_db = None
+                                variables.course_type = get_string_lower(education, "course_type")
+
+                                education_db = None
                                 if variables.education_id:
-                                        try:
-                                            education_db = Education.objects.get(pk=variables.education_id, customer_id=customer_id, status=1)
-                                        except ObjectDoesNotExist as e:
-                                            raise InvalidInputException(get_response(Statuses.education_id_not_exist))
+                                    try:
+                                        education_db = Education.objects.get(pk=variables.education_id, customer_id=customer_id, status=1)
+                                    except ObjectDoesNotExist as e:
+                                        raise InvalidInputException(get_response(Statuses.education_id_not_exist))
                                 else:
                                     raise InvalidInputException(get_response(Statuses.education_id_not_provided))
 
-                                # validation
-                                if variables.institute_id is None:
-                                    logger.debug("institute_id is None...")
-                                    raise InvalidInputException(get_response_resp_var(Statuses.invalid_institute_id, {"sequence": counter}))
-
-                                if variables.institute_name is None:
-                                    logger.debug("institute_name is None...")
-                                    raise InvalidInputException(get_response_resp_var(Statuses.invalid_institute_name, {"sequence": counter}))
-
-                            
-                                if variables.course_id is None:
-                                    logger.debug("course_id is None...")
-                                    raise InvalidInputException(get_response_resp_var(Statuses.invalid_course_id, {"sequence": counter}))
-
-                                if variables.course_name is None:
-                                    logger.debug("course_name is None...")
-                                    raise InvalidInputException(get_response_resp_var(Statuses.invalid_course_name, {"sequence": counter}))
-                                
-
-                                if variables.stream_id is None:
-                                    logger.debug("stream_id is None...")
-                                    raise InvalidInputException(get_response_resp_var(Statuses.invalid_stream_id, {"sequence": counter}))
-
-                                if variables.stream_name is None:
-                                    logger.debug("stream_name is None...")
-                                    raise InvalidInputException(get_response_resp_var(Statuses.invalid_stream_name, {"sequence": counter}))
-
-
-                                if variables.start_month_year is None:
-                                    logger.debug("start_month_year is None...")
-                                    raise InvalidInputException(get_response_resp_var(Statuses.invalid_start_month_year, {"sequence": counter}))
-
-                                if variables.end_month_year is None:
-                                    logger.debug("end_month_year is None...")
-                                    raise InvalidInputException(get_response_resp_var(Statuses.invalid_end_month_year, {"sequence": counter})) 
-
-                                variables.marks_type = validate_dict(variables.marks_type, LosDictionary.marks_type)
-                                logger.info("marks_type: %s", variables.marks_type)
-                                if variables.marks_type == dict():
-                                    raise InvalidInputException(get_response(Statuses.invalid_marks_type, {"sequence": counter}))    
-
-                                if variables.marks == LosDictionary.marks_type['percentage']:
-                                    check_percentage = validate_numeric(variables.marks)
-                                    if check_percentage == int():
-                                        raise InvalidInputException(get_response_resp_var(Statuses.invalid_marks, {"sequence": counter}))
-
-                                    if variables.max_marks is None:
-                                        raise InvalidInputException(get_response_resp_var(Statuses.invalid_max_marks, {"sequence": counter}))
-
-                                if variables.marks == LosDictionary.marks_type['cgpa']:
-                                    check_cgpa = validate_numeric(variables.marks)
-                                    if check_cgpa == int():
-                                        raise InvalidInputException(get_response_resp_var(Statuses.invalid_marks, {"sequence": counter}))
-
-                                    if variables.max_marks is None:
-                                        raise InvalidInputException(get_response_resp_var(Statuses.invalid_max_marks, {"sequence": counter}))  
-
-                                if variables.marks == LosDictionary.marks_type['percentile']:
-                                    check_percentile = validate_numeric(variables.marks)
-
-                                    if check_percentile == int():
-                                        raise InvalidInputException(get_response_resp_var(Statuses.invalid_marks, {"sequence": counter}))
-
-                                    if variables.max_marks is None:
-                                        raise InvalidInputException(get_response_resp_var(Statuses.invalid_max_marks, {"sequence": counter}))     
-
-                                variables.course_type = validate_dict(variables.course_type, LosDictionary.course_type)
-                                logger.info("course_type: %s", variables.course_type)
-                                if variables.course_type == dict():
-                                    raise InvalidInputException(get_response(Statuses.invalid_course_type, {"sequence": counter}))    
-
-                                if variables.duration_months == LosDictionary.course_type['part time']:
-                                    check_part_time = validate_numeric(variables.duration_months)
-                                    if check_part_time == str():
-                                        raise InvalidInputException(get_response_resp_var(Statuses.invalid_duration_months, {"sequence": counter}))
-
-                                    if variables.duration_months is None:
-                                        raise InvalidInputException(get_response_resp_var(Statuses.invalid_duration_months, {"sequence": counter}))
-                                
-                                if variables.duration_months == LosDictionary.course_type['full time']:
-                                    check_full_time = validate_numeric(variables.duration)
-                                    if check_full_time == str():
-                                        raise InvalidInputException(get_response_resp_var(Statuses.invalid_duration_months, {"sequence": counter}))
-
-                                    if variables.duration_months is None:
-                                        raise InvalidInputException(get_response_resp_var(Statuses.invalid_duration_months, {"sequence": counter}))
+                                validate_education(variables, counter)
 
                                 set_db_attr_request(education_db, education, variables)
                                 current_time = django.utils.timezone.now()
