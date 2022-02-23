@@ -137,7 +137,7 @@ def education_create_service(req_data):
                                 variables.end_month_year = get_string_lower(education, "end_month_year")
                                 variables.marks = get_value(education, "marks")
                                 variables.max_marks = get_value(education, "max_marks")
-                                variables.marks_type = get_value(education, "marks_type")
+                                variables.marks_type = get_string_lower(education, "marks_type")
                                 variables.duration_months = get_value(education, "duration_months")
                                 variables.course_type = get_string_lower(education, "course_type")
                                 logger.info("marks_type: %s", variables.marks_type)
@@ -165,7 +165,7 @@ def education_create_service(req_data):
                                     customer_id=customer_id)
                                 education.save()
 
-                                education_log = Education()
+                                education_log = EducationLog()
                                 education_log.__dict__ = education.__dict__.copy()
                                 education_log.id = None
                                 education_log.education = education
@@ -236,7 +236,7 @@ def education_update_service(req_data):
                                 variables.end_month_year = get_string_lower(education, "end_month_year")
                                 variables.marks = get_value(education, "marks")
                                 variables.max_marks = get_value(education, "max_marks")
-                                variables.marks_type = get_value(education, "marks_type")
+                                variables.marks_type = get_string_lower(education, "marks_type")
                                 variables.duration_months = get_value(education, "duration_months")
                                 variables.course_type = get_string_lower(education, "course_type")
 

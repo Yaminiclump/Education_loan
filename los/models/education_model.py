@@ -28,6 +28,7 @@ class Education(models.Model):
     class Meta:
         db_table = "los_education"
 
+
 class EducationLog(models.Model):
     id = models.BigAutoField(primary_key=True)
     customer = models.ForeignKey('Customer', on_delete=models.RESTRICT, null=False)
