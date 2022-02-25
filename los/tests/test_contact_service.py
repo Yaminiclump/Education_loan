@@ -2570,3 +2570,4 @@ class TestContactUpdate:
         with django_db_blocker.block():
             response_obj = customer_contact_create_service(data)
         assert response_obj["status"] == Statuses.generic_error_2["status_code"]
+
