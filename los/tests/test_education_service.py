@@ -49,19 +49,16 @@ def education_insert(customer_id):
     current_time = django.utils.timezone.now()
     logger.debug("current_time india: %s", current_time)
     create_education = Education(
-        institute_id= 1,
-        institute_name= "string",
-        course_id= 0,
-        course_name= "string",
-        stream_id= 0,
-        stream_name= "string",
-        start_month_year= "2018-06-11",
-        end_month_year= "2022-06-10",
-        marks= 10,
-        max_marks= 0,
-        marks_type= "string",
-        duration_months= 0,
-        course_type= "string",
+        institute_id= "1",
+        course_id= "1",
+        stream_id= "1",
+        end_month_year= "2022-11-22",
+        marks= "93",
+        max_marks= "100",
+        marks_type= "percentage",
+        duration_months= "48",
+        course_type= "full_time",
+        status=1,
         creation_date=current_time,
         creation_by="System",
         customer_id=customer_id
@@ -74,9 +71,9 @@ def marks_type_insert(customer_id):
     current_time = django.utils.timezone.now()
     logger.debug("current_time india: %s", current_time)
     marks_type_insert = Education(
-        marks_type= "string",
-        marks= 10,
-        max_marks= 0,
+        marks_type= "percentage",
+        marks= "93",
+        max_marks= "100",
         status=1,
         creation_date=current_time,
         creation_by="System",
@@ -90,8 +87,8 @@ def course_type_insert(customer_id):
     current_time = django.utils.timezone.now()
     logger.debug("current_time india: %s", current_time)
     course_type_insert = Education(
-        course_type= "string",
-        duration_months= 0,
+        course_type= "full_time",
+        duration_months= "48",
         status=1,
         creation_date=current_time,
         creation_by="System",
@@ -110,18 +107,14 @@ class TestEducationCreate:
                 "educations": [
                     {
                         "institute_id": "1",
-                        "institute_name": "string",
-                        "course_id": "0",
-                        "course_name": "string",
-                        "stream_id": "0",
-                        "stream_name": "string",
-                        "start_month_year": "2018-06-10",
-                        "end_month_year": "2022-06-10",
-                        "marks": "10",
-                        "max_marks": "0",
-                        "marks_type": "string",
-                        "duration_months": "0",
-                        "course_type": "string"
+                        "course_id": "1",
+                        "stream_id": "1",
+                        "end_month_year": "2022-11-22",
+                        "marks": "93",
+                        "max_marks": "100",
+                        "marks_type": "percentage",
+                        "duration_months": "48",
+                        "course_type": "full_time"
                     }
                 ]
 
@@ -140,18 +133,14 @@ class TestEducationCreate:
                 "educations": [
                     {
                         "institute_id": "1",
-                        "institute_name": "string",
-                        "course_id": "0",
-                        "course_name": "string",
-                        "stream_id": "0",
-                        "stream_name": "string",
-                        "start_month_year": "2018-06-10",
-                        "end_month_year": "2022-06-10",
-                        "marks": "10",
-                        "max_marks": "0",
-                        "marks_type": "string",
-                        "duration_months": "0",
-                        "course_type": "string"
+                        "course_id": "1",
+                        "stream_id": "1",
+                        "end_month_year": "2022-11-22",
+                        "marks": "93",
+                        "max_marks": "100",
+                        "marks_type": "percentage",
+                        "duration_months": "48",
+                        "course_type": "full_time"
                     }
                 ]
 
@@ -169,18 +158,14 @@ class TestEducationCreate:
                 "educations": [
                     {
                         "institute_id": "1",
-                        "institute_name": "string",
-                        "course_id": "0",
-                        "course_name": "string",
-                        "stream_id": "0",
-                        "stream_name": "string",
-                        "start_month_year": "2018-06-10",
-                        "end_month_year": "2022-06-10",
-                        "marks": "10",
-                        "max_marks": "0",
-                        "marks_type": "string",
-                        "duration_months": "0",
-                        "course_type": "string"
+                        "course_id": "1",
+                        "stream_id": "1",
+                        "end_month_year": "2022-11-22",
+                        "marks": "93",
+                        "max_marks": "100",
+                        "marks_type": "percentage",
+                        "duration_months": "48",
+                        "course_type": "full_time"
                     }
                 ]
 
@@ -569,12 +554,8 @@ class TestEducationCreate:
                 "educations": [
                     {
                         "marks_type": "percentage",
-                        "marks": 75,
-                        "max_marks": 0
-                    },
-                    {
-                        "marks_type": "percentile",
-                        "marks": 80
+                        "marks": "93",
+                        "max_marks": "100"
                     }
                 ]
 
@@ -595,8 +576,8 @@ class TestEducationCreate:
                 "educations": [
                     {
                         "marks_type": "percentage",
-                        "marks": 75,
-                        "max_marks": 0
+                        "marks": "93",
+                        "max_marks": "100"
                     }
                 ]
             }
@@ -616,12 +597,8 @@ class TestEducationCreate:
                 "educations": [
                     {
                         "marks_type": "percentage",
-                        "marks": 75,
-                        "max_marks": 0
-                    },
-                    {
-                        "marks_type": "percentile",
-                        "marks": 80
+                        "marks": "93",
+                        "max_marks": "100"
                     }
                 ]
             }
@@ -640,12 +617,8 @@ class TestEducationCreate:
                 "customer_id": create_customer.id,
                 "educations": [
                     {
-                        "course_type": "part_time",
-                        "duration_months": "0"
-                    },
-                    {
                         "course_type": "full_time",
-                        "duration_months": "0"
+                        "duration_months": "48"
                     }
                 ]
 
@@ -665,8 +638,8 @@ class TestEducationCreate:
                 "customer_id": create_customer.id,
                 "educations": [
                     {
-                        "course_type": "part_time",
-                        "duration_months": "0"
+                        "course_type": "full_time",
+                        "duration_months": "48"
                     }
                 ]
             }
@@ -685,12 +658,8 @@ class TestEducationCreate:
                 "customer_id": create_customer.id,
                 "educations": [
                     {
-                        "course_type": "part_time",
-                        "duration_months": "0"
-                    },
-                    {
                         "course_type": "full_time",
-                        "duration_months": "0"
+                        "duration_months": "48"
                     }
                 ]
             }
@@ -880,9 +849,9 @@ class TestEducationCreate:
                 "customer_id": create_customer.id,
                 "educations": [
                     {
-                        "marks_type": "cgpa",
-                        "marks": "7.5",
-                        "max_marks": "0"
+                        "marks_type": "percentage",
+                        "marks": "93",
+                        "max_marks": "100"
                     }
                 ]
             }
@@ -901,8 +870,8 @@ class TestEducationCreate:
                 "customer_id": create_customer.id,
                 "educations": [
                     {
-                        "course_type": "part time",
-                        "duration_months": "0"
+                        "course_type": "full_time",
+                        "duration_months": "48"
                     }
                 ]
             }
@@ -922,28 +891,24 @@ class TestEducationCreate:
                 "educations": [
                     {
                         "institute_id": "1",
-                        "institute_name": "string",
-                        "course_id": "0",
-                        "course_name": "string",
-                        "stream_id": "0",
-                        "stream_name": "string",
-                        "start_month_year": "2018-06-10",
-                        "end_month_year": "2022-06-10",
-                        "marks": "10",
-                        "max_marks": "0",
-                        "marks_type": "string",
-                        "duration_months": "0",
-                        "course_type": "string"
+                        "course_id": "1",
+                        "stream_id": "1",
+                        "end_month_year": "2022-11-22",
+                        "marks": "93",
+                        "max_marks": "100",
+                        "marks_type": "percentage",
+                        "duration_months": "48",
+                        "course_type": "full_time"
                     },
                     {
-                        "marks_type": "cgpa",
-                        "marks": "7.5",
-                        "max_marks": "0"
+                        "marks_type": "percentage",
+                        "marks": "93",
+                        "max_marks": "100"
                     },
 
                     {
-                        "course_type": "part time",
-                        "duration_months": "0"  
+                        "course_type": "full_time",
+                        "duration_months": "48"  
                     }
             
                 ]
@@ -965,18 +930,14 @@ class TestEducationCreate:
                 "educations": [
                     {
                         "institute_id": "1",
-                        "institute_name": "string",
-                        "course_id": "0",
-                        "course_name": "string",
-                        "stream_id": "0",
-                        "stream_name": "string",
-                        "start_month_year": "2018-06-10",
-                        "end_month_year": "2022-06-10",
-                        "marks": "10",
-                        "max_marks": "0",
-                        "marks_type": "string",
-                        "duration_months": "0",
-                        "course_type": "string"
+                        "course_id": "1",
+                        "stream_id": "1",
+                        "end_month_year": "2022-11-22",
+                        "marks": "93",
+                        "max_marks": "100",
+                        "marks_type": "percentage",
+                        "duration_months": "48",
+                        "course_type": "full_time"
                     }
                 ]
 
@@ -1004,30 +965,26 @@ class TestEducationUpdate:
                 "educations": [
                     {
                         "education_id": create_education.id,
-                        "institute_id": 1,
-                        "institute_name": "string",
-                        "course_id": 0,
-                        "course_name": "string",
-                        "stream_id": 0,
-                        "stream_name": "string",
-                        "start_month_year": "2018-06-10",
-                        "end_month_year": "2022-06-10",
-                        "marks": 10,
-                        "max_marks": 0,
-                        "marks_type": "string",
-                        "duration_months": 0,
-                        "course_type": "string"
+                        "institute_id": "1",
+                        "course_id": "1",
+                        "stream_id": "1",
+                        "end_month_year": "2022-11-22",
+                        "marks": "93",
+                        "max_marks": "100",
+                        "marks_type": "percentage",
+                        "duration_months": "48",
+                        "course_type": "full_time"
                     },
                     {
                         "education_id": create_marks_type.id,
-                        "marks_type": "string",
-                        "marks": 10,
-                        "max_marks": 0
+                        "marks_type": "percentage",
+                        "marks": "93",
+                        "max_marks": "100"
                     },
                     {
                         "education_id": create_course_type.id,
-                        "course_type": "string",
-                        "duration_months": 0
+                        "course_type": "full_time",
+                        "duration_months": "48"
                     }
                 ]
 
@@ -1052,29 +1009,25 @@ class TestEducationUpdate:
                     {
                         "education_id": create_education.id,
                         "institute_id": "1",
-                        "institute_name": "string",
-                        "course_id": "0",
-                        "course_name": "string",
-                        "stream_id": "0",
-                        "stream_name": "string",
-                        "start_month_year": "2018-06-10",
-                        "end_month_year": "2022-06-10",
-                        "marks": "10",
-                        "max_marks": "0",
-                        "marks_type": "string",
-                        "duration_months": "0",
-                        "course_type": "string"
+                        "course_id": "1",
+                        "stream_id": "1",
+                        "end_month_year": "2022-11-22",
+                        "marks": "93",
+                        "max_marks": "100",
+                        "marks_type": "percentage",
+                        "duration_months": "48",
+                        "course_type": "full_time"
                     },
                     {
                         "education_id": create_marks_type.id,
-                        "marks_type": "string",
-                        "marks": "10",
-                        "max_marks": "0"
+                        "marks_type": "percentage",
+                        "marks": "93",
+                        "max_marks": "100"
                     },
                     {
                         "education_id": create_course_type.id,
-                        "course_type": "string",
-                        "duration_months": "0"
+                        "course_type": "full_time",
+                        "duration_months": "48"
                     }
                 ]
 
@@ -1098,29 +1051,25 @@ class TestEducationUpdate:
                     {
                         "education_id": create_education.id,
                         "institute_id": "1",
-                        "institute_name": "string",
-                        "course_id": "0",
-                        "course_name": "string",
-                        "stream_id": "0",
-                        "stream_name": "string",
-                        "start_month_year": "2018-06-10",
-                        "end_month_year": "2022-06-10",
-                        "marks": "10",
-                        "max_marks": "0",
-                        "marks_type": "string",
-                        "duration_months": "0",
-                        "course_type": "string"
+                        "course_id": "1",
+                        "stream_id": "1",
+                        "end_month_year": "2022-11-22",
+                        "marks": "93",
+                        "max_marks": "100",
+                        "marks_type": "percentage",
+                        "duration_months": "48",
+                        "course_type": "full_time"
                     },
                     {
                         "education_id": create_marks_type.id,
-                        "marks_type": "string",
-                        "marks": "10",
-                        "max_marks": "0"
+                        "marks_type": "percentage",
+                        "marks": "93",
+                        "max_marks": "100"
                     },
                     {
                         "education_id": create_course_type.id,
-                        "course_type": "string",
-                        "duration_months": "0"
+                        "course_type": "full_time",
+                        "duration_months": "48"
                     }
                 ]
 
@@ -1170,20 +1119,14 @@ class TestEducationUpdate:
                     {
                         "education_id": create_education.id,
                         "institute_id": "1",
-                        "institute_name": "string",
-                        "course_id": "0",
-                        "course_name": "string",
-                        "stream_id": "0",
-                        "stream_name": "string",
-                        "start_month_year": "2018-06-10",
-                        "end_month_year": "2022-06-10",
-                        "marks": "10",
-                        "max_marks": "0",
-                        "marks_type": "string",
-                        "duration_months": "0",
-                        "course_type": "string"
-                    },
-                    {
+                        "course_id": "1",
+                        "stream_id": "1",
+                        "end_month_year": "2022-11-22",
+                        "marks": "93",
+                        "max_marks": "100",
+                        "marks_type": "percentage",
+                        "duration_months": "48",
+                        "course_type": "full_time"
                     }
                 ]
 
@@ -1205,18 +1148,14 @@ class TestEducationUpdate:
                     {
                         "education_id": create_education.id,
                         "institute_id": "1",
-                        "institute_name": "string",
-                        "course_id": "0",
-                        "course_name": "string",
-                        "stream_id": "0",
-                        "stream_name": "string",
-                        "start_month_year": "2018-06-10",
-                        "end_month_year": "2022-06-10",
-                        "marks": "10",
-                        "max_marks": "0",
-                        "marks_type": "string",
-                        "duration_months": "0",
-                        "course_type": "string"
+                        "course_id": "1",
+                        "stream_id": "1",
+                        "end_month_year": "2022-11-22",
+                        "marks": "93",
+                        "max_marks": "100",
+                        "marks_type": "percentage",
+                        "duration_months": "48",
+                        "course_type": "full_time"
                     },
                     {
                         "education_id": 10000
@@ -1242,18 +1181,14 @@ class TestEducationUpdate:
                     {
                         "education_id": create_education.id,
                         "institute_id": "1",
-                        "institute_name": "string",
-                        "course_id": "0",
-                        "course_name": "string",
-                        "stream_id": "0",
-                        "stream_name": "string",
-                        "start_month_year": "2018-06-10",
-                        "end_month_year": "2022-06-10",
-                        "marks": "10",
-                        "max_marks": "0",
-                        "marks_type": "string",
-                        "duration_months": "0",
-                        "course_type": "string"
+                        "course_id": "1",
+                        "stream_id": "1",
+                        "end_month_year": "2022-11-22",
+                        "marks": "93",
+                        "max_marks": "100",
+                        "marks_type": "percentage",
+                        "duration_months": "48",
+                        "course_type": "full_time"
                     },
                     {
                         "institute_id": "10000"
@@ -1279,25 +1214,21 @@ class TestEducationUpdate:
                 "educations": [
                     {
                         "education_id": create_education.id,
-                        "institute_id": 1,
-                        "institute_name": "string",
-                        "course_id": 0,
-                        "course_name": "string",
-                        "stream_id": 0,
-                        "stream_name": "string",
-                        "start_month_year": 2018-11-10,
-                        "end_month_year": 2022-11-10,
-                        "marks": 10,
-                        "max_marks": 0,
-                        "marks_type": "string",
-                        "duration_months": 0,
-                        "course_type": "string"
+                        "institute_id": "1",
+                        "course_id": "1",
+                        "stream_id": "1",
+                        "end_month_year": "2022-11-22",
+                        "marks": "93",
+                        "max_marks": "100",
+                        "marks_type": "percentage",
+                        "duration_months": "48",
+                        "course_type": "full_time"
                     },
                     {
                         "education_id": create_marks_type.id,
-                        "marks_type": "cgpa",
-                        "marks": 7.5,
-                        "max_marks": "0"
+                        "marks_type": "percentage",
+                        "marks": "93",
+                        "max_marks": "100"
                     }
                 ]
 
@@ -1321,24 +1252,20 @@ class TestEducationUpdate:
                     {
                         "education_id": create_education.id,
                         "institute_id": "1",
-                        "institute_name": "string",
-                        "course_id": "0",
-                        "course_name": "string",
-                        "stream_id": "0",
-                        "stream_name": "string",
-                        "start_month_year": "2018-06-10",
-                        "end_month_year": "2022-06-10",
-                        "marks": "10",
-                        "max_marks": "0",
-                        "marks_type": "string",
-                        "duration_months": "0",
-                        "course_type": "string"
+                        "course_id": "1",
+                        "stream_id": "1",
+                        "end_month_year": "2022-11-22",
+                        "marks": "93",
+                        "max_marks": "100",
+                        "marks_type": "percentage",
+                        "duration_months": "48",
+                        "course_type": "full_time"
                     },
                     {
                         "education_id": create_marks_type.id,
                         "marks_type": "fasfa",
-                        "marks": "7.5",
-                        "max_marks": "0"
+                        "marks": "93",
+                        "max_marks": "100"
                     }
                 ]
 
@@ -1362,23 +1289,19 @@ class TestEducationUpdate:
                     {
                         "education_id": create_education.id,
                         "institute_id": "1",
-                        "institute_name": "string",
-                        "course_id": "0",
-                        "course_name": "string",
-                        "stream_id": "0",
-                        "stream_name": "string",
-                        "start_month_year": "2018-06-10",
-                        "end_month_year": "2022-06-10",
-                        "marks": "10",
-                        "max_marks": "0",
-                        "marks_type": "string",
-                        "duration_months": "0",
-                        "course_type": "string"
+                        "course_id": "1",
+                        "stream_id": "1",
+                        "end_month_year": "2022-11-22",
+                        "marks": "93",
+                        "max_marks": "100",
+                        "marks_type": "percentage",
+                        "duration_months": "48",
+                        "course_type": "full_time"
                     },
                     {
                         "education_id": create_course_type.id,
-                        "course_type": "part time",
-                        "duration_months": "0"
+                        "course_type": "full_time",
+                        "duration_months": "48"
                     }
                 ]
 
@@ -1402,23 +1325,19 @@ class TestEducationUpdate:
                     {
                         "education_id": create_education.id,
                         "institute_id": "1",
-                        "institute_name": "string",
-                        "course_id": "0",
-                        "course_name": "string",
-                        "stream_id": "0",
-                        "stream_name": "string",
-                        "start_month_year": "2018-06-10",
-                        "end_month_year": "2022-06-10",
-                        "marks": "10",
-                        "max_marks": "0",
-                        "marks_type": "string",
-                        "duration_months": "0",
-                        "course_type": "string"
+                        "course_id": "1",
+                        "stream_id": "1",
+                        "end_month_year": "2022-11-22",
+                        "marks": "93",
+                        "max_marks": "100",
+                        "marks_type": "percentage",
+                        "duration_months": "48",
+                        "course_type": "full_time"
                     },
                     {
                         "education_id": create_course_type.id,
                         "course_type": "fasfa",
-                        "duration_months": "0"
+                        "duration_months": "48"
                     }
                 ]
 
@@ -1461,30 +1380,26 @@ class TestEducationUpdate:
                     {
                         "education_id": create_education.id,
                         "institute_id": "1",
-                        "institute_name": "string",
-                        "course_id": "0",
-                        "course_name": "string",
-                        "stream_id": "0",
-                        "stream_name": "string",
-                        "start_month_year": "2018-06-10",
-                        "end_month_year": "2022-06-10",
-                        "marks": "10",
-                        "max_marks": "0",
-                        "marks_type": "string",
-                        "duration_months": "0",
-                        "course_type": "string"
+                        "course_id": "1",
+                        "stream_id": "1",
+                        "end_month_year": "2022-11-22",
+                        "marks": "93",
+                        "max_marks": "100",
+                        "marks_type": "percentage",
+                        "duration_months": "48",
+                        "course_type": "full_time"
                     },
                     {
                         "education_id": create_marks_type.id,
-                        "marks_type": "cgpa",
-                        "marks": "7.5",
-                        "max_marks": "0"
+                        "marks_type": "percentage",
+                        "marks": "93",
+                        "max_marks": "100"
 
                     },
                     {
                         "education_id": create_course_type.id,
-                        "course_type": "part time",
-                        "duration_months": "0"
+                        "course_type": "full_time",
+                        "duration_months": "100"
                     }
                 ]
 
@@ -1509,29 +1424,25 @@ class TestEducationUpdate:
                     {
                         "education_id": create_education.id,
                         "institute_id": "1",
-                        "institute_name": "string",
-                        "course_id": "0",
-                        "course_name": "string",
-                        "stream_id": "0",
-                        "stream_name": "string",
-                        "start_month_year": "2018-06-10",
-                        "end_month_year": "2022-06-10",
-                        "marks": "10",
-                        "max_marks": "0",
-                        "marks_type": "string",
-                        "duration_months": "0",
-                        "course_type": "string"
+                        "course_id": "1",
+                        "stream_id": "1",
+                        "end_month_year": "2022-11-22",
+                        "marks": "93",
+                        "max_marks": "100",
+                        "marks_type": "percentage",
+                        "duration_months": "48",
+                        "course_type": "full_time"
                     },
                     {
                         "education_id": create_marks_type.id,
-                        "marks_type": "cgpa",
-                        "marks": "7.5",
-                        "max_marks": "0"
+                        "marks_type": "percentage",
+                        "marks": "93",
+                        "max_marks": "100"
                     },
                     {
                         "education_id": create_course_type.id,
-                        "course_type": "part time",
-                        "duration_months": "0"
+                        "course_type": "full_time",
+                        "duration_months": "100"
                     }
                 ]
 
