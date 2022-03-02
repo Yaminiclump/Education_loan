@@ -554,8 +554,8 @@ class TestEducationCreate:
                 "educations": [
                     {
                         "marks_type": "percentage",
-                        "marks": "93",
-                        "max_marks": "100"
+                        "marks": 93,
+                        "max_marks": 100
                     }
                 ]
 
@@ -576,8 +576,8 @@ class TestEducationCreate:
                 "educations": [
                     {
                         "marks_type": "percentage",
-                        "marks": "93",
-                        "max_marks": "100"
+                        "marks": 93,
+                        "max_marks": 100
                     }
                 ]
             }
@@ -597,8 +597,8 @@ class TestEducationCreate:
                 "educations": [
                     {
                         "marks_type": "percentage",
-                        "marks": "93",
-                        "max_marks": "100"
+                        "marks": 93,
+                        "max_marks": 100
                     }
                 ]
             }
@@ -618,7 +618,7 @@ class TestEducationCreate:
                 "educations": [
                     {
                         "course_type": "full_time",
-                        "duration_months": "48"
+                        "duration_months": 48
                     }
                 ]
 
@@ -639,7 +639,7 @@ class TestEducationCreate:
                 "educations": [
                     {
                         "course_type": "full_time",
-                        "duration_months": "48"
+                        "duration_months": 48
                     }
                 ]
             }
@@ -659,7 +659,7 @@ class TestEducationCreate:
                 "educations": [
                     {
                         "course_type": "full_time",
-                        "duration_months": "48"
+                        "duration_months": 48
                     }
                 ]
             }
@@ -697,7 +697,7 @@ class TestEducationCreate:
                 "customer_id": create_customer.id,
                 "educations": [
                     {
-                        "institute_id": "1"
+                        "institute_id": 1
                     }
                 ]
             }
@@ -716,7 +716,7 @@ class TestEducationCreate:
                 "customer_id": create_customer.id,
                 "educations": [
                     {
-                        "institute_name": "fdyjhh"
+                        "institute_name": "du"
                     }
                 ]
             }
@@ -735,7 +735,7 @@ class TestEducationCreate:
                 "customer_id": create_customer.id,
                 "educations": [
                     {
-                        "course_id": "0"
+                        "course_id": 0
                     }
                 ]
             }
@@ -773,7 +773,7 @@ class TestEducationCreate:
                 "customer_id": create_customer.id,
                 "educations": [
                     {
-                        "stream_id": "0"
+                        "stream_id": 0
                     }
                 ]
             }
@@ -811,7 +811,7 @@ class TestEducationCreate:
                 "customer_id": create_customer.id,
                 "educations": [
                     {
-                        "start_month_year": "2018-06-10"
+                        "start_month_year": 2018-6-10
                     }
                 ]
             }
@@ -830,7 +830,7 @@ class TestEducationCreate:
                 "customer_id": create_customer.id,
                 "educations": [
                     {
-                        "end_month_year": "2022-06-10"
+                        "end_month_year": 2022-6-10
                     }
                 ]
             }
@@ -850,8 +850,8 @@ class TestEducationCreate:
                 "educations": [
                     {
                         "marks_type": "percentage",
-                        "marks": "93",
-                        "max_marks": "100"
+                        "marks": 93,
+                        "max_marks": 100
                     }
                 ]
             }
@@ -871,7 +871,7 @@ class TestEducationCreate:
                 "educations": [
                     {
                         "course_type": "full_time",
-                        "duration_months": "48"
+                        "duration_months": 48
                     }
                 ]
             }
@@ -902,13 +902,13 @@ class TestEducationCreate:
                     },
                     {
                         "marks_type": "percentage",
-                        "marks": "93",
-                        "max_marks": "100"
+                        "marks": 93,
+                        "max_marks": 100
                     },
 
                     {
                         "course_type": "full_time",
-                        "duration_months": "48"  
+                        "duration_months": 48  
                     }
             
                 ]
