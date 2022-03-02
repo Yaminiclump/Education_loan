@@ -26,31 +26,7 @@ class TestEducationCreateView:
     def test_create_education_view_post(self, client):
         current_time = django.utils.timezone.now()
         logger.debug("current_time india: %s", current_time)
-        create_customer = Customer(
-            salutation=1,
-            first_name="abc",
-            middle_name="",
-            last_name="",
-            gender=1,
-            date_of_birth="2019-10-25",
-            relation_with_applicant=0,
-            marital_status=1,
-            father_first_name="abc",
-            father_middle_name="abc",
-            father_last_name="",
-            mother_first_name="",
-            mother_middle_name="",
-            mother_last_name="",
-            spouse_first_name="",
-            spouse_middle_name="",
-            spouse_last_name="",
-            no_of_family_members=4,
-            household_income_monthly=5000,
-            status=1,
-            creation_date=current_time,
-            creation_by="System"
-        )
-        create_customer.save()
+        create_customer = customer_insert()
         data = {
             "customer": {
                 "customer_id": create_customer.id,
@@ -134,7 +110,7 @@ class TestEducationUpdateView():
             customer_id=create_customer.id
         )
         create_education1.save()
-        
+
         current_time = django.utils.timezone.now()
         logger.debug("current_time india: %s", current_time)
         create_education2 = Education(
@@ -159,13 +135,13 @@ class TestEducationUpdateView():
                 "educations": [
                     {
                         "education_id": create_education1.id,
-                        "course_type": "full_time",
-                        "duration months": "48"
+                        "marks_type": "percentge",
+                        "marks": "93"
                     },
                     {
                         "education_id": create_education2.id,
-                        "course_type": "part_time",
-                        "duration months": "48"
+                        "course_type": "full_time",
+                        "duration": "48"
                     }
                 ]
 
@@ -176,3 +152,5 @@ class TestEducationUpdateView():
         response = client.post(url, data=data, content_type='application/json')
         logger.info("response for post method: %s", response)
         assert response.status_code == Statuses.test_post['status_code']
+
+
