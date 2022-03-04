@@ -52,7 +52,7 @@ def education_insert(customer_id):
         institute_id= "1",
         course_id= "1",
         stream_id= "1",
-        end_month_year= "2022-11-22",
+        end_month_year= "2022-11",
         marks= "93",
         max_marks= "100",
         marks_type= "percentage",
@@ -66,6 +66,26 @@ def education_insert(customer_id):
     create_education.save()
     return create_education
 
+def education_insert2(customer_id):
+    current_time = django.utils.timezone.now()
+    logger.debug("current_time india: %s", current_time)
+    create_education2 = Education(
+        institute_id= "1",
+        course_id= "1",
+        stream_id= "1",
+        end_month_year= "2022-11",
+        marks= "93",
+        max_marks= "100",
+        marks_type= "percentage",
+        duration_months= "48",
+        course_type= "full_time",
+        status=1,
+        creation_date=current_time,
+        creation_by="System",
+        customer_id=customer_id
+    )
+    create_education2.save()
+    return create_education2
 
 def marks_type_insert(customer_id):
     current_time = django.utils.timezone.now()
@@ -513,13 +533,13 @@ class TestEducationCreate:
         logger.info("response: %s", response)
         assert response['status'] == Statuses.generic_error_1['status_code']
 
-    def test_start_end_year_parameter_blank(self):
+    def test_end_month_year_parameter_blank(self):
         create_customer = customer_insert()
 
         data = {
             "customer": {
                 "customer_id": create_customer.id,
-                "start_end_year": [],
+                "end_month_year": [],
             }
         }
         data = json.dumps(data)
@@ -534,7 +554,7 @@ class TestEducationCreate:
         data = {
             "customer": {
                 "customer_id": create_customer.id,
-                "start_end_year": [
+                "end_month_year": [
                     {}
                 ],
             }
@@ -554,8 +574,10 @@ class TestEducationCreate:
                 "educations": [
                     {
                         "marks_type": "percentage",
-                        "marks": 93,
-                        "max_marks": 100
+                        "marks": "93",
+                        "max_marks": "100"
+
+
                     }
                 ]
 
@@ -576,8 +598,8 @@ class TestEducationCreate:
                 "educations": [
                     {
                         "marks_type": "percentage",
-                        "marks": 93,
-                        "max_marks": 100
+                        "marks": "93",
+                        "max_marks": "100"
                     }
                 ]
             }
@@ -597,8 +619,8 @@ class TestEducationCreate:
                 "educations": [
                     {
                         "marks_type": "percentage",
-                        "marks": 93,
-                        "max_marks": 100
+                        "marks": "93",
+                        "max_marks": "100"
                     }
                 ]
             }
@@ -618,7 +640,7 @@ class TestEducationCreate:
                 "educations": [
                     {
                         "course_type": "full_time",
-                        "duration_months": 48
+                        "duration_months": "48"
                     }
                 ]
 
@@ -639,7 +661,7 @@ class TestEducationCreate:
                 "educations": [
                     {
                         "course_type": "full_time",
-                        "duration_months": 48
+                        "duration_months": "48"
                     }
                 ]
             }
@@ -659,7 +681,7 @@ class TestEducationCreate:
                 "educations": [
                     {
                         "course_type": "full_time",
-                        "duration_months": 48
+                        "duration_months": "48"
                     }
                 ]
             }
@@ -697,7 +719,7 @@ class TestEducationCreate:
                 "customer_id": create_customer.id,
                 "educations": [
                     {
-                        "institute_id": 1
+                        "institute_id": "1"
                     }
                 ]
             }
@@ -716,7 +738,7 @@ class TestEducationCreate:
                 "customer_id": create_customer.id,
                 "educations": [
                     {
-                        "institute_name": "du"
+                        "institute_name": "string"
                     }
                 ]
             }
@@ -884,10 +906,12 @@ class TestEducationCreate:
 
     def test_education_success(self):
         create_customer = customer_insert()
+        
 
         data = {
             "customer": {
                 "customer_id": create_customer.id,
+               
                 "educations": [
                     {
                         "institute_id": "1",
@@ -898,17 +922,18 @@ class TestEducationCreate:
                         "max_marks": "100",
                         "marks_type": "percentage",
                         "duration_months": "48",
-                        "course_type": "full_time"
+                        "course_type": "full_time",
+                        "customer_id": "customer_id"
                     },
                     {
                         "marks_type": "percentage",
-                        "marks": 93,
-                        "max_marks": 100
+                        "marks": "93",
+                        "max_marks": "100"
                     },
 
                     {
                         "course_type": "full_time",
-                        "duration_months": 48  
+                        "duration_months": "48"  
                     }
             
                 ]

@@ -8,7 +8,7 @@ from django.urls import reverse
 from los.models import Customer
 from los.models import Education
 from los.status_code import Statuses
-from los.tests.test_education_service import customer_insert
+from los.tests.test_education_service import customer_insert, education_insert
 
 logger = logging.getLogger("django")
 
@@ -35,7 +35,7 @@ class TestEducationCreateView:
                         "institute_id": "1",
                         "course_id": "1",
                         "stream_id": "1",
-                        "end_month_year": "2022-11-22",
+                        "end_month_year": "2022-06",
                         "marks": "93",
                         "max_marks": "100",
                         "marks_type": "percentage",
@@ -66,30 +66,7 @@ class TestEducationUpdateView():
     def test_update_education_view_post(self,client):
         current_time = django.utils.timezone.now()
         logger.debug("current_time india: %s", current_time)
-        create_customer = Customer(
-            salutation=1,
-            first_name="abc",
-            middle_name="",
-            last_name="",
-            gender=1,
-            date_of_birth="2019-10-25",
-            relation_with_applicant=0,
-            marital_status=1,
-            father_first_name="abc",
-            father_middle_name="abc",
-            father_last_name="",
-            mother_first_name="",
-            mother_middle_name="",
-            mother_last_name="",
-            spouse_first_name="",
-            spouse_middle_name="",
-            spouse_last_name="",
-            no_of_family_members=4,
-            household_income_monthly=5000,
-            status=1,
-            creation_date=current_time,
-            creation_by="System"
-        )
+        create_customer = customer_insert()
         create_customer.save()
 
         current_time = django.utils.timezone.now()
@@ -98,7 +75,7 @@ class TestEducationUpdateView():
             institute_id= "1",
             course_id= "1",
             stream_id= "1",
-            end_month_year= "2022-11-22",
+            end_month_year= "2022-06",
             marks= "93",
             max_marks= "100",
             marks_type= "percentage",
@@ -109,39 +86,22 @@ class TestEducationUpdateView():
             creation_by="System",
             customer_id=create_customer.id
         )
-        create_education1.save()
 
-        current_time = django.utils.timezone.now()
-        logger.debug("current_time india: %s", current_time)
-        create_education2 = Education(
-            institute_id= "1",
-            course_id= "1",
-            stream_id= "1",
-            end_month_year= "2022-11-22",
-            marks= "93",
-            max_marks= "100",
-            marks_type= "percentage",
-            duration_months= "48",
-            course_type= "full_time",
-            status=1,
-            creation_date=current_time,
-            creation_by="System",
-            customer_id=create_customer.id
-        )
-        create_education2.save()
+        create_education1.save()
         data = {
             "customer": {
                 "customer_id": create_customer.id,
                 "educations": [
                     {
-                        "education_id": create_education1.id,
-                        "marks_type": "percentge",
-                        "marks": "93"
-                    },
-                    {
-                        "education_id": create_education2.id,
-                        "course_type": "full_time",
-                        "duration": "48"
+                        "institute_id": "1",
+                        "course_id": "1",
+                        "stream_id": "1",
+                        "end_month_year": "2022-06",
+                        "marks": "93",
+                        "max_marks": "100",
+                        "marks_type": "percentage",
+                        "duration_months": "48",
+                        "course_type": "full_time"
                     }
                 ]
 
